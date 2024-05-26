@@ -58,6 +58,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MyResource\Script\TimingGuage.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
