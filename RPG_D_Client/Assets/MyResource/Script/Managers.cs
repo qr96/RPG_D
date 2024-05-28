@@ -7,11 +7,10 @@ public class Managers : MonoBehaviour
     public static Managers Instance;
 
     public UIManager ui;
+    public InputManager input;
 
     private void Awake()
     {
         Instance = this;
     }
-
-
 }
