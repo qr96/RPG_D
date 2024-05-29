@@ -58,8 +58,11 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MyResource\Script\Packet\LocalServer.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\LocalPacketSender.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\PacketDefine.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\MyPlayer.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\TimingPopup.cs" />
@@ -70,7 +73,9 @@
     <Compile Include="Assets\MyResource\Script\UIManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Prefabs.cs" />
     <Compile Include="Assets\MyResource\Script\InputManager.cs" />
+    <Compile Include="Assets\MyResource\Script\ObjectManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Manager.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\GuageBar.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\Lode.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TimingPopup : MonoBehaviour
 {
     public TimingGuage timingGuage;
+    public GuageBar hpBar;
     public Button stopButton;
 
     // Setting
@@ -19,6 +20,11 @@ public class TimingPopup : MonoBehaviour
     {
         stopButton.onClick.RemoveAllListeners();
         stopButton.onClick.AddListener(() => onClick());
+    }
+
+    public void SetHpBar(long maxHp, long nowHp)
+    {
+        hpBar.SetGuage(maxHp, nowHp);
     }
 
     public void StartMove(float moveTime, float targetTime, float orangePer, float yellowPer, float greenPer, Action<int> onStop)

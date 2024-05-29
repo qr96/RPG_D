@@ -8,6 +8,7 @@ public class Managers : MonoBehaviour
 
     public UIManager ui;
     public InputManager input;
+    public ObjectManager obj;
 
     private void Awake()
     {

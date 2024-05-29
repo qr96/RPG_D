@@ -30,6 +30,11 @@ public class UIManager : MonoBehaviour
             Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMineButton);
     }
 
+    public void SetMinePopup(long lodeMaxHp)
+    {
+
+    }
+
     public void ShowMinePopup(bool show)
     {
         var orangeTime = 0.75f;
