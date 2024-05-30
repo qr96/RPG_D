@@ -18997,7 +18997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1888765004
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19034,6 +19034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timingGuage: {fileID: 597925113}
+  hpBar: {fileID: 274749356}
   stopButton: {fileID: 173146216}
 --- !u!1 &1917748108
 GameObject:

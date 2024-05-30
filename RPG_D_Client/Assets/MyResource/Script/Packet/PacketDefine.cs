@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LodeInfo
+public class LodeObject
 {
     public int id;
     public int lodeType;
@@ -14,4 +14,6 @@ public class UserInfo
     public int id;
     public float hp;
     public float speed;
+    public long attack;
 }
+

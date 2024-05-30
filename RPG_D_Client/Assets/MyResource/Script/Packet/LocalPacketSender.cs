@@ -6,7 +6,7 @@ public class LocalPacketSender
 {
     public static void C_GameStart()
     {
-        LocalServer.Instance.Recv();
+
     }
 
     public static void C_LodeAttackStart(int lodeId)
@@ -16,6 +16,6 @@ public class LocalPacketSender
 
     public static void C_LodeAttack(int attackLevel)
     {
-
+        LocalServer.Instance.C_LodeAttack(attackLevel);
     }
 }

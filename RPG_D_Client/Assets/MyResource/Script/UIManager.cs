@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         mineButton.onClick.AddListener(OnClickMineButton);
-        minePopup.SetButtonEvent(OnClickMinePopup);
+        minePopup.SetButtonEvent(OnClickMinePopupAttack);
     }
 
     private void Start()
@@ -32,7 +32,25 @@ public class UIManager : MonoBehaviour
 
     public void SetMinePopup(long lodeMaxHp)
     {
+        minePopup.SetHpBar(lodeMaxHp, lodeMaxHp);
+    }
 
+    public void ChangeMinePopupHp(long lodeNowHp)
+    {
+        var targetTime = Random.Range(0.375f, 0.625f);
+
+        minePopup.ChanageTargetZone(targetTime);
+        minePopup.ChangeHpBar(lodeNowHp);
+    }
+
+    public void StopMinePopup()
+    {
+        minePopup.StopMove();
+    }
+
+    public void ChangeTargetTime(float targetTime)
+    {
+        minePopup.ChanageTargetZone(targetTime);
     }
 
     public void ShowMinePopup(bool show)
@@ -44,20 +62,20 @@ public class UIManager : MonoBehaviour
         minePopup.StartMove(1f, targetTime, 0.75f, 0.4f, 0.1f, OnStopMinePopup);
 
         if (show)
-            Managers.Instance.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopup);
+            Managers.Instance.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
         else
-            Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopup);
+            Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
     }
 
     void OnClickMineButton()
     {
-        ShowMinePopup(true);
+        LocalPacketSender.C_LodeAttackStart(0);
         ShowMineButton(false);
     }
 
-    void OnClickMinePopup()
+    void OnClickMinePopupAttack()
     {
-        minePopup.StopMove();
+        minePopup.GetPointResult();
     }
 
     void OnStopMinePopup(int result)
@@ -71,6 +89,6 @@ public class UIManager : MonoBehaviour
         else
             Debug.Log("OnRedZone");
 
-        ShowMinePopup(false);
+        LocalPacketSender.C_LodeAttack(result);
     }
 }

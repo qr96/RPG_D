@@ -59,12 +59,9 @@ public class TimingGuage : MonoBehaviour
         }
     }
 
-    public void StartMove(float moveTime, float targetTime, float orangePer, float yellowPer, float greenPer)
+    public void SetGuage(float moveTime, float targetTime, float orangePer, float yellowPer, float greenPer)
     {
-        movingPointer = true;
-
         this.moveTime = moveTime;
-        this.targetTime = targetTime;
         this.orangePer = orangePer;
         this.yellowPer = yellowPer;
         this.greenPer = greenPer;
@@ -78,16 +75,22 @@ public class TimingGuage : MonoBehaviour
         yellowZone.sizeDelta = new Vector2(moveRange * yellowPer, yellowZone.sizeDelta.y);
         greenZone.sizeDelta = new Vector2(moveRange * greenPer, greenZone.sizeDelta.y);
 
-        pointer.anchoredPosition = new Vector2(minPos, pointer.transform.localPosition.y);
-        orangeZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, orangeZone.anchoredPosition.y);
-        yellowZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, yellowZone.anchoredPosition.y);
-        greenZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, greenZone.anchoredPosition.y);
+        SetTargetZone(targetTime);
     }
 
-    public int StopMove()
+    public void StartMove()
     {
-        movingPointer = false;
+        pointer.anchoredPosition = new Vector2(minPos, pointer.transform.localPosition.y);
+        movingPointer = true;
+    }
 
+    public void ChanageTargetZone(float targetTime)
+    {
+        SetTargetZone(targetTime);
+    }
+
+    public int GetPointResult()
+    {
         var greenBoundary = moveTime * greenPer / 2f;
         var yellowBoundary = moveTime * yellowPer / 2f;
         var orangeBoundary = moveTime * orangePer / 2f;
@@ -112,5 +115,19 @@ public class TimingGuage : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public void StopMove()
+    {
+        movingPointer = false;
+    }
+
+    void SetTargetZone(float targetTime)
+    {
+        this.targetTime = targetTime;
+
+        orangeZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, orangeZone.anchoredPosition.y);
+        yellowZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, yellowZone.anchoredPosition.y);
+        greenZone.anchoredPosition = new Vector2(minPos + moveRange * targetTime / moveTime, greenZone.anchoredPosition.y);
     }
 }
