@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Lode : MonoBehaviour
 {
+    public int id;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.Instance.ui.ShowMineButton(true);
+            Managers.Instance.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(true, id);
         }
     }
 
@@ -16,7 +18,7 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.Instance.ui.ShowMineButton(false);
+            Managers.Instance.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(false);
         }
     }
 }

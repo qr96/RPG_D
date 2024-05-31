@@ -10,9 +10,6 @@ public class TimingPopup : MonoBehaviour
     public GuageBar hpBar;
     public Button stopButton;
 
-    // Setting
-    Action<int> onStop;
-
     // Caching
     long maxHp;
 
@@ -20,6 +17,11 @@ public class TimingPopup : MonoBehaviour
     {
         stopButton.onClick.RemoveAllListeners();
         stopButton.onClick.AddListener(() => onClick());
+    }
+
+    public void RemoveButtonEvent()
+    {
+        stopButton.onClick.RemoveAllListeners();
     }
 
     public void SetHpBar(long maxHp, long nowHp)
@@ -33,10 +35,8 @@ public class TimingPopup : MonoBehaviour
         hpBar.SetGuage(maxHp, nowHp);
     }
 
-    public void StartMove(float moveTime, float targetTime, float orangePer, float yellowPer, float greenPer, Action<int> onStop)
+    public void StartMove(float moveTime, float targetTime, float orangePer, float yellowPer, float greenPer)
     {
-        this.onStop = onStop;
-
         timingGuage.SetGuage(moveTime, targetTime, orangePer, yellowPer, greenPer);
         timingGuage.StartMove();
     }
@@ -51,11 +51,9 @@ public class TimingPopup : MonoBehaviour
         timingGuage.ChanageTargetZone(targetTime);
     }
 
-    public void GetPointResult()
+    public int GetPointResult()
     {
         var result = timingGuage.GetPointResult();
-
-        if (onStop != null)
-            onStop.Invoke(result);
+        return result;
     }
 }
