@@ -27,11 +27,11 @@ public class UILayoutMineGame : UILayout
 
         if (show)
         {
-            Managers.Instance.input.AddKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
+            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
             this.targetLodeId = targetLodeId;
         }
         else
-            Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
+            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
     }
 
     public void SetMinePopup(long lodeMaxHp)
@@ -49,12 +49,12 @@ public class UILayoutMineGame : UILayout
             var targetTime = Random.Range(orangeTime / 2f, 1 - orangeTime / 2f);
 
             minePopup.StartMove(1f, targetTime, 0.75f, 0.4f, 0.1f);
-            Managers.Instance.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
+            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
             minePopup.SetButtonEvent(OnClickMinePopupAttack);
         }
         else
         {
-            Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
+            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
             minePopup.RemoveButtonEvent();
         }
     }
@@ -62,7 +62,7 @@ public class UILayoutMineGame : UILayout
     public void ResultMineGamePopup()
     {
         minePopup.StopMove();
-        Managers.Instance.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
+        Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
         minePopup.RemoveButtonEvent();
         StartCoroutine(ShowResult());
 

@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UILayoutMineHUD : UILayout
 {
     public GuageBar hpBar;
     public GameObject ItemNotiBox;
     public TMP_Text itemNotiPrefab;
+    public Button inventoryButton;
 
     Coroutine reduceHpCo;
     Queue<string> itemNotiMessageQue = new Queue<string>();
@@ -19,6 +21,14 @@ public class UILayoutMineHUD : UILayout
     long nowHP;
 
     const int MAX_ITEM_NOTI = 5;
+
+    private void Awake()
+    {
+        inventoryButton.onClick.AddListener(() =>
+        {
+            Managers.ui.GetLayout<UILayoutInventory>().ShowPopup(true);
+        });
+    }
 
     private void Start()
     {
@@ -83,7 +93,7 @@ public class UILayoutMineHUD : UILayout
                 itemNoti.color = Color.white;
                 itemNoti.gameObject.SetActive(true);
                 itemNoti.DOFade(0f, 0.3f)
-                    .SetDelay(1f)
+                    .SetDelay(2f)
                     .OnComplete(() =>
                     {
                         itemNoti.gameObject.SetActive(false);

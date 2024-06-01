@@ -5,9 +5,10 @@ using UnityEngine;
 public class ObjectManager : MonoBehaviour
 {
     public MyPlayer myPlayer;
-    public List<Lode> lodePool = new List<Lode>();
-
+    
     public Lode lodePrefab;
+
+    List<Lode> lodePool = new List<Lode>();
 
     public Lode InstantiateLode()
     {

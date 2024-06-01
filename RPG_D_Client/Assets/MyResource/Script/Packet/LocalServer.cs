@@ -28,10 +28,16 @@ public class LocalServer : MonoBehaviour
     // Now Attacked lode Info
     int lodeId = 0;
     long lodeHp = 0;
+    Dictionary<int, Item> acquiredItem = new Dictionary<int, Item>();
+
+    public void C_ReqGameInfo(int mapId)
+    {
+        LocalPacketHandler.S_ReqGameInfo(lodeObjectDic.Values.ToList(), new UserGameInfo() { maxHp = 100 });
+    }
 
     public void C_GameStart()
     {
-        LocalPacketHandler.S_GameStart(lodeObjectDic.Values.ToList(), 1, new UserGameInfo() { maxHp = 100 });
+        LocalPacketHandler.S_GameStart(true, 1);
     }
 
     public void C_LodeAttackStart(int lodeId)
@@ -60,8 +66,24 @@ public class LocalServer : MonoBehaviour
 
         if (lodeHp <= 0)
         {
-            var minerals = new List<int>() { 1, 3, 5 };
+            var minerals = new List<Item>() {
+                new Item() { itemType = 10001, count = 5 },
+                new Item() { itemType = 10002, count = 3 },
+                new Item() { itemType = 10003, count = 6 }
+            };
+            foreach (var item in minerals) {
+                if (acquiredItem.ContainsKey(item.itemType))
+                    acquiredItem[item.itemType].count += item.count;
+                else
+                    acquiredItem.Add(item.itemType, item);
+            }
+
             LocalPacketHandler.S_LodeAttackResult(lodeId, minerals, 10);
         }
+    }
+
+    public void C_MineGameResult()
+    {
+        LocalPacketHandler.S_MineGameResult(acquiredItem.Values.ToList());
     }
 }

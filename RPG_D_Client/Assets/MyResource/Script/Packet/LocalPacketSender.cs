@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LocalPacketSender
 {
+    public static void C_ReqGameInfo(int mapId)
+    {
+        LocalServer.Instance.C_ReqGameInfo(mapId);
+    }
+
     public static void C_GameStart()
     {
         LocalServer.Instance.C_GameStart();
@@ -17,5 +22,10 @@ public class LocalPacketSender
     public static void C_LodeAttack(int attackLevel)
     {
         LocalServer.Instance.C_LodeAttack(attackLevel);
+    }
+
+    public static void C_MineGameResult()
+    {
+        LocalServer.Instance.C_MineGameResult();
     }
 }

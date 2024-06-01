@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lode : MonoBehaviour
+public class MovePortal : MonoBehaviour
 {
     public int id;
 
@@ -10,7 +10,7 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(true, id);
+            Managers.ui.GetLayout<UILayoutGameResult>().ShowEndGameButton(true);
         }
     }
 
@@ -18,7 +18,7 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(false);
+            Managers.ui.GetLayout<UILayoutGameResult>().ShowEndGameButton(false);
         }
     }
 }

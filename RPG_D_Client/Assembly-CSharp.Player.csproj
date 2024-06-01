@@ -67,10 +67,12 @@
     <Compile Include="Assets\MyResource\Script\InGame\MyPlayer.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\MovePortal.cs" />
     <Compile Include="Assets\MyResource\Script\Packet\LocalPacketHandler.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingPopup.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutGameResult.cs" />
     <Compile Include="Assets\MyResource\Script\UIManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Prefabs.cs" />
     <Compile Include="Assets\MyResource\Script\UILayout.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Assets\SPUM\Sample\Script\PlayerObj.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\GuageBar.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutStartGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

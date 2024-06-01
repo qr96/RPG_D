@@ -6,6 +6,6 @@ public class MineGameScene : MonoBehaviour
 {
     void Start()
     {
-        LocalPacketSender.C_GameStart();
+        //LocalPacketSender.C_ReqGameInfo(1001);
     }
 }
