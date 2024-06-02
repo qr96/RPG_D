@@ -34,7 +34,11 @@ public class UserData
     public long maxWeight;
     public long maxHp;
     public long attack;
-    public List<Item> minerals;
+    public float speed;
+    public long money;
+
+    public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
+    public long nowWeight;
 }
 
 public class UserGameInfo
@@ -45,8 +49,9 @@ public class UserGameInfo
     public long maxHp;
     public long nowHp;
     public long attack;
+    public float speed;
 
     public DateTime gameStartTime;
-    public List<int> mineralList = new List<int>();
+    public List<Item> mineralList = new List<Item>();
 }
 #endregion

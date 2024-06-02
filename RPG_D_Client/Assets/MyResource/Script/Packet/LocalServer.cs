@@ -3,10 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class LocalServer : MonoBehaviour
 {
     public static LocalServer Instance;
+
+    Dictionary<int, LodeObject> lodeObjectDic = new Dictionary<int, LodeObject>();
+    Dictionary<int, Tuple<long>> lodeInfoDic = new Dictionary<int, Tuple<long>>(); // <lodeType, maxHp> : TODO
+
+    // TODO : Make class
+    // Now Attacked lode Info
+    int lodeId = 0;
+    long lodeHp = 0;
+    Dictionary<int, Item> acquiredItem = new Dictionary<int, Item>();
+
+    UserData userData = new UserData();
+    UserGameInfo userGameInfo = new UserGameInfo();
 
     private void Awake()
     {
@@ -19,20 +32,27 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(4, new LodeObject() { id = 4, lodeType = 10001, position = new Vector2(8f, -18f) });
         lodeObjectDic.Add(5, new LodeObject() { id = 5, lodeType = 10001, position = new Vector2(18f, -22.5f) });
         lodeObjectDic.Add(6, new LodeObject() { id = 6, lodeType = 10001, position = new Vector2(24f, -31.5f) });
+
+        userData.speed = 200f;
+        userData.maxHp = 100;
+        userData.nickName = "테스트플레이어";
+        userData.maxWeight = 100;
+        userData.maxHp = 100;
+        userData.attack = 10;
     }
 
-    Dictionary<int, LodeObject> lodeObjectDic = new Dictionary<int, LodeObject>();
-    Dictionary<int, Tuple<long>> lodeInfoDic = new Dictionary<int, Tuple<long>>(); // <lodeType, maxHp> : TODO
-
-    // TODO : Make class
-    // Now Attacked lode Info
-    int lodeId = 0;
-    long lodeHp = 0;
-    Dictionary<int, Item> acquiredItem = new Dictionary<int, Item>();
-
-    public void C_ReqGameInfo(int mapId)
+    public void C_MoveMap(int mapId)
     {
-        LocalPacketHandler.S_ReqGameInfo(lodeObjectDic.Values.ToList(), new UserGameInfo() { maxHp = 100 });
+        userGameInfo.speed = userData.speed;
+        userGameInfo.maxHp = userData.maxHp;
+        userGameInfo.nowHp = userData.maxHp;
+        userGameInfo.maxWeight = userData.maxWeight;
+        userGameInfo.attack = userData.attack;
+
+        if (mapId == 1001)
+            LocalPacketHandler.S_MoveMap(true, mapId, new List<LodeObject>(), userGameInfo, false);
+        else if (mapId == 1002)
+            LocalPacketHandler.S_MoveMap(true, mapId, lodeObjectDic.Values.ToList(), userGameInfo, true);
     }
 
     public void C_GameStart()
@@ -84,6 +104,56 @@ public class LocalServer : MonoBehaviour
 
     public void C_MineGameResult()
     {
+        foreach (var acquired in acquiredItem)
+        {
+            if (userData.mineralDic.ContainsKey(acquired.Key))
+                userData.mineralDic[acquired.Key].count += acquired.Value.count;
+            else
+                userData.mineralDic[acquired.Key] = acquired.Value;
+
+        }
         LocalPacketHandler.S_MineGameResult(acquiredItem.Values.ToList());
+        SendInventoryInfo();
+    }
+
+    public void C_SellItem(bool sellAll, int itemType, long count)
+    {
+        long sellPrice = 0;
+
+        if (sellAll)
+        {
+            foreach (var item in userData.mineralDic)
+            {
+                if (item.Value.itemType == 10001)
+                    sellPrice += item.Value.count * 1000;
+                else if (item.Value.itemType == 10002)
+                    sellPrice += item.Value.count * 1500;
+                else if (item.Value.itemType == 10003)
+                    sellPrice += item.Value.count * 2000;
+                item.Value.count = 0;
+            }
+        }
+        else
+        {
+            if (userData.mineralDic.ContainsKey(itemType))
+            {
+                var item = userData.mineralDic[itemType];
+                if (item.itemType == 10001)
+                    sellPrice += item.count * 1000;
+                else if (item.itemType == 10002)
+                    sellPrice += item.count * 1500;
+                else if (item.itemType == 10003)
+                    sellPrice += item.count * 2000;
+                item.count = 0;
+            }
+        }
+
+        userData.money += sellPrice;
+        SendInventoryInfo();
+    }
+
+    public void SendInventoryInfo()
+    {
+        LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money);
     }
 }

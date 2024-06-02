@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class MyPlayer : MonoBehaviour
 {
@@ -10,7 +11,13 @@ public class MyPlayer : MonoBehaviour
 
     public float speed;
 
+    GameObject nameTag;
     Vector2 input;
+
+    private void Start()
+    {
+        nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag("유저이름어쩌구");
+    }
 
     private void Update()
     {
@@ -36,5 +43,7 @@ public class MyPlayer : MonoBehaviour
     private void LateUpdate()
     {
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10f);
+
+        nameTag.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
     }
 }

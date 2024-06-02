@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,15 @@ public class MovePortal : MonoBehaviour
 {
     public int id;
 
+    Action onTiggerEnter;
+    Action onTiggerExit;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutGameResult>().ShowEndGameButton(true);
+            if (onTiggerEnter != null)
+                onTiggerEnter();
         }
     }
 
@@ -18,7 +23,18 @@ public class MovePortal : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutGameResult>().ShowEndGameButton(false);
+            if (onTiggerExit != null)
+                onTiggerExit();
         }
+    }
+
+    public void SetTriggerEnterEvent(Action onTriggerEnterEvent)
+    {
+        onTiggerEnter = onTriggerEnterEvent;
+    }
+
+    public void SetTriggerExitEvent(Action onTriggerExitEvnet)
+    {
+        onTiggerExit = onTriggerExitEvnet;
     }
 }

@@ -63,6 +63,12 @@ public class UILayoutMineHUD : UILayout
         reduceHpCo = StartCoroutine(ReduceHpCo(reduceHpPerSec));
     }
 
+    public void StopReduceHp()
+    {
+        if (reduceHpCo != null)
+            StopCoroutine(reduceHpCo);
+    }
+
     public void AddItemNotiQue(string message)
     {
         itemNotiMessageQue.Enqueue(message);

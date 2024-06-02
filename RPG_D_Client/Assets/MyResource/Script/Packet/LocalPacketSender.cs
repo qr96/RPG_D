@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LocalPacketSender
 {
-    public static void C_ReqGameInfo(int mapId)
+    public static void C_MoveMap(int mapId)
     {
-        LocalServer.Instance.C_ReqGameInfo(mapId);
+        LocalServer.Instance.C_MoveMap(mapId);
     }
 
     public static void C_GameStart()
@@ -27,5 +27,10 @@ public class LocalPacketSender
     public static void C_MineGameResult()
     {
         LocalServer.Instance.C_MineGameResult();
+    }
+
+    public static void C_SellItem(bool sellAll, int itemType, long count)
+    {
+        LocalServer.Instance.C_SellItem(sellAll, itemType, count);
     }
 }

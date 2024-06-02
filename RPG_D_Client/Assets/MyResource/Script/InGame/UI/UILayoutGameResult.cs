@@ -80,8 +80,8 @@ public class UILayoutGameResult : UILayout
 
     void OnClickGoTown()
     {
-        // TODO
-        // GO TO Town
+        ShowGameResult(false);
+        LocalPacketSender.C_MoveMap(1001);
     }
 
     void OnClickEndGame()

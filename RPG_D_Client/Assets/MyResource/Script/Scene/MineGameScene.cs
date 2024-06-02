@@ -6,6 +6,8 @@ public class MineGameScene : MonoBehaviour
 {
     void Start()
     {
-        //LocalPacketSender.C_ReqGameInfo(1001);
+        // Recv my town 1001
+        LocalPacketSender.C_MoveMap(1001);
+        //Managers.map.SetMap(1001);
     }
 }
