@@ -73,6 +73,7 @@
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutNameTag.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutMineGame.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\SlotView.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerObj.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\MyResource\Script\InputManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutMineHUD.cs" />
     <Compile Include="Assets\MyResource\Script\ObjectManager.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutEquipment.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\Lode.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingGuage.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_TexutreList.cs" />

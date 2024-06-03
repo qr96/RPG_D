@@ -42,6 +42,7 @@ public class UILayoutMineGame : UILayout
     public void ShowMinePopup(bool show)
     {
         minePopup.gameObject.SetActive(show);
+        Managers.obj.myPlayer.SetPlayerMoveLock(show);
 
         if (show)
         {

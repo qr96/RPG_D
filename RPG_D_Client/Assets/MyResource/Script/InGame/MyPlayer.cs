@@ -14,6 +14,8 @@ public class MyPlayer : MonoBehaviour
     GameObject nameTag;
     Vector2 input;
 
+    bool moveLock;
+
     private void Start()
     {
         nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag("유저이름어쩌구");
@@ -23,6 +25,9 @@ public class MyPlayer : MonoBehaviour
     {
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
+
+        if (moveLock)
+            input = Vector2.zero;
 
         if (input.sqrMagnitude > 1)
             input = input.normalized;
@@ -45,5 +50,10 @@ public class MyPlayer : MonoBehaviour
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10f);
 
         nameTag.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
+    }
+
+    public void SetPlayerMoveLock(bool moveLock)
+    {
+        this.moveLock = moveLock;
     }
 }

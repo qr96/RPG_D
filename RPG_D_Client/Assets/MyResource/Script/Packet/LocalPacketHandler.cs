@@ -27,6 +27,8 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userInfo.maxHp, userInfo.maxHp);
         if (showStartGame)
             Managers.ui.GetLayout<UILayoutStartGame>().ShowStartGame(true);
+        else
+            Managers.obj.myPlayer.SetPlayerMoveLock(false);
     }
 
     public static void S_GameStart(bool success, long hpReducePerSec)
@@ -76,5 +78,6 @@ public class LocalPacketHandler
     public static void S_InventoryInfo(List<Item> minerals, long money)
     {
         Managers.ui.GetLayout<UILayoutInventory>().SetInventory(minerals, money);
+        Managers.ui.GetLayout<UILayoutMineShop>().SetInventory(minerals);
     }
 }

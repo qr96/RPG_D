@@ -40,6 +40,7 @@ public class UILayoutGameResult : UILayout
         dim.SetActive(show);
         inventoryPopup.SetActive(show);
         goHomeButton.gameObject.SetActive(show);
+        Managers.obj.myPlayer.SetPlayerMoveLock(show);
 
         if (show)
             Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickGoTown);

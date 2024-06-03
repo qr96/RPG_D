@@ -21,6 +21,7 @@ public class UILayoutStartGame : UILayout
         dim.SetActive(show);
         startButton.gameObject.SetActive(show);
         startButton.enabled = show;
+        Managers.obj.myPlayer.SetPlayerMoveLock(show);
 
         if (show)
             Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickStartGame);
