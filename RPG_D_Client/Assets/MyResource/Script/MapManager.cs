@@ -40,7 +40,7 @@ public class MapManager : MonoBehaviour
                         Managers.ui.GetLayout<UILayoutMineShop>().ShowShopPopup();
                     });
             });
-            portal.SetTriggerExitEvent(() =>
+            shop.SetTriggerExitEvent(() =>
             {
                 Managers.ui.GetLayout<UILayoutTriggerButton>().HideButton();
             });
