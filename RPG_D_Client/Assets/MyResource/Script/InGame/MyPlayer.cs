@@ -18,7 +18,7 @@ public class MyPlayer : MonoBehaviour
 
     private void Start()
     {
-        nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag("유저이름어쩌구");
+        nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(transform, "유저이름어쩌구");
     }
 
     private void Update()
@@ -49,7 +49,7 @@ public class MyPlayer : MonoBehaviour
     {
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10f);
 
-        nameTag.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
+        //nameTag.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
     }
 
     public void SetPlayerMoveLock(bool moveLock)

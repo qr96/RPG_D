@@ -11,6 +11,8 @@ public class UILayoutMineShop : UILayout
     Button sellAll;
     SlotView shopInventory;
 
+    long fullPrice;
+
     private void Awake()
     {
         dim = gameObject.Find<Button>("Dim");
@@ -47,6 +49,16 @@ public class UILayoutMineShop : UILayout
 
     public void SetInventory(List<Item> items)
     {
+        sellAll.enabled = false;
+        foreach (var item in items)
+        {
+            if (item.count > 0)
+            {
+                sellAll.enabled = true;
+                break;
+            }
+        }
+
         shopInventory.SetInventory(items,
             (item, slot) =>
             {
@@ -54,19 +66,17 @@ public class UILayoutMineShop : UILayout
                 {
                     var countText = slot.Find<TMP_Text>("ItemCount");
                     countText.text = item.count.ToString();
+                    var itemImage = slot.Find<Image>("ItemImage");
+                    itemImage.sprite = Resources.Load<Sprite>(DataPool.GetItemSpritePath(item.itemType));
                     slot.SetActive(true);
                 }
-            },
-            (item, slot) =>
-            {
-
             }, null);
+        fullPrice = DataPool.GetItemPrice(items);
     }
 
     void OnClickSellAll()
     {
-        var price = 1000;
-        var message = $"총 판매금액은 {price}골드 입니다. 정말로 파시겠습니까?";
+        var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
         Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup(message,
             () =>
             {

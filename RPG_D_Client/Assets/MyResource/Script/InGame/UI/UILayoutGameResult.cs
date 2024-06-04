@@ -65,6 +65,7 @@ public class UILayoutGameResult : UILayout
         {
             var itemSlot = itemSlotPool[i];
             itemSlot.Find<TMP_Text>("ItemCount").text = itemList[i].count.ToString();
+            itemSlot.Find<Image>("ItemImage").sprite = Resources.Load<Sprite>(DataPool.GetItemSpritePath(itemList[i].itemType));
             itemSlot.SetActive(true);
         }
     }

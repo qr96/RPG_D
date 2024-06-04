@@ -49,6 +49,7 @@ public class UILayoutInventory : UILayout
             {
                 var itemSlot = itemSlotPool[i];
                 itemSlot.Find<TMP_Text>("ItemCount").text = minerals[i].count.ToString();
+                itemSlot.Find<Image>("ItemImage").sprite = Resources.Load<Sprite>(DataPool.GetItemSpritePath(minerals[i].itemType));
                 itemSlot.SetActive(true);
             }
         }

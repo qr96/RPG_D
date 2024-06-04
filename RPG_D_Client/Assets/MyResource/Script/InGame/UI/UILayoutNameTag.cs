@@ -8,7 +8,7 @@ public class UILayoutNameTag : UILayout
 {
     GameObject nameTagPrefab;
     Stack<GameObject> nameTagPool = new Stack<GameObject>();
-    Dictionary<GameObject, GameObject> nameTagAttachedDic = new Dictionary<GameObject, GameObject>();
+    Dictionary<Transform, Transform> nameTagAttachedDic = new Dictionary<Transform, Transform>();
 
     private void Awake()
     {
@@ -19,11 +19,11 @@ public class UILayoutNameTag : UILayout
     {
         foreach (var iter in nameTagAttachedDic)
         {
-            //iter.Value.transform.position = Camera.main.WorldToScreenPoint(iter.Key.transform.position + new Vector3(0f, 1f, 0f));
+            iter.Value.position = Camera.main.WorldToScreenPoint(iter.Key.position + new Vector3(0f, 1f, 0f));
         }
     }
 
-    public GameObject AcquireNameTag(string name)
+    public GameObject AcquireNameTag(Transform target, string name)
     {
         GameObject nameTag;
 
@@ -32,18 +32,19 @@ public class UILayoutNameTag : UILayout
         else
             nameTag = Instantiate(nameTagPrefab, nameTagPrefab.transform.parent);
 
+        nameTagAttachedDic.Add(target, nameTag.transform);
         nameTag.Find<TMP_Text>("NameText").text = name;
         nameTag.SetActive(true);
         return nameTag;
     }
 
-    public void RemoveNameTag(GameObject target)
+    public void RemoveNameTag(Transform target)
     {
         if (nameTagAttachedDic.ContainsKey(target))
         {
             var nameTag = nameTagAttachedDic[target];
-            nameTag.SetActive(false);
-            nameTagPool.Push(nameTag);
+            nameTag.gameObject.SetActive(false);
+            nameTagPool.Push(nameTag.gameObject);
             nameTagAttachedDic.Remove(target);
         }
     }
