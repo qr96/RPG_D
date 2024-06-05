@@ -67,25 +67,17 @@ public class UILayoutMineShop : UILayout
                     var countText = slot.Find<TMP_Text>("ItemCount");
                     countText.text = item.count.ToString();
                     var itemImage = slot.Find<Image>("ItemImage");
-                    itemImage.sprite = Resources.Load<Sprite>(DataPool.GetItemSpritePath(item.itemType));
+                    itemImage.sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(item.itemType));
                     slot.SetActive(true);
                 }
             }, null);
-        fullPrice = DataPool.GetItemPrice(items);
+        fullPrice = DataTable.GetItemPrice(items);
     }
 
     void OnClickSellAll()
     {
         var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
         Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup(message,
-            () =>
-            {
-                LocalPacketSender.C_SellItem(true, 0, 0);
-                Managers.ui.GetLayout<UILayoutNotice>().HideNoticePopup();
-            },
-            () =>
-            {
-                Managers.ui.GetLayout<UILayoutNotice>().HideNoticePopup();
-            });
+            () => LocalPacketSender.C_SellItem(true, 0, 0), null);
     }
 }

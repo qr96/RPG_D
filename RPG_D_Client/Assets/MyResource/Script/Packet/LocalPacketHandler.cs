@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class LocalPacketHandler
 {
+    public static void S_UserInfo(UserData userData)
+    {
+        Managers.data.SetMyUserData(userData);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.maxHp, userData.maxHp);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(0, userData.weaponLevel);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(1, userData.armorLevel);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(2, userData.shoesLevel);
+        Managers.obj.myPlayer.speed = userData.speed;
+    }
+
     public static void S_MoveMap(bool moveSuccess, int mapId, List<LodeObject> lodeInfoList, UserGameInfo userInfo, bool showStartGame)
     {
         if (!moveSuccess)
@@ -75,9 +86,33 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutGameResult>().ShowGameResult(true);
     }
 
+    public static void S_EnforceEquip(UserData userData, int result)
+    {
+        if (result == 0)
+        {
+            Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup("강화 성공", null, null);
+        }
+        else if (result == 1)
+        {
+            Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup("강화 실패", null, null);
+        }
+        else if (result == 2)
+        {
+            Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup("돈이 부족합니다.", null, null);
+        }
+
+        Managers.ui.GetLayout<UILayoutInventory>().SetMoney(userData.money);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(0, userData.weaponLevel);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(1, userData.armorLevel);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetEquipLevel(2, userData.shoesLevel);
+        Managers.obj.myPlayer.speed = userData.speed;
+    }
+
     public static void S_InventoryInfo(List<Item> minerals, long money)
     {
-        Managers.ui.GetLayout<UILayoutInventory>().SetInventory(minerals, money);
+        Managers.ui.GetLayout<UILayoutInventory>().SetInventory(minerals);
+        Managers.ui.GetLayout<UILayoutInventory>().SetMoney(money);
         Managers.ui.GetLayout<UILayoutMineShop>().SetInventory(minerals);
     }
 }

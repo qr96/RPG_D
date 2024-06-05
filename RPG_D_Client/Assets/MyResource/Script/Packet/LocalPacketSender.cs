@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LocalPacketSender
 {
+    public static void C_UserInfo(int uid)
+    {
+        LocalServer.Instance.C_UserInfo(uid);
+    }
+
     public static void C_MoveMap(int mapId)
     {
         LocalServer.Instance.C_MoveMap(mapId);
@@ -32,5 +37,10 @@ public class LocalPacketSender
     public static void C_SellItem(bool sellAll, int itemType, long count)
     {
         LocalServer.Instance.C_SellItem(sellAll, itemType, count);
+    }
+
+    public static void C_EnforceEquip(int equipType)
+    {
+        LocalServer.Instance.C_EnforceEquip(equipType);
     }
 }

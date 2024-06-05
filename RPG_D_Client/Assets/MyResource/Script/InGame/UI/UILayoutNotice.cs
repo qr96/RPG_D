@@ -28,11 +28,13 @@ public class UILayoutNotice : UILayout
 
         yesButton.onClick.AddListener(() =>
         {
+            HideNoticePopup();
             if (onYes != null)
                 onYes();
         });
         noButton.onClick.AddListener(() =>
         {
+            HideNoticePopup();
             if (onNo != null)
                 onNo();
         });

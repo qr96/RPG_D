@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataPool
+public class DataTable
 {
+    // 추후에 json 혹은 csv 등의 파일로 서버, 클라 공용으로 읽어서 처리할 예정
+
     public static string GetItemSpritePath(int itemType)
     {
         var spriteName = "";
@@ -40,5 +42,19 @@ public class DataPool
             price = 2000;
 
         return price;
+    }
+
+    public static long GetEquipEnhancePrice(int nowLevel)
+    {
+        return nowLevel * 1000;
+    }
+
+    static float[] successPercentage = new float[10] { 90f, 85f, 80f, 75f, 60f, 50f, 40f, 30f, 20f, 20f };
+    public static float GetEquipEnhanceSuccessPercent(int nowLevel)
+    {
+        if (nowLevel < 10)
+            return successPercentage[nowLevel];
+        else
+            return 20f;
     }
 }

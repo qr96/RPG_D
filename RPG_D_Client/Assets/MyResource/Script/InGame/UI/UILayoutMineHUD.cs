@@ -12,6 +12,7 @@ public class UILayoutMineHUD : UILayout
     public GameObject ItemNotiBox;
     public TMP_Text itemNotiPrefab;
     public Button inventoryButton;
+    Button equipmentButton;
 
     Coroutine reduceHpCo;
     Queue<string> itemNotiMessageQue = new Queue<string>();
@@ -24,10 +25,10 @@ public class UILayoutMineHUD : UILayout
 
     private void Awake()
     {
-        inventoryButton.onClick.AddListener(() =>
-        {
-            Managers.ui.GetLayout<UILayoutInventory>().ShowPopup(true);
-        });
+        equipmentButton = gameObject.Find<Button>("EquipButton");
+
+        inventoryButton.onClick.AddListener(() => Managers.ui.GetLayout<UILayoutInventory>().ShowPopup(true));
+        equipmentButton.onClick.AddListener(() => Managers.ui.GetLayout<UILayoutEquipment>().ShowPopup(true));
     }
 
     private void Start()

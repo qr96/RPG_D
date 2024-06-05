@@ -66,7 +66,9 @@
     <Compile Include="Assets\MyResource\Script\Packet\LocalPacketHandler.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingPopup.cs" />
+    <Compile Include="Assets\MyResource\Script\Data\DataTable.cs" />
     <Compile Include="Assets\MyResource\Script\Util\Util.cs" />
+    <Compile Include="Assets\MyResource\Script\DataManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutInventory.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Manager.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
@@ -77,7 +79,6 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerObj.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
-    <Compile Include="Assets\MyResource\Script\Data\DataPool.cs" />
     <Compile Include="Assets\MyResource\Script\MapManager.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\Packet\PacketDefine.cs" />

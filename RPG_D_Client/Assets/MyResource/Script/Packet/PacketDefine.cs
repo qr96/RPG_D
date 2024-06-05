@@ -39,6 +39,9 @@ public class UserData
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
     public long nowWeight;
+    public int weaponLevel;
+    public int armorLevel;
+    public int shoesLevel;
 }
 
 public class UserGameInfo

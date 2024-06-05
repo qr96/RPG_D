@@ -30,7 +30,7 @@ public class UILayoutInventory : UILayout
         itemSlotPrefab.SetActive(false);
     }
 
-    public void SetInventory(List<Item> minerals, long money)
+    public void SetInventory(List<Item> minerals)
     {
         var needSlot = minerals.Count - itemSlotPool.Count;
 
@@ -49,11 +49,14 @@ public class UILayoutInventory : UILayout
             {
                 var itemSlot = itemSlotPool[i];
                 itemSlot.Find<TMP_Text>("ItemCount").text = minerals[i].count.ToString();
-                itemSlot.Find<Image>("ItemImage").sprite = Resources.Load<Sprite>(DataPool.GetItemSpritePath(minerals[i].itemType));
+                itemSlot.Find<Image>("ItemImage").sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(minerals[i].itemType));
                 itemSlot.SetActive(true);
             }
         }
+    }
 
+    public void SetMoney(long money)
+    {
         moneyText.text = money.ToString();
     }
 

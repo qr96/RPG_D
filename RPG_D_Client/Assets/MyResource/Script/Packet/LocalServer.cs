@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class LocalServer : MonoBehaviour
 {
@@ -39,6 +37,12 @@ public class LocalServer : MonoBehaviour
         userData.maxWeight = 100;
         userData.maxHp = 100;
         userData.attack = 10;
+        userData.money = 10000000;
+    }
+
+    public void C_UserInfo(int uid)
+    {
+        LocalPacketHandler.S_UserInfo(userData);
     }
 
     public void C_MoveMap(int mapId)
@@ -79,8 +83,10 @@ public class LocalServer : MonoBehaviour
         if (lodeHp <= 0)
             return;
 
-        var damage = 10;
+        var damage = userData.attack;
         lodeHp -= damage;
+        if (lodeHp < 0)
+            lodeHp = 0;
 
         LocalPacketHandler.S_LodeAttack(lodeHp, damage, false);
 
@@ -150,6 +156,57 @@ public class LocalServer : MonoBehaviour
 
         userData.money += sellPrice;
         SendInventoryInfo();
+    }
+
+    public void C_EnforceEquip(int equipType)
+    {
+        var nowLevel = 0;
+        var result = 0;
+
+        if (equipType == 0)
+            nowLevel = userData.weaponLevel;
+        else if (equipType == 1)
+            nowLevel = userData.armorLevel;
+        else if (equipType == 2)
+            nowLevel = userData.shoesLevel;
+
+        var enhancePrice = DataTable.GetEquipEnhancePrice(nowLevel);
+        var successPer = DataTable.GetEquipEnhanceSuccessPercent(nowLevel);
+        var rand = UnityEngine.Random.Range(0f, 100f);
+
+        if (userData.money > enhancePrice)
+        {
+            userData.money -= enhancePrice;
+            if (rand < successPer)
+            {
+                result = 0;
+                if (equipType == 0)
+                {
+                    userData.weaponLevel++;
+                    userData.attack += 1;
+                }
+                else if (equipType == 1)
+                {
+                    userData.armorLevel++;
+                    userData.maxHp += 10;
+                }
+                else if (equipType == 2)
+                {
+                    userData.shoesLevel++;
+                    userData.speed += 1;
+                }
+            }
+            else
+            {
+                result = 1;
+            }
+        }
+        else
+        {
+            result = 2;
+        }
+
+        LocalPacketHandler.S_EnforceEquip(userData, result);
     }
 
     public void SendInventoryInfo()
