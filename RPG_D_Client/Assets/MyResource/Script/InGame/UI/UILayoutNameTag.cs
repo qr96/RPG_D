@@ -15,15 +15,7 @@ public class UILayoutNameTag : UILayout
         nameTagPrefab = gameObject.Find("NameTag");
     }
 
-    private void LateUpdate()
-    {
-        foreach (var iter in nameTagAttachedDic)
-        {
-            iter.Value.position = Camera.main.WorldToScreenPoint(iter.Key.position + new Vector3(0f, 1f, 0f));
-        }
-    }
-
-    public GameObject AcquireNameTag(Transform target, string name)
+    public Transform AcquireNameTag(Transform target, string name)
     {
         GameObject nameTag;
 
@@ -35,7 +27,7 @@ public class UILayoutNameTag : UILayout
         nameTagAttachedDic.Add(target, nameTag.transform);
         nameTag.Find<TMP_Text>("NameText").text = name;
         nameTag.SetActive(true);
-        return nameTag;
+        return nameTag.transform;
     }
 
     public void RemoveNameTag(Transform target)

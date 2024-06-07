@@ -15,6 +15,8 @@ public class UILayoutEquipment : UILayout
     TMP_Text hpStat;
     TMP_Text speedStat;
 
+    TMP_Text money;
+
     Button weaponButton;
     Button armorButton;
     Button shoesButton;
@@ -29,6 +31,8 @@ public class UILayoutEquipment : UILayout
         attackStat = equipmentPopup.Find<TMP_Text>("Stats/Attack/Value");
         hpStat = equipmentPopup.Find<TMP_Text>("Stats/HP/Value");
         speedStat = equipmentPopup.Find<TMP_Text>("Stats/Speed/Value");
+
+        money = equipmentPopup.Find<TMP_Text>("Money");
 
         weaponButton = equipmentPopup.Find<Button>("Equipments/Weapon");
         armorButton = equipmentPopup.Find<Button>("Equipments/Armor");
@@ -74,6 +78,11 @@ public class UILayoutEquipment : UILayout
         {
             shoesButton.gameObject.Find<TMP_Text>("Level").text = levelString;
         }
+    }
+
+    public void SetMoney(long money)
+    {
+        this.money.text = RDUtil.MoneyComma(money);
     }
 
     void OnClickEquipButton(int equipType)

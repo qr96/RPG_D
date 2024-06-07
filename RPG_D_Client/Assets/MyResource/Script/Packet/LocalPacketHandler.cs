@@ -114,5 +114,6 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutInventory>().SetInventory(minerals);
         Managers.ui.GetLayout<UILayoutInventory>().SetMoney(money);
         Managers.ui.GetLayout<UILayoutMineShop>().SetInventory(minerals);
+        Managers.ui.GetLayout<UILayoutEquipment>().SetMoney(money);
     }
 }

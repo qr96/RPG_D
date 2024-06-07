@@ -44,6 +44,7 @@ public class MapManager : MonoBehaviour
             {
                 Managers.ui.GetLayout<UILayoutTriggerButton>().HideButton();
             });
+            shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.transform, "±§π∞ªÛ¿Œ"));
         }
         else if (mapId == 1002)
         {

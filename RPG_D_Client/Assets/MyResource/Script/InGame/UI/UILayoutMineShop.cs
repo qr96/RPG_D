@@ -38,6 +38,8 @@ public class UILayoutMineShop : UILayout
         dim.gameObject.SetActive(true);
         shopPopup.SetActive(true);
         sellAll.gameObject.SetActive(true);
+
+        Managers.input.AddKeyDownEvent(KeyCode.Escape, () => HideShopPopup());
     }
 
     public void HideShopPopup()

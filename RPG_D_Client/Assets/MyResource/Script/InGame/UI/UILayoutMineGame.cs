@@ -46,10 +46,14 @@ public class UILayoutMineGame : UILayout
 
         if (show)
         {
-            var orangeTime = 0.75f;
-            var targetTime = Random.Range(orangeTime / 2f, 1 - orangeTime / 2f);
+            var moveTime = 0.5f;
+            var orangePer = 0.75f;
+            var yellowPer = 0.4f;
+            var greenPer = 0.1f;
+            var orangeTime = moveTime * orangePer;
+            var targetTime = Random.Range(orangeTime / 2f, moveTime - orangeTime / 2f);
 
-            minePopup.StartMove(1f, targetTime, 0.75f, 0.4f, 0.1f);
+            minePopup.StartMove(moveTime, targetTime, orangePer, yellowPer, greenPer);
             Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
             minePopup.SetButtonEvent(OnClickMinePopupAttack);
         }
@@ -81,7 +85,11 @@ public class UILayoutMineGame : UILayout
 
     public void ChangeMinePopupTargetZone()
     {
-        var targetTime = Random.Range(0.375f, 0.625f);
+        var moveTime = 0.5f;
+        var orangePer = 0.75f;
+        var orangeTime = moveTime * orangePer;
+        var targetTime = Random.Range(orangeTime / 2f, moveTime - orangeTime / 2f);
+
         minePopup.ChanageTargetZone(targetTime);
     }
 

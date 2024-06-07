@@ -11,7 +11,7 @@ public class MyPlayer : MonoBehaviour
 
     public float speed;
 
-    GameObject nameTag;
+    Transform nameTag;
     Vector2 input;
 
     bool moveLock;
@@ -49,7 +49,7 @@ public class MyPlayer : MonoBehaviour
     {
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 10f);
 
-        //nameTag.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
+        nameTag.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
     }
 
     public void SetPlayerMoveLock(bool moveLock)

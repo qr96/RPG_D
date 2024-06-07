@@ -67,6 +67,7 @@
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingPopup.cs" />
     <Compile Include="Assets\MyResource\Script\Data\DataTable.cs" />
+    <Compile Include="Assets\MyResource\Script\Util\RDUtil.cs" />
     <Compile Include="Assets\MyResource\Script\Util\Util.cs" />
     <Compile Include="Assets\MyResource\Script\DataManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutInventory.cs" />
