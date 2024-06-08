@@ -9,6 +9,7 @@ public class LocalPacketHandler
     {
         Managers.data.SetMyUserData(userData);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.maxHp, userData.maxHp);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.maxWeight, userData.nowWeight);
         Managers.ui.GetPopup<UILayoutEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
         Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(0, userData.weaponLevel);
         Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(1, userData.armorLevel);
@@ -80,12 +81,13 @@ public class LocalPacketHandler
             Managers.ui.GetPopup<UILayoutMineGame>().ChangeMinePopupTargetZone();
     }
 
-    public static void S_LodeAttackResult(int lodeId, List<Item> minerals, float nowWeight)
+    public static void S_LodeAttackResult(int lodeId, List<Item> minerals, long maxWeight, long nowWeight)
     {
         Managers.obj.myPlayer.SetPlayerMoveLock(false);
         Managers.obj.DestroyLode(lodeId);
         foreach (var mineral in minerals)
             Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{mineral.itemType} {mineral.count}°³ È¹µæ");
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 
     public static void S_MineGameResult(bool success, List<Item> minerals)

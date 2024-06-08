@@ -44,6 +44,29 @@ public class DataTable
         return price;
     }
 
+    public static long GetMineralWeight(List<Item> itemList)
+    {
+        var weight = 0L;
+        foreach (var item in itemList)
+            weight += GetMineralWeight(item);
+
+        return weight;
+    }
+
+    public static long GetMineralWeight(Item item)
+    {
+        var weight = 0L;
+
+        if (item.itemType == 10001)
+            weight = item.count * 1;
+        else if (item.itemType == 10002)
+            weight = item.count * 2;
+        else if (item.itemType == 10003)
+            weight = item.count * 3;
+
+        return weight;
+    }
+
     public static long GetEquipEnhancePrice(int nowLevel)
     {
         return 1000 + nowLevel * 1000;

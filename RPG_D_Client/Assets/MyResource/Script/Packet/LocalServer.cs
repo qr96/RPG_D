@@ -94,19 +94,22 @@ public class LocalServer : MonoBehaviour
 
         if (lodeHp <= 0)
         {
-            var minerals = new List<Item>() {
+            var nowMinerals = new List<Item>() {
                 new Item() { itemType = 10001, count = 5 },
                 new Item() { itemType = 10002, count = 3 },
                 new Item() { itemType = 10003, count = 6 }
             };
-            foreach (var item in minerals) {
+
+            foreach (var item in nowMinerals) {
                 if (acquiredItem.ContainsKey(item.itemType))
                     acquiredItem[item.itemType].count += item.count;
                 else
                     acquiredItem.Add(item.itemType, item);
             }
 
-            LocalPacketHandler.S_LodeAttackResult(lodeId, minerals, 10);
+            var nowWeight = DataTable.GetMineralWeight(acquiredItem.Values.ToList());
+
+            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userData.maxWeight, userData.nowWeight + nowWeight);
         }
     }
 

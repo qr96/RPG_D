@@ -14,6 +14,9 @@ public class UILayoutMineHUD : UILayout
     public Button inventoryButton;
     
     Button equipmentButton;
+
+    GameObject bagIndicator;
+    TMP_Text bagIndicatorTmp;
     GameObject depthIndicator;
     TMP_Text depthIndicatorTmp;
 
@@ -29,6 +32,9 @@ public class UILayoutMineHUD : UILayout
     private void Awake()
     {
         equipmentButton = gameObject.Find<Button>("EquipButton");
+
+        bagIndicator = gameObject.Find("BagIndicator");
+        bagIndicatorTmp = bagIndicator.Find<TMP_Text>("Text");
         depthIndicator = gameObject.Find("DepthIndicator");
         depthIndicatorTmp = depthIndicator.Find<TMP_Text>("Text");
 
@@ -89,6 +95,11 @@ public class UILayoutMineHUD : UILayout
     public void SetDepthIndicator(bool show)
     {
         depthIndicator.SetActive(show);
+    }
+
+    public void SetBagIndicator(long maxWeight, long nowWeight)
+    {
+        bagIndicatorTmp.text = $"{nowWeight}/{maxWeight}g";
     }
 
     IEnumerator ReduceHpCo(long reduceHpPerSec, Action onEndReduceHp)
