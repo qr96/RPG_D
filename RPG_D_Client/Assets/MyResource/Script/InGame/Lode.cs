@@ -10,7 +10,7 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(true, id);
+            Managers.ui.ShowPopup<UILayoutTriggerButton>().SetButton("Ã¤±¤½ÃÀÛ", () => LocalPacketSender.C_LodeAttackStart(id));
         }
     }
 
@@ -18,7 +18,8 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(false);
+            Managers.ui.HidePopup<UILayoutTriggerButton>();
+            //Managers.ui.GetLayout<UILayoutMineGame>().ShowMineStartButton(false);
         }
     }
 }

@@ -18,6 +18,7 @@ public class LocalServer : MonoBehaviour
 
     UserData userData = new UserData();
     UserGameInfo userGameInfo = new UserGameInfo();
+    long hpReducePerSec = 1;
 
     private void Awake()
     {
@@ -61,7 +62,8 @@ public class LocalServer : MonoBehaviour
 
     public void C_GameStart()
     {
-        LocalPacketHandler.S_GameStart(true, 1);
+        userGameInfo.gameStartTime = DateTime.Now;
+        LocalPacketHandler.S_GameStart(true, hpReducePerSec);
     }
 
     public void C_LodeAttackStart(int lodeId)
@@ -110,15 +112,21 @@ public class LocalServer : MonoBehaviour
 
     public void C_MineGameResult()
     {
-        foreach (var acquired in acquiredItem)
-        {
-            if (userData.mineralDic.ContainsKey(acquired.Key))
-                userData.mineralDic[acquired.Key].count += acquired.Value.count;
-            else
-                userData.mineralDic[acquired.Key] = acquired.Value;
+        bool gameSuccess = false;
+        gameSuccess = (DateTime.Now - userGameInfo.gameStartTime).TotalSeconds * hpReducePerSec < userData.maxHp;
 
+        if (gameSuccess)
+        {
+            foreach (var acquired in acquiredItem)
+            {
+                if (userData.mineralDic.ContainsKey(acquired.Key))
+                    userData.mineralDic[acquired.Key].count += acquired.Value.count;
+                else
+                    userData.mineralDic[acquired.Key] = acquired.Value;
+            }
         }
-        LocalPacketHandler.S_MineGameResult(acquiredItem.Values.ToList());
+
+        LocalPacketHandler.S_MineGameResult(gameSuccess, acquiredItem.Values.ToList());
         SendInventoryInfo();
     }
 

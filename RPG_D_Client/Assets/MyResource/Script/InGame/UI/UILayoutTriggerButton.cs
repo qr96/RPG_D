@@ -6,24 +6,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UILayoutTriggerButton : UILayout
+public class UILayoutTriggerButton : UIPopup
 {
     Button triggerButton;
     TMP_Text triggerButtonText;
     Action onClick;
 
-    private void Awake()
+    public override void InputEvent()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            triggerButton.onClick.Invoke();
+    }
+
+    public override void OnCreate()
     {
         triggerButton = gameObject.Find<Button>("TriggerButton");
         triggerButtonText = triggerButton.gameObject.Find<TMP_Text>("Text");
     }
 
-    private void Start()
-    {
-        HideButton();
-    }
-
-    public void ShowButton(string buttonText, Action onClickEvent)
+    public void SetButton(string buttonText, Action onClickEvent)
     {
         triggerButtonText.text = buttonText;
         triggerButton.gameObject.SetActive(true);
@@ -31,18 +32,11 @@ public class UILayoutTriggerButton : UILayout
 
         triggerButton.onClick.RemoveAllListeners();
         triggerButton.onClick.AddListener(() => OnClickEvent());
-        Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickEvent);
-    }
-
-    public void HideButton()
-    {
-        triggerButton.gameObject.SetActive(false);
-        Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickEvent);
     }
 
     void OnClickEvent()
     {
+        Hide();
         onClick?.Invoke();
-        HideButton();
     }
 }

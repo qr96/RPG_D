@@ -3,84 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutMineGame : UILayout
+public class UILayoutMineGame : UIPopup
 {
-    public Button mineStartButton;
-    public TimingPopup minePopup;
+    TimingGuage timingGuage;
+    GuageBar hpBar;
+    Button stopButton;
 
-    int targetLodeId;
+    long lodeMaxHp = 0;
 
-    private void Awake()
+    public override void InputEvent()
     {
-        mineStartButton.onClick.AddListener(OnClickMineStartButton);
+        if (Input.GetKeyDown(KeyCode.Space))
+            stopButton.onClick.Invoke();
     }
 
-    private void Start()
+    public override void OnCreate()
     {
-        ShowMineStartButton(false);
-        ShowMinePopup(false);
-    }
+        timingGuage = gameObject.Find<TimingGuage>("TimingGuage");
+        hpBar = gameObject.Find<GuageBar>("HPGuage");
+        stopButton = gameObject.Find<Button>("StopButton");
 
-    public void ShowMineStartButton(bool show, int targetLodeId = 0)
-    {
-        mineStartButton.gameObject.SetActive(show);
-
-        if (show)
-        {
-            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
-            this.targetLodeId = targetLodeId;
-        }
-        else
-            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMineStartButton);
+        stopButton.onClick.AddListener(() => OnClickMinePopupAttack());
     }
 
     public void SetMinePopup(long lodeMaxHp)
     {
-        minePopup.SetHpBar(lodeMaxHp, lodeMaxHp);
-    }
+        var moveTime = 0.5f;
+        var orangePer = 0.75f;
+        var yellowPer = 0.4f;
+        var greenPer = 0.1f;
+        var orangeTime = moveTime * orangePer;
+        var targetTime = Random.Range(orangeTime / 2f, moveTime - orangeTime / 2f);
 
-    public void ShowMinePopup(bool show)
-    {
-        minePopup.gameObject.SetActive(show);
-        Managers.obj.myPlayer.SetPlayerMoveLock(show);
+        timingGuage.SetGuage(moveTime, targetTime, orangePer, yellowPer, greenPer);
+        timingGuage.StartMove();
 
-        if (show)
-        {
-            var moveTime = 0.5f;
-            var orangePer = 0.75f;
-            var yellowPer = 0.4f;
-            var greenPer = 0.1f;
-            var orangeTime = moveTime * orangePer;
-            var targetTime = Random.Range(orangeTime / 2f, moveTime - orangeTime / 2f);
-
-            minePopup.StartMove(moveTime, targetTime, orangePer, yellowPer, greenPer);
-            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
-            minePopup.SetButtonEvent(OnClickMinePopupAttack);
-        }
-        else
-        {
-            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
-            minePopup.RemoveButtonEvent();
-        }
+        hpBar.SetGuage(lodeMaxHp, lodeMaxHp);
+        this.lodeMaxHp = lodeMaxHp;
     }
 
     public void ResultMineGamePopup()
     {
-        minePopup.StopMove();
-        Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickMinePopupAttack);
-        minePopup.RemoveButtonEvent();
+        timingGuage.StopMove();
         StartCoroutine(ShowResult());
 
         IEnumerator ShowResult()
         {
             yield return new WaitForSeconds(0.3f);
-            ShowMinePopup(false);
+            Hide();
         }
     }
 
     public void ChangeMinePopupHp(long lodeNowHp)
     {
-        minePopup.ChangeHpBar(lodeNowHp);
+        hpBar.SetGuage(lodeMaxHp, lodeNowHp);
     }
 
     public void ChangeMinePopupTargetZone()
@@ -90,18 +66,12 @@ public class UILayoutMineGame : UILayout
         var orangeTime = moveTime * orangePer;
         var targetTime = Random.Range(orangeTime / 2f, moveTime - orangeTime / 2f);
 
-        minePopup.ChanageTargetZone(targetTime);
-    }
-
-    void OnClickMineStartButton()
-    {
-        LocalPacketSender.C_LodeAttackStart(targetLodeId);
-        ShowMineStartButton(false);
+        timingGuage.ChanageTargetZone(targetTime);
     }
 
     void OnClickMinePopupAttack()
     {
-        var result = minePopup.GetPointResult();
+        var result = timingGuage.GetPointResult();
         Debug.Log($"[{GetType().Name}] OnClickMinePopupAttack(), result:{result}");
         LocalPacketSender.C_LodeAttack(result);
     }

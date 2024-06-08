@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutNotice : UILayout
+public class UILayoutNotice : UIPopup
 {
     GameObject dim;
     Button yesButton;
@@ -15,9 +15,8 @@ public class UILayoutNotice : UILayout
     TMP_Text desc;
 
     Action onYes;
-    Action onNo;
 
-    private void Awake()
+    public override void OnCreate()
     {
         dim = gameObject.Find("Dim");
         yesButton = gameObject.Find<Button>("YesButton");
@@ -26,42 +25,32 @@ public class UILayoutNotice : UILayout
         notiPopup = gameObject.Find("NoticePopup");
         desc = notiPopup.Find<TMP_Text>("Desc");
 
+        yesButton.onClick.RemoveAllListeners();
+        noButton.onClick.RemoveAllListeners();
+
         yesButton.onClick.AddListener(() =>
         {
-            HideNoticePopup();
+            Hide();
             if (onYes != null)
                 onYes();
         });
         noButton.onClick.AddListener(() =>
         {
-            HideNoticePopup();
-            if (onNo != null)
-                onNo();
+            Hide();
         });
     }
 
-    private void Start()
+    public override void InputEvent()
     {
-        HideNoticePopup();
+        if (Input.GetKeyDown(KeyCode.Space))
+            yesButton.onClick.Invoke();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            noButton.onClick.Invoke();
     }
 
-    public void ShowNoticePopup(string desc, Action onYes, Action onNo)
+    public void SetPopup(string desc, Action onYes)
     {
         this.desc.text = desc;
         this.onYes = onYes;
-        this.onNo = onNo;
-
-        dim.SetActive(true);
-        notiPopup.SetActive(true);
-        yesButton.gameObject.SetActive(true);
-        noButton.gameObject.SetActive(true);
-    }
-
-    public void HideNoticePopup()
-    {
-        dim.SetActive(false);
-        notiPopup.SetActive(false);
-        yesButton.gameObject.SetActive(false);
-        noButton.gameObject.SetActive(false);
     }
 }

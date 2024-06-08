@@ -3,25 +3,36 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class UILayoutInventory : UILayout
+public class UILayoutInventory : UIPopup
 {
     public Button dimButton;
     public GameObject inventoryPopup;
     public GameObject itemSlotParent;
     public GameObject itemSlotPrefab;
+    SlotView inventoryView;
 
     TMP_Text moneyText;
 
     public List<GameObject> itemSlotPool = new List<GameObject>();
 
-    private void Awake()
+    public override void InputEvent()
     {
-        dimButton.onClick.AddListener(() =>
-        {
-            ShowPopup(false);
-        });
+        if (Input.GetKeyDown(KeyCode.Escape))
+            dimButton.onClick.Invoke();
+    }
 
+    public override void OnCreate()
+    {
+        inventoryView = inventoryPopup.GetComponent<SlotView>();
+
+        dimButton.onClick.AddListener(() => Hide());
+
+        var slotPrefab = gameObject.Find("InventoryPopup/Scroll View/Viewport/Content/ItemSlot");
+        slotPrefab.SetActive(false);
+        inventoryView.SetPrefab(slotPrefab, slotPrefab.transform.parent);
+        
         moneyText = inventoryPopup.Find<TMP_Text>("Property/MoneyText");
     }
 
@@ -30,8 +41,22 @@ public class UILayoutInventory : UILayout
         itemSlotPrefab.SetActive(false);
     }
 
-    public void SetInventory(List<Item> minerals)
+    public void SetInventory(List<Item> items)
     {
+        inventoryView.SetInventory(items,
+            (item, slot) =>
+            {
+                if (item.count > 0)
+                {
+                    var countText = slot.Find<TMP_Text>("ItemCount");
+                    countText.text = item.count.ToString();
+                    var itemImage = slot.Find<Image>("ItemImage");
+                    itemImage.sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(item.itemType));
+                    slot.SetActive(true);
+                }
+            }, null);
+        
+        /*
         var needSlot = minerals.Count - itemSlotPool.Count;
 
         for (int i = 0; i < needSlot; i++)
@@ -53,16 +78,11 @@ public class UILayoutInventory : UILayout
                 itemSlot.SetActive(true);
             }
         }
+        */
     }
 
     public void SetMoney(long money)
     {
         moneyText.text = money.ToString();
-    }
-
-    public void ShowPopup(bool show)
-    {
-        dimButton.gameObject.SetActive(show);
-        inventoryPopup.SetActive(show);
     }
 }

@@ -46,7 +46,7 @@ public class DataTable
 
     public static long GetEquipEnhancePrice(int nowLevel)
     {
-        return nowLevel * 1000;
+        return 1000 + nowLevel * 1000;
     }
 
     static float[] successPercentage = new float[10] { 90f, 85f, 80f, 75f, 60f, 50f, 40f, 30f, 20f, 20f };

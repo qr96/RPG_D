@@ -12,7 +12,10 @@ public class UILayoutMineHUD : UILayout
     public GameObject ItemNotiBox;
     public TMP_Text itemNotiPrefab;
     public Button inventoryButton;
+    
     Button equipmentButton;
+    GameObject depthIndicator;
+    TMP_Text depthIndicatorTmp;
 
     Coroutine reduceHpCo;
     Queue<string> itemNotiMessageQue = new Queue<string>();
@@ -26,9 +29,11 @@ public class UILayoutMineHUD : UILayout
     private void Awake()
     {
         equipmentButton = gameObject.Find<Button>("EquipButton");
+        depthIndicator = gameObject.Find("DepthIndicator");
+        depthIndicatorTmp = depthIndicator.Find<TMP_Text>("Text");
 
-        inventoryButton.onClick.AddListener(() => Managers.ui.GetLayout<UILayoutInventory>().ShowPopup(true));
-        equipmentButton.onClick.AddListener(() => Managers.ui.GetLayout<UILayoutEquipment>().ShowPopup(true));
+        inventoryButton.onClick.AddListener(() => Managers.ui.ShowPopup<UILayoutInventory>());
+        equipmentButton.onClick.AddListener(() => Managers.ui.ShowPopup<UILayoutEquipment>());
     }
 
     private void Start()
@@ -45,6 +50,11 @@ public class UILayoutMineHUD : UILayout
         }
     }
 
+    private void Update()
+    {
+        depthIndicatorTmp.text = $"{(-Managers.obj.myPlayer.transform.position.y).ToString("F1")}m";
+    }
+
     public void SetHpBar(long maxHp, long nowHp)
     {
         this.maxHp = maxHp;
@@ -53,7 +63,7 @@ public class UILayoutMineHUD : UILayout
         hpBar.SetGuage(maxHp, nowHp);
     }
 
-    public void StartReduceHP(long reduceHpPerSec)
+    public void StartReduceHP(long reduceHpPerSec, Action onEndHpCo)
     {
         if (reduceHpPerSec <= 0)
             return;
@@ -61,7 +71,7 @@ public class UILayoutMineHUD : UILayout
         if (reduceHpCo != null)
             StopCoroutine(reduceHpCo);
 
-        reduceHpCo = StartCoroutine(ReduceHpCo(reduceHpPerSec));
+        reduceHpCo = StartCoroutine(ReduceHpCo(reduceHpPerSec, onEndHpCo));
     }
 
     public void StopReduceHp()
@@ -76,7 +86,12 @@ public class UILayoutMineHUD : UILayout
         FlushItemMessageQue();
     }
 
-    IEnumerator ReduceHpCo(long reduceHpPerSec)
+    public void SetDepthIndicator(bool show)
+    {
+        depthIndicator.SetActive(show);
+    }
+
+    IEnumerator ReduceHpCo(long reduceHpPerSec, Action onEndReduceHp)
     {
         while (nowHP > 0)
         {
@@ -84,6 +99,8 @@ public class UILayoutMineHUD : UILayout
             nowHP -= reduceHpPerSec;
             SetHpBar(maxHp, nowHP);
         }
+
+        onEndReduceHp?.Invoke();
     }
 
     void FlushItemMessageQue()

@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class InputManager : MonoBehaviour
 {
     Dictionary<KeyCode, Action> keyDownEventDic = new Dictionary<KeyCode, Action>();
+    Stack<Action> inputEvents = new Stack<Action>();
 
     private void Update()
     {
@@ -17,6 +19,9 @@ public class InputManager : MonoBehaviour
                 keyDownEventDic[keyDownEvent.Key]?.Invoke();
             }
         }
+
+        if (inputEvents.Count > 0)
+            inputEvents.Peek().Invoke();
     }
 
     public void AddKeyDownEvent(KeyCode key, Action onKeyDown)
@@ -31,5 +36,15 @@ public class InputManager : MonoBehaviour
     {
         if (keyDownEventDic.ContainsKey(key))
             keyDownEventDic[key] -= onKeyDown;
+    }
+
+    public void PushInputEvent(Action inputEvent)
+    {
+        inputEvents.Push(inputEvent);
+    }
+
+    public void PopInputEvent()
+    {
+        inputEvents.Pop();
     }
 }

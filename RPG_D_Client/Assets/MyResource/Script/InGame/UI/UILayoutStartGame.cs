@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutStartGame : UILayout
+public class UILayoutStartGame : UIPopup
 {
     GameObject dim;
     Button startButton;
 
-    private void Awake()
+    public override void InputEvent()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            startButton.onClick.Invoke();
+    }
+
+    public override void OnCreate()
     {
         dim = gameObject.Find("Dim");
         startButton = gameObject.Find<Button>("StartMineButton");
@@ -16,21 +22,9 @@ public class UILayoutStartGame : UILayout
         startButton.onClick.AddListener(() => OnClickStartGame());
     }
 
-    public void ShowStartGame(bool show)
-    {
-        dim.SetActive(show);
-        startButton.gameObject.SetActive(show);
-        startButton.enabled = show;
-        Managers.obj.myPlayer.SetPlayerMoveLock(show);
-
-        if (show)
-            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickStartGame);
-        else
-            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickStartGame);
-    }
-
     void OnClickStartGame()
     {
+        Debug.Log("start");
         LocalPacketSender.C_GameStart();
         startButton.enabled = false;
     }

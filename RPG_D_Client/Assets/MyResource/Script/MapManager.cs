@@ -16,33 +16,30 @@ public class MapManager : MonoBehaviour
             mapList[0].SetActive(true);
 
             Managers.obj.myPlayer.transform.position = Vector3.zero;
+            Managers.ui.GetLayout<UILayoutMineHUD>().SetDepthIndicator(false);
 
             var portal = mapList[0].Find<MovePortal>("MinePortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().ShowButton("±¤»êÀÔÀå",
-                    () =>
-                    {
-                        LocalPacketSender.C_MoveMap(1002);
-                    });
+                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("±¤»êÀÔÀå",
+                    () => LocalPacketSender.C_MoveMap(1002));
+                Managers.ui.ShowPopup<UILayoutTriggerButton>();
             });
             portal.SetTriggerExitEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().HideButton();
+                Managers.ui.HidePopup<UILayoutTriggerButton>();
             });
 
             var shop = mapList[0].Find<MovePortal>("Shop");
             shop.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().ShowButton("»óÁ¡ÀÌ¿ë",
-                    () =>
-                    {
-                        Managers.ui.GetLayout<UILayoutMineShop>().ShowShopPopup();
-                    });
+                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("»óÁ¡ÀÌ¿ë",
+                    () => Managers.ui.ShowPopup<UILayoutMineShop>());
+                Managers.ui.ShowPopup<UILayoutTriggerButton>();
             });
             shop.SetTriggerExitEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().HideButton();
+                Managers.ui.HidePopup<UILayoutTriggerButton>();
             });
             shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.transform, "±¤¹°»óÀÎ"));
         }
@@ -51,19 +48,18 @@ public class MapManager : MonoBehaviour
             mapList[1].SetActive(true);
 
             Managers.obj.myPlayer.transform.position = Vector3.zero;
+            Managers.ui.GetLayout<UILayoutMineHUD>().SetDepthIndicator(true);
 
             var portal = mapList[1].Find<MovePortal>("TownPortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().ShowButton("Å½ÇèÁ¾·á",
-                    () =>
-                    {
-                        LocalPacketSender.C_MineGameResult();
-                    });
+                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("Å½ÇèÁ¾·á",
+                    () => LocalPacketSender.C_MineGameResult());
+                Managers.ui.ShowPopup<UILayoutTriggerButton>();
             });
             portal.SetTriggerExitEvent(() =>
             {
-                Managers.ui.GetLayout<UILayoutTriggerButton>().HideButton();
+                Managers.ui.HidePopup<UILayoutTriggerButton>();
             });
         }
     }

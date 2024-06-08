@@ -4,52 +4,50 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutGameResult : UILayout
+public class UILayoutGameResult : UIPopup
 {
     GameObject dim;
     GameObject inventoryPopup;
     GameObject itemSlotParent;
     GameObject itemSlotPrefab;
-    
+    TMP_Text inventoryPopupTitle;
+    TMP_Text result;
+
     Button goHomeButton;
-    Button endGameButton;
 
     List<GameObject> itemSlotPool = new List<GameObject>();
 
-    private void Awake()
+    public override void InputEvent()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            goHomeButton.onClick.Invoke();
+    }
+
+    public override void OnCreate()
     {
         dim = gameObject.Find("Dim");
 
         inventoryPopup = gameObject.Find("InventoryPopup");
         itemSlotParent = inventoryPopup.Find("Scroll View/Viewport/Content");
         itemSlotPrefab = itemSlotParent.Find("ItemSlot");
+        inventoryPopupTitle = inventoryPopup.Find<TMP_Text>("Title");
+        result = gameObject.Find<TMP_Text>("Result");
 
         goHomeButton = gameObject.Find<Button>("GoHomeButton");
-        endGameButton = gameObject.Find<Button>("EndGameButton");
+
+        goHomeButton.onClick.AddListener(() => OnClickGoTown());
     }
 
     private void Start()
     {
         itemSlotPrefab.SetActive(false);
-        ShowGameResult(false);
-        ShowEndGameButton(false);
     }
 
-    public void ShowGameResult(bool show)
+    public void SetResultPopup(bool success, List<Item> itemList)
     {
-        dim.SetActive(show);
-        inventoryPopup.SetActive(show);
-        goHomeButton.gameObject.SetActive(show);
-        Managers.obj.myPlayer.SetPlayerMoveLock(show);
+        result.text = success ? "≈ΩªÁº∫∞¯" : "≈ΩªÁΩ«∆–";
+        inventoryPopupTitle.text = success ? "»πµÊ æ∆¿Ã≈€" : "¿“¿∫ æ∆¿Ã≈€";
 
-        if (show)
-            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickGoTown);
-        else
-            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickGoTown);
-    }
-
-    public void SetInventory(List<Item> itemList)
-    {
         var needSlot = itemList.Count - itemSlotPool.Count;
 
         for (int i = 0; i < needSlot; i++)
@@ -70,25 +68,9 @@ public class UILayoutGameResult : UILayout
         }
     }
 
-    public void ShowEndGameButton(bool show)
-    {
-        endGameButton.gameObject.SetActive(show);
-
-        if (show)
-            Managers.input.AddKeyDownEvent(KeyCode.Space, OnClickEndGame);
-        else
-            Managers.input.RemoveKeyDownEvent(KeyCode.Space, OnClickEndGame);
-    }
-
     void OnClickGoTown()
     {
-        ShowGameResult(false);
+        Hide();
         LocalPacketSender.C_MoveMap(1001);
-    }
-
-    void OnClickEndGame()
-    {
-        LocalPacketSender.C_MineGameResult();
-        ShowEndGameButton(false);
     }
 }

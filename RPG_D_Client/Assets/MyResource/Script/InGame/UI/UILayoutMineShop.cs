@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutMineShop : UILayout
+public class UILayoutMineShop : UIPopup
 {
     Button dim;
     GameObject shopPopup;
@@ -13,7 +13,15 @@ public class UILayoutMineShop : UILayout
 
     long fullPrice;
 
-    private void Awake()
+    public override void InputEvent()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            dim.onClick.Invoke();
+        if (Input.GetKeyDown(KeyCode.Space))
+            sellAll.onClick.Invoke();
+    }
+
+    public override void OnCreate()
     {
         dim = gameObject.Find<Button>("Dim");
         shopPopup = gameObject.Find("ShopPopup");
@@ -21,32 +29,11 @@ public class UILayoutMineShop : UILayout
         shopInventory = shopPopup.GetComponent<SlotView>();
 
         sellAll.onClick.AddListener(() => OnClickSellAll());
-        dim.onClick.AddListener(() => HideShopPopup());
+        dim.onClick.AddListener(() => Hide());
 
         var slotPrefab = gameObject.Find("ShopPopup/Scroll View/Viewport/Content/ItemSlot");
         shopInventory.SetPrefab(slotPrefab, slotPrefab.transform.parent);
         slotPrefab.SetActive(false);
-    }
-
-    private void Start()
-    {
-        HideShopPopup();
-    }
-
-    public void ShowShopPopup()
-    {
-        dim.gameObject.SetActive(true);
-        shopPopup.SetActive(true);
-        sellAll.gameObject.SetActive(true);
-
-        Managers.input.AddKeyDownEvent(KeyCode.Escape, () => HideShopPopup());
-    }
-
-    public void HideShopPopup()
-    {
-        dim.gameObject.SetActive(false);
-        shopPopup.SetActive(false);
-        sellAll.gameObject.SetActive(false);
     }
 
     public void SetInventory(List<Item> items)
@@ -79,7 +66,7 @@ public class UILayoutMineShop : UILayout
     void OnClickSellAll()
     {
         var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
-        Managers.ui.GetLayout<UILayoutNotice>().ShowNoticePopup(message,
-            () => LocalPacketSender.C_SellItem(true, 0, 0), null);
+        Managers.ui.ShowPopup<UILayoutNotice>().SetPopup(message,
+            () => LocalPacketSender.C_SellItem(true, 0, 0));
     }
 }
