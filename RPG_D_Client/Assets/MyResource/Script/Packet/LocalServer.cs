@@ -31,6 +31,19 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(4, new LodeObject() { id = 4, lodeType = 10001, position = new Vector2(8f, -18f) });
         lodeObjectDic.Add(5, new LodeObject() { id = 5, lodeType = 10001, position = new Vector2(18f, -22.5f) });
         lodeObjectDic.Add(6, new LodeObject() { id = 6, lodeType = 10001, position = new Vector2(24f, -31.5f) });
+        lodeObjectDic.Add(7, new LodeObject() { id = 7, lodeType = 10001, position = new Vector2(20f, -42f) });
+        lodeObjectDic.Add(8, new LodeObject() { id = 8, lodeType = 10001, position = new Vector2(12f, -51f) });
+        lodeObjectDic.Add(9, new LodeObject() { id = 9, lodeType = 10001, position = new Vector2(5f, -63f) });
+        lodeObjectDic.Add(10, new LodeObject() { id = 10, lodeType = 10001, position = new Vector2(10f, -75f) });
+        lodeObjectDic.Add(11, new LodeObject() { id = 11, lodeType = 10001, position = new Vector2(20f, -80f) });
+        lodeObjectDic.Add(12, new LodeObject() { id = 12, lodeType = 10001, position = new Vector2(32f, -80f) });
+        lodeObjectDic.Add(13, new LodeObject() { id = 13, lodeType = 10001, position = new Vector2(46f, -77f) });
+        lodeObjectDic.Add(14, new LodeObject() { id = 14, lodeType = 10001, position = new Vector2(50f, -85f) });
+        lodeObjectDic.Add(15, new LodeObject() { id = 15, lodeType = 10001, position = new Vector2(44f, -98f) });
+        lodeObjectDic.Add(16, new LodeObject() { id = 16, lodeType = 10001, position = new Vector2(37f, -104f) });
+        lodeObjectDic.Add(17, new LodeObject() { id = 17, lodeType = 10001, position = new Vector2(31f, -107f) });
+        lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10001, position = new Vector2(20f, -110f) });
+        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });
 
         userData.speed = 200f;
         userData.maxHp = 100;
@@ -85,8 +98,15 @@ public class LocalServer : MonoBehaviour
         if (lodeHp <= 0)
             return;
 
-        var damage = userData.attack;
-        lodeHp -= damage;
+        var damage = 0L;
+        if (attackLevel == 0)
+            damage = userData.attack * 12 / 10;
+        else if (attackLevel == 1)
+            damage = userData.attack;
+        else if (attackLevel == 2)
+            damage = userData.attack * 8 / 10;
+
+            lodeHp -= damage;
         if (lodeHp < 0)
             lodeHp = 0;
 
@@ -194,7 +214,7 @@ public class LocalServer : MonoBehaviour
                 if (equipType == 0)
                 {
                     userData.weaponLevel++;
-                    userData.attack += 1;
+                    userData.attack += 5;
                 }
                 else if (equipType == 1)
                 {
@@ -204,7 +224,7 @@ public class LocalServer : MonoBehaviour
                 else if (equipType == 2)
                 {
                     userData.shoesLevel++;
-                    userData.speed += 1;
+                    userData.speed += 5;
                 }
             }
             else

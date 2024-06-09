@@ -74,6 +74,7 @@ public class LocalPacketHandler
     public static void S_LodeAttack(long lodeHp, long damage, bool critical)
     {
         Managers.ui.GetPopup<UILayoutMineGame>().ChangeMinePopupHp(lodeHp);
+        Managers.ui.GetPopup<UILayoutMineGame>().ShowDamageBar(damage);
 
         if (lodeHp <= 0)
             Managers.ui.GetPopup<UILayoutMineGame>().ResultMineGamePopup();
