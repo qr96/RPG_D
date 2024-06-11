@@ -86,8 +86,9 @@ public class LocalPacketHandler
     {
         Managers.obj.myPlayer.SetPlayerMoveLock(false);
         Managers.obj.DestroyLode(lodeId);
+
         foreach (var mineral in minerals)
-            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{mineral.itemType} {mineral.count}개 획득");
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}개 획득");
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 
@@ -102,15 +103,15 @@ public class LocalPacketHandler
     {
         if (result == 0)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 성공", null);
+            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 성공");
         }
         else if (result == 1)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 실패", null);
+            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 실패");
         }
         else if (result == 2)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("돈이 부족합니다.", null);
+            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("돈이 부족합니다.");
         }
 
         Managers.ui.GetPopup<UILayoutInventory>().SetMoney(userData.money);
@@ -122,11 +123,12 @@ public class LocalPacketHandler
         Managers.obj.myPlayer.speed = userData.speed;
     }
 
-    public static void S_InventoryInfo(List<Item> minerals, long money)
+    public static void S_InventoryInfo(List<Item> minerals, long money, long maxWeight, long nowWeight)
     {
         Managers.ui.GetPopup<UILayoutInventory>().SetInventory(minerals);
         Managers.ui.GetPopup<UILayoutInventory>().SetMoney(money);
         Managers.ui.GetPopup<UILayoutMineShop>().SetInventory(minerals);
         Managers.ui.GetPopup<UILayoutEquipment>().SetMoney(money);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class LocalServer : MonoBehaviour
@@ -16,8 +17,8 @@ public class LocalServer : MonoBehaviour
     long lodeHp = 0;
     Dictionary<int, Item> acquiredItem = new Dictionary<int, Item>();
 
-    UserData userData = new UserData();
-    UserGameInfo userGameInfo = new UserGameInfo();
+    UserData userData = new UserData(); // user's normal info
+    UserGameInfo userGameInfo = new UserGameInfo(); // user's now playing game info
     long hpReducePerSec = 1;
 
     private void Awake()
@@ -114,22 +115,27 @@ public class LocalServer : MonoBehaviour
 
         if (lodeHp <= 0)
         {
-            var nowMinerals = new List<Item>() {
-                new Item() { itemType = 10001, count = 5 },
-                new Item() { itemType = 10002, count = 3 },
-                new Item() { itemType = 10003, count = 6 }
-            };
+            var nowMinerals = new List<Item>();
 
-            foreach (var item in nowMinerals) {
+            // can get more items
+            if (userGameInfo.nowWeight < userGameInfo.maxWeight)
+            {
+                nowMinerals.Add(new Item() { itemType = 10001, count = 3 });
+                nowMinerals.Add(new Item() { itemType = 10002, count = 4 });
+                nowMinerals.Add(new Item() { itemType = 10003, count = 5 });
+            }
+
+            foreach (var item in nowMinerals)
+            {
                 if (acquiredItem.ContainsKey(item.itemType))
                     acquiredItem[item.itemType].count += item.count;
                 else
                     acquiredItem.Add(item.itemType, item);
             }
 
-            var nowWeight = DataTable.GetMineralWeight(acquiredItem.Values.ToList());
+            userGameInfo.nowWeight = DataTable.GetMineralWeight(acquiredItem.Values.ToList());
 
-            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userData.maxWeight, userData.nowWeight + nowWeight);
+            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userData.maxWeight, userGameInfo.nowWeight);
         }
     }
 
@@ -142,6 +148,7 @@ public class LocalServer : MonoBehaviour
         {
             foreach (var acquired in acquiredItem)
             {
+                // Put items to user's normal info
                 if (userData.mineralDic.ContainsKey(acquired.Key))
                     userData.mineralDic[acquired.Key].count += acquired.Value.count;
                 else
@@ -176,12 +183,12 @@ public class LocalServer : MonoBehaviour
             {
                 var item = userData.mineralDic[itemType];
                 if (item.itemType == 10001)
-                    sellPrice += item.count * 1000;
+                    sellPrice += Math.Min(count, item.count) * 1000;
                 else if (item.itemType == 10002)
-                    sellPrice += item.count * 1500;
+                    sellPrice += Math.Min(count, item.count) * 1500;
                 else if (item.itemType == 10003)
-                    sellPrice += item.count * 2000;
-                item.count = 0;
+                    sellPrice += Math.Min(count, item.count) * 2000;
+                item.count -= Math.Min(count, item.count);
             }
         }
 
@@ -242,6 +249,6 @@ public class LocalServer : MonoBehaviour
 
     public void SendInventoryInfo()
     {
-        LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money);
+        LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money, userData.maxWeight, userData.nowWeight);
     }
 }

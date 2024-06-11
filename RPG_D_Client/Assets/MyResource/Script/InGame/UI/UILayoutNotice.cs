@@ -10,6 +10,7 @@ public class UILayoutNotice : UIPopup
     GameObject dim;
     Button yesButton;
     Button noButton;
+    Button singleYesButton;
 
     GameObject notiPopup;
     TMP_Text desc;
@@ -21,6 +22,7 @@ public class UILayoutNotice : UIPopup
         dim = gameObject.Find("Dim");
         yesButton = gameObject.Find<Button>("YesButton");
         noButton = gameObject.Find<Button>("NoButton");
+        singleYesButton = gameObject.Find<Button>("SingleYesButton");
 
         notiPopup = gameObject.Find("NoticePopup");
         desc = notiPopup.Find<TMP_Text>("Desc");
@@ -52,5 +54,19 @@ public class UILayoutNotice : UIPopup
     {
         this.desc.text = desc;
         this.onYes = onYes;
+
+        singleYesButton.gameObject.SetActive(false);
+        yesButton.gameObject.SetActive(true);
+        noButton.gameObject.SetActive(true);
+    }
+
+    public void SetPopup(string desc)
+    {
+        this.desc.text = desc;
+        this.onYes = null;
+
+        singleYesButton.gameObject.SetActive(true);
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
     }
 }

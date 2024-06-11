@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,15 +39,7 @@ public class UILayoutMineShop : UIPopup
 
     public void SetInventory(List<Item> items)
     {
-        sellAll.enabled = false;
-        foreach (var item in items)
-        {
-            if (item.count > 0)
-            {
-                sellAll.enabled = true;
-                break;
-            }
-        }
+        fullPrice = DataTable.GetItemPrice(items);
 
         shopInventory.SetInventory(items,
             (item, slot) =>
@@ -60,13 +53,20 @@ public class UILayoutMineShop : UIPopup
                     slot.SetActive(true);
                 }
             }, null);
-        fullPrice = DataTable.GetItemPrice(items);
     }
 
     void OnClickSellAll()
     {
-        var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
-        Managers.ui.ShowPopup<UILayoutNotice>().SetPopup(message,
-            () => LocalPacketSender.C_SellItem(true, 0, 0));
+        if (fullPrice == 0)
+        {
+            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("팔 수 있는 아이템이 없습니다.");
+        }
+        else
+        {
+            var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
+            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup(message,
+                () => LocalPacketSender.C_SellItem(true, 0, 0));
+        }
+        
     }
 }
