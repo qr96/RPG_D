@@ -1,10 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class LocalPacketHandler
 {
+    public static void S_Login(bool success)
+    {
+        if (success)
+        {
+            Managers.ui.HidePopup<UIPopupLogin>();
+            LocalPacketSender.C_UserInfo(0);
+        }
+        else
+        {
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("에러가 발생했습니다.\n재시도 부탁드립니다.");
+        }
+    }
+
     public static void S_UserInfo(UserData userData)
     {
         Managers.data.SetMyUserData(userData);
@@ -16,7 +30,9 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
         Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
+
         Managers.obj.myPlayer.speed = userData.speed;
+        Managers.obj.myPlayer.SetNameTag(userData.nickName);
     }
         
     public static void S_MoveMap(bool moveSuccess, int mapId, List<LodeObject> lodeInfoList, UserGameInfo userInfo, bool showStartGame)
@@ -87,6 +103,8 @@ public class LocalPacketHandler
         Managers.obj.myPlayer.SetPlayerMoveLock(false);
         Managers.obj.DestroyLode(lodeId);
 
+        if (minerals.Count <= 0)
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"가방이 가득 차 획득할 수 없습니다.");
         foreach (var mineral in minerals)
             Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}개 획득");
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);

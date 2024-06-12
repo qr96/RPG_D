@@ -63,6 +63,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\Packet\LocalPacketSender.cs" />
     <Compile Include="Assets\MyResource\Script\Util\Extension.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupLogin.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\MovePortal.cs" />
     <Compile Include="Assets\MyResource\Script\Packet\LocalPacketHandler.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />

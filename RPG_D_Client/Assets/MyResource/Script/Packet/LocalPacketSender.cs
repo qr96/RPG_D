@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LocalPacketSender
 {
+    public static void C_Login(string nickname)
+    {
+        LocalServer.Instance.C_Login(nickname);
+    }
+
     public static void C_UserInfo(int uid)
     {
         LocalServer.Instance.C_UserInfo(uid);

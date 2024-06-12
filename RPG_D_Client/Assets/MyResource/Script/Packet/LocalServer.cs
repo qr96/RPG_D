@@ -53,11 +53,19 @@ public class LocalServer : MonoBehaviour
         userData.maxHp = 100;
         userData.attack = 10;
         userData.money = 10000000;
+        userData.lastMapId = 1001;
+    }
+
+    public void C_Login(string nickname)
+    {
+        userData.nickName = nickname;
+        LocalPacketHandler.S_Login(true);
     }
 
     public void C_UserInfo(int uid)
     {
         LocalPacketHandler.S_UserInfo(userData);
+        C_MoveMap(userData.lastMapId);
     }
 
     public void C_MoveMap(int mapId)
@@ -77,6 +85,10 @@ public class LocalServer : MonoBehaviour
     public void C_GameStart()
     {
         userGameInfo.gameStartTime = DateTime.Now;
+        userGameInfo.maxHp = userData.maxHp;
+        userGameInfo.nowWeight = userData.nowWeight;
+        userGameInfo.maxWeight = userData.maxWeight;
+
         LocalPacketHandler.S_GameStart(true, hpReducePerSec);
     }
 
@@ -154,6 +166,8 @@ public class LocalServer : MonoBehaviour
                 else
                     userData.mineralDic[acquired.Key] = acquired.Value;
             }
+
+            userData.nowWeight += userGameInfo.nowWeight;
         }
 
         LocalPacketHandler.S_MineGameResult(gameSuccess, acquiredItem.Values.ToList());
@@ -176,6 +190,8 @@ public class LocalServer : MonoBehaviour
                     sellPrice += item.Value.count * 2000;
                 item.Value.count = 0;
             }
+
+            userData.nowWeight = 0;
         }
         else
         {

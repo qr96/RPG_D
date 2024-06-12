@@ -42,6 +42,8 @@ public class UserData
     public int weaponLevel;
     public int armorLevel;
     public int shoesLevel;
+
+    public int lastMapId;
 }
 
 public class UserGameInfo
