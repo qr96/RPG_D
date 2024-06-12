@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutGameResult : UIPopup
+public class UIPopupGameResult : UIPopup
 {
     GameObject dim;
     GameObject inventoryPopup;

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutNotice : UIPopup
+public class UIPopupNotice : UIPopup
 {
     GameObject dim;
     Button yesButton;

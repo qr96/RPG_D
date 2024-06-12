@@ -21,25 +21,25 @@ public class MapManager : MonoBehaviour
             var portal = mapList[0].Find<MovePortal>("MinePortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("±¤»êÀÔÀå",
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("±¤»êÀÔÀå",
                     () => LocalPacketSender.C_MoveMap(1002));
-                Managers.ui.ShowPopup<UILayoutTriggerButton>();
+                Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
             portal.SetTriggerExitEvent(() =>
             {
-                Managers.ui.HidePopup<UILayoutTriggerButton>();
+                Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
 
             var shop = mapList[0].Find<MovePortal>("Shop");
             shop.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("»óÁ¡ÀÌ¿ë",
-                    () => Managers.ui.ShowPopup<UILayoutMineShop>());
-                Managers.ui.ShowPopup<UILayoutTriggerButton>();
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("»óÁ¡ÀÌ¿ë",
+                    () => Managers.ui.ShowPopup<UIPopupMineShop>());
+                Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
             shop.SetTriggerExitEvent(() =>
             {
-                Managers.ui.HidePopup<UILayoutTriggerButton>();
+                Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
             shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.transform, "±¤¹°»óÀÎ"));
         }
@@ -53,13 +53,13 @@ public class MapManager : MonoBehaviour
             var portal = mapList[1].Find<MovePortal>("TownPortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UILayoutTriggerButton>().SetButton("Å½ÇèÁ¾·á",
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("Å½ÇèÁ¾·á",
                     () => LocalPacketSender.C_MineGameResult());
-                Managers.ui.ShowPopup<UILayoutTriggerButton>();
+                Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
             portal.SetTriggerExitEvent(() =>
             {
-                Managers.ui.HidePopup<UILayoutTriggerButton>();
+                Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
         }
     }

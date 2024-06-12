@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class UILayoutInventory : UIPopup
+public class UIPopupInventory : UIPopup
 {
     public Button dimButton;
     public GameObject inventoryPopup;

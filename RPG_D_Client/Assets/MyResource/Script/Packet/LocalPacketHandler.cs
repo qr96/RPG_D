@@ -10,15 +10,15 @@ public class LocalPacketHandler
         Managers.data.SetMyUserData(userData);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.maxHp, userData.maxHp);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.maxWeight, userData.nowWeight);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(0, userData.weaponLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(1, userData.armorLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(2, userData.shoesLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetMoney(userData.money);
-        Managers.ui.GetPopup<UILayoutInventory>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(0, userData.weaponLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(1, userData.armorLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.obj.myPlayer.speed = userData.speed;
     }
-
+        
     public static void S_MoveMap(bool moveSuccess, int mapId, List<LodeObject> lodeInfoList, UserGameInfo userInfo, bool showStartGame)
     {
         if (!moveSuccess)
@@ -43,7 +43,7 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userInfo.maxHp, userInfo.maxHp);
         if (showStartGame)
         {
-            Managers.ui.ShowPopup<UILayoutStartGame>();
+            Managers.ui.ShowPopup<UIPopupStartGame>();
             Managers.obj.myPlayer.SetPlayerMoveLock(true);
         }
         else
@@ -55,7 +55,7 @@ public class LocalPacketHandler
         if (success)
         {
             Managers.ui.GetLayout<UILayoutMineHUD>().StartReduceHP(hpReducePerSec, () => LocalPacketSender.C_MineGameResult());
-            Managers.ui.HidePopup<UILayoutStartGame>();
+            Managers.ui.HidePopup<UIPopupStartGame>();
             Managers.obj.myPlayer.SetPlayerMoveLock(false);
         }
         else
@@ -68,18 +68,18 @@ public class LocalPacketHandler
     public static void S_LodeAttackStart(int lodeId, long lodeMaxHp)
     {
         Managers.obj.myPlayer.SetPlayerMoveLock(true);
-        Managers.ui.ShowPopup<UILayoutMineGame>().SetMinePopup(lodeMaxHp);
+        Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp);
     }
 
     public static void S_LodeAttack(long lodeHp, long damage, bool critical)
     {
-        Managers.ui.GetPopup<UILayoutMineGame>().ChangeMinePopupHp(lodeHp);
-        Managers.ui.GetPopup<UILayoutMineGame>().ShowDamageBar(damage);
+        Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupHp(lodeHp);
+        Managers.ui.GetPopup<UIPopupMineGame>().ShowDamageBar(damage);
 
         if (lodeHp <= 0)
-            Managers.ui.GetPopup<UILayoutMineGame>().ResultMineGamePopup();
+            Managers.ui.GetPopup<UIPopupMineGame>().ResultMineGamePopup();
         else
-            Managers.ui.GetPopup<UILayoutMineGame>().ChangeMinePopupTargetZone();
+            Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupTargetZone();
     }
 
     public static void S_LodeAttackResult(int lodeId, List<Item> minerals, long maxWeight, long nowWeight)
@@ -96,39 +96,39 @@ public class LocalPacketHandler
     {
         Managers.obj.myPlayer.SetPlayerMoveLock(true);
         Managers.ui.GetLayout<UILayoutMineHUD>().StopReduceHp();
-        Managers.ui.ShowPopup<UILayoutGameResult>().SetResultPopup(success, minerals);
+        Managers.ui.ShowPopup<UIPopupGameResult>().SetResultPopup(success, minerals);
     }
 
     public static void S_EnforceEquip(UserData userData, int result)
     {
         if (result == 0)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 성공");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("강화 성공");
         }
         else if (result == 1)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("강화 실패");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("강화 실패");
         }
         else if (result == 2)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("돈이 부족합니다.");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("돈이 부족합니다.");
         }
 
-        Managers.ui.GetPopup<UILayoutInventory>().SetMoney(userData.money);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(0, userData.weaponLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(1, userData.armorLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetEquipLevel(2, userData.shoesLevel);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(0, userData.weaponLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(1, userData.armorLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.obj.myPlayer.speed = userData.speed;
     }
 
     public static void S_InventoryInfo(List<Item> minerals, long money, long maxWeight, long nowWeight)
     {
-        Managers.ui.GetPopup<UILayoutInventory>().SetInventory(minerals);
-        Managers.ui.GetPopup<UILayoutInventory>().SetMoney(money);
-        Managers.ui.GetPopup<UILayoutMineShop>().SetInventory(minerals);
-        Managers.ui.GetPopup<UILayoutEquipment>().SetMoney(money);
+        Managers.ui.GetPopup<UIPopupInventory>().SetInventory(minerals);
+        Managers.ui.GetPopup<UIPopupInventory>().SetMoney(money);
+        Managers.ui.GetPopup<UIPopupMineShop>().SetInventory(minerals);
+        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(money);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 }

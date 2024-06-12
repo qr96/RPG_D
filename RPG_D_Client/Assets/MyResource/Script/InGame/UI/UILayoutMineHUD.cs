@@ -38,8 +38,8 @@ public class UILayoutMineHUD : UILayout
         depthIndicator = gameObject.Find("DepthIndicator");
         depthIndicatorTmp = depthIndicator.Find<TMP_Text>("Text");
 
-        inventoryButton.onClick.AddListener(() => Managers.ui.ShowPopup<UILayoutInventory>());
-        equipmentButton.onClick.AddListener(() => Managers.ui.ShowPopup<UILayoutEquipment>());
+        inventoryButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupInventory>());
+        equipmentButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupEquipment>());
     }
 
     private void Start()

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UILayoutTriggerButton : UIPopup
+public class UIPopupTriggerButton : UIPopup
 {
     Button triggerButton;
     TMP_Text triggerButtonText;

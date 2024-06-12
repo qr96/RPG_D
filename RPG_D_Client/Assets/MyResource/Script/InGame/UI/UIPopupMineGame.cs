@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutMineGame : UIPopup
+public class UIPopupMineGame : UIPopup
 {
     TimingGuage timingGuage;
     GuageBar hpBar;

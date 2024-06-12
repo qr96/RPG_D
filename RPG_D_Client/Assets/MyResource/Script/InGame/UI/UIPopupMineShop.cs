@@ -5,7 +5,7 @@ using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutMineShop : UIPopup
+public class UIPopupMineShop : UIPopup
 {
     Button dim;
     GameObject shopPopup;
@@ -59,12 +59,12 @@ public class UILayoutMineShop : UIPopup
     {
         if (fullPrice == 0)
         {
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup("팔 수 있는 아이템이 없습니다.");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("팔 수 있는 아이템이 없습니다.");
         }
         else
         {
             var message = $"총 판매금액은 {fullPrice}골드 입니다. 정말로 파시겠습니까?";
-            Managers.ui.ShowPopup<UILayoutNotice>().SetPopup(message,
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup(message,
                 () => LocalPacketSender.C_SellItem(true, 0, 0));
         }
         

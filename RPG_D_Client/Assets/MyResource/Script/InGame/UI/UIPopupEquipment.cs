@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILayoutEquipment : UIPopup
+public class UIPopupEquipment : UIPopup
 {
     GameObject dim;
     GameObject equipmentPopup;
@@ -33,8 +33,7 @@ public class UILayoutEquipment : UIPopup
     {
         dim = gameObject.Find("Dim");
         equipmentPopup = gameObject.Find("EquipmentPopup");
-
-        closeButton = equipmentPopup.Find<Button>("CloseButton");
+        closeButton = gameObject.Find<Button>("CloseButton");
 
         attackStat = equipmentPopup.Find<TMP_Text>("Stats/Attack/Value");
         hpStat = equipmentPopup.Find<TMP_Text>("Stats/HP/Value");
@@ -88,7 +87,7 @@ public class UILayoutEquipment : UIPopup
         var price = DataTable.GetEquipEnhancePrice(nowLevel);
         var successPer = DataTable.GetEquipEnhanceSuccessPercent(nowLevel);
         var message = $"정말로 강화하시겠습니까?\n강화비용:{price}\n성공확률:{successPer}%";
-        Managers.ui.ShowPopup<UILayoutNotice>().SetPopup(message,
+        Managers.ui.ShowPopup<UIPopupNotice>().SetPopup(message,
             () => LocalPacketSender.C_EnforceEquip(equipType));
     }
 }
