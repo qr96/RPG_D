@@ -99,6 +99,7 @@
     <Compile Include="Assets\MyResource\Script\UILayout.cs" />
     <Compile Include="Assets\MyResource\Script\InputManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutMineHUD.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupBlackSmith.cs" />
     <Compile Include="Assets\MyResource\Script\ObjectManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupInventory.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineShop.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\SPUM\Script\SPUM_TexutreList.cs" />
     <Compile Include="Assets\MyResource\Script\Managers.cs" />
     <Compile Include="Assets\MyResource\Script\Scene\MineGameScene.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMakeResult.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\GuageBar.cs" />
   </ItemGroup>
   <ItemGroup>

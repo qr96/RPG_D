@@ -97,5 +97,10 @@ public class DataTable
         else
             return 20f;
     }
+
+    public static long GetMakeEquipPrice(int anvilLevel)
+    {
+        return (anvilLevel * 1000);
+    }
     #endregion
 }

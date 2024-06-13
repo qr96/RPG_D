@@ -48,4 +48,9 @@ public class LocalPacketSender
     {
         LocalServer.Instance.C_EnforceEquip(equipType);
     }
+
+    public static void C_MakeEquip()
+    {
+        LocalServer.Instance.C_MakeEquip();
+    }
 }

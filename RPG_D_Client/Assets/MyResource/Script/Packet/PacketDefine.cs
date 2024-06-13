@@ -36,6 +36,7 @@ public class UserData
     public long attack;
     public float speed;
     public long money;
+    public int anvilLevel;
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
     public long nowWeight;

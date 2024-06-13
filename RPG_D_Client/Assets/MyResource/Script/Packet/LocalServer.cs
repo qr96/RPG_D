@@ -54,6 +54,7 @@ public class LocalServer : MonoBehaviour
         userData.attack = 10;
         userData.money = 10000000;
         userData.lastMapId = 1001;
+        userData.anvilLevel = 1;
     }
 
     public void C_Login(string nickname)
@@ -261,6 +262,16 @@ public class LocalServer : MonoBehaviour
         }
 
         LocalPacketHandler.S_EnforceEquip(userData, result);
+    }
+
+    public void C_MakeEquip()
+    {
+        var needMoney = DataTable.GetMakeEquipPrice(userData.anvilLevel);
+        if (needMoney >= userData.money)
+        {
+            userData.money -= needMoney;
+
+        }
     }
 
     public void SendInventoryInfo()
