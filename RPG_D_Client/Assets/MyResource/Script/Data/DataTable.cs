@@ -102,5 +102,51 @@ public class DataTable
     {
         return (anvilLevel * 1000);
     }
+
+    public static string GetEquipmentSpritePath(int equipType)
+    {
+        var path = "";
+        var prefix = "Sprites/Weapon/";
+
+        path = equipType.ToString();
+
+        Debug.Log(path);
+
+        return prefix + path;
+    }
+
+    public static string GetEquipmentSpriteName(int equipType)
+    {
+        var name = "-";
+
+        if (equipType == 3001)
+            name = "Èë¼öÀú";
+        else if (equipType == 3002)
+            name = "Àº¼öÀú";
+        else if (equipType == 3003)
+            name = "±İ¼öÀú";
+        else if (equipType == 3004)
+            name = "ÇÃ·¡Æ¼³Ñ ¼öÀú";
+        else if (equipType == 3005)
+            name = "Èë°î±ªÀÌ";
+        else if (equipType == 3006)
+            name = "Àº°î±ªÀÌ";
+        else if (equipType == 3007)
+            name = "±İ°î±ªÀÌ";
+        else if (equipType == 3008)
+            name = "ÇÃ·¡Æ¼³Ñ°î±ªÀÌ";
+
+        return name;
+    }
+
+    public static long GetEquipmentStat(int equipType)
+    {
+        long stat = 0;
+
+        if (equipType == 3001)
+            stat = 10;
+
+        return stat;
+    }
     #endregion
 }

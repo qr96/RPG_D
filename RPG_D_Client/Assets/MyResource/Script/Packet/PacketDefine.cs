@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
-# region Packet
+#region Packet
 public class LodeObject
 {
     public int id;
@@ -24,6 +25,12 @@ public class Item
     public int itemType;
     public long count;
 }
+
+public class Equipment
+{
+    public int type;
+    public int level;
+}
 #endregion
 
 # region InServer
@@ -39,6 +46,8 @@ public class UserData
     public int anvilLevel;
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
+    public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
+
     public long nowWeight;
     public int weaponLevel;
     public int armorLevel;

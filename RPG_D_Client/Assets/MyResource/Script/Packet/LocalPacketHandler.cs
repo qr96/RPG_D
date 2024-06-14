@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,6 +31,7 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
         Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.equipmentDic.Values.ToList());
 
         Managers.obj.myPlayer.speed = userData.speed;
         Managers.obj.myPlayer.SetNameTag(userData.nickName);
@@ -139,6 +141,11 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
         Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.obj.myPlayer.speed = userData.speed;
+    }
+
+    public static void S_EquipmentList(Dictionary<int, Equipment> equipmentList)
+    {
+        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(equipmentList.Values.ToList());
     }
 
     public static void S_InventoryInfo(List<Item> minerals, long money, long maxWeight, long nowWeight)

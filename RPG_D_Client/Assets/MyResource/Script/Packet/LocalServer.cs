@@ -55,6 +55,9 @@ public class LocalServer : MonoBehaviour
         userData.money = 10000000;
         userData.lastMapId = 1001;
         userData.anvilLevel = 1;
+
+        for (int i = 3001; i < 3009; i++)
+            userData.equipmentDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
     }
 
     public void C_Login(string nickname)
@@ -270,8 +273,12 @@ public class LocalServer : MonoBehaviour
         if (needMoney >= userData.money)
         {
             userData.money -= needMoney;
-
         }
+    }
+
+    public void C_EquipmentList()
+    {
+        LocalPacketHandler.S_EquipmentList(userData.equipmentDic);
     }
 
     public void SendInventoryInfo()

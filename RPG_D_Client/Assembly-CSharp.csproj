@@ -74,6 +74,7 @@
     <Compile Include="Assets\MyResource\Script\Util\Util.cs" />
     <Compile Include="Assets\MyResource\Script\DataManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Manager.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupEquipShop.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutNameTag.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
