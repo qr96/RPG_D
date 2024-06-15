@@ -186,12 +186,7 @@ public class LocalServer : MonoBehaviour
         {
             foreach (var item in userData.mineralDic)
             {
-                if (item.Value.itemType == 10001)
-                    sellPrice += item.Value.count * 1000;
-                else if (item.Value.itemType == 10002)
-                    sellPrice += item.Value.count * 1500;
-                else if (item.Value.itemType == 10003)
-                    sellPrice += item.Value.count * 2000;
+                sellPrice += item.Value.count * DataTable.GetItemPrice(item.Value.itemType);
                 item.Value.count = 0;
             }
 
@@ -202,12 +197,7 @@ public class LocalServer : MonoBehaviour
             if (userData.mineralDic.ContainsKey(itemType))
             {
                 var item = userData.mineralDic[itemType];
-                if (item.itemType == 10001)
-                    sellPrice += Math.Min(count, item.count) * 1000;
-                else if (item.itemType == 10002)
-                    sellPrice += Math.Min(count, item.count) * 1500;
-                else if (item.itemType == 10003)
-                    sellPrice += Math.Min(count, item.count) * 2000;
+                sellPrice += Math.Min(count, item.count) * DataTable.GetItemPrice(item.itemType);
                 item.count -= Math.Min(count, item.count);
             }
         }
