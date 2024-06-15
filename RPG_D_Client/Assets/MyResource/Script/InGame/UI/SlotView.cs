@@ -21,7 +21,7 @@ public class SlotView : MonoBehaviour
             Destroy(slot);
     }
 
-    public void SetInventory<T>(List<T> items, Action<T, GameObject> setSlotFunc0, Action onClickSlot)
+    public void SetInventory<T>(List<T> items, Action<T, GameObject> setSlotFunc0)
     {
         var needSlot = items.Count - slotPool.Count;
 
@@ -38,12 +38,6 @@ public class SlotView : MonoBehaviour
         {
             if (setSlotFunc0 != null)
                 setSlotFunc0(items[i], slotPool[i]);
-
-            if (onClickSlot != null)
-            {
-                slotPool[i].GetOrAddComponent<Button>().onClick.RemoveAllListeners();
-                slotPool[i].GetOrAddComponent<Button>().onClick.AddListener(() => onClickSlot());
-            }
         }
     }
 }

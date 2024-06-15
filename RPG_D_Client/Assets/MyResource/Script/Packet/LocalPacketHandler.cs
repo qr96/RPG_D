@@ -32,6 +32,7 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.equipmentDic.Values.ToList());
+        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
 
         Managers.obj.myPlayer.speed = userData.speed;
         Managers.obj.myPlayer.SetNameTag(userData.nickName);

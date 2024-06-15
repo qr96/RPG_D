@@ -139,14 +139,29 @@ public class DataTable
         return name;
     }
 
-    public static long GetEquipmentStat(int equipType)
+    public static long GetEquipmentStat(int equipType, int level)
     {
         long stat = 0;
-
-        if (equipType == 3001)
-            stat = 10;
-
+        stat = GetEquipmentAddedStat(equipType, level) * level;
         return stat;
+    }
+
+    public static long GetEquipmentAddedStat(int equipType, int nowLevel)
+    {
+        long weight = 0;
+        weight = (long)Mathf.Pow(2, equipType - 3001);
+        return weight;
+    }
+
+    public static long GetEquipmentEnhancePrice(int equipType, int level)
+    {
+        long price = 0;
+        
+        price = (long)(Mathf.Pow(3, equipType - 3001) * 1000);
+        if (level == 0)
+            price *= 2;
+
+        return price;
     }
     #endregion
 }

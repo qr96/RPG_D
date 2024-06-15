@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class UIPopupInventory : UIPopup
 {
@@ -54,7 +53,7 @@ public class UIPopupInventory : UIPopup
                     itemImage.sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(item.itemType));
                     slot.SetActive(true);
                 }
-            }, null);
+            });
         
         /*
         var needSlot = minerals.Count - itemSlotPool.Count;

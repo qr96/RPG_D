@@ -267,18 +267,21 @@ public class LocalServer : MonoBehaviour
         LocalPacketHandler.S_EnforceEquip(userData, result);
     }
 
-    public void C_MakeEquip()
+    public void C_BuyEquip(int equipType)
     {
-        var needMoney = DataTable.GetMakeEquipPrice(userData.anvilLevel);
-        if (needMoney >= userData.money)
+        if (userData.equipmentDic.ContainsKey(equipType))
         {
-            userData.money -= needMoney;
-        }
-    }
+            var nowLevel = userData.equipmentDic[equipType].level;
+            var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
+            if (userData.money >= price)
+            {
+                userData.money -= price;
+                userData.attack = DataTable.GetEquipmentAddedStat(equipType, nowLevel);
+                userData.equipmentDic[equipType].level++;
 
-    public void C_EquipmentList()
-    {
-        LocalPacketHandler.S_EquipmentList(userData.equipmentDic);
+                LocalPacketHandler.S_UserInfo(userData);
+            }
+        }
     }
 
     public void SendInventoryInfo()

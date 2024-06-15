@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,7 +51,7 @@ public class UIPopupMineShop : UIPopup
                     itemImage.sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(item.itemType));
                     slot.SetActive(true);
                 }
-            }, null);
+            });
     }
 
     void OnClickSellAll()
