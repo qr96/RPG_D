@@ -56,8 +56,11 @@ public class MyPlayer : MonoBehaviour
     public void SetNameTag(string name)
     {
         if (nameTag != null)
-            Managers.ui.GetLayout<UILayoutNameTag>().RemoveNameTag(nameTag);
-
-        nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(transform, name);
+        {
+            Managers.ui.GetLayout<UILayoutNameTag>().RemoveNameTag(gameObject);
+            nameTag = null;
+        }
+        
+        nameTag = Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(gameObject, name);
     }
 }

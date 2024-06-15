@@ -34,7 +34,7 @@ public class MovePortal : MonoBehaviour
     {
         if (nameTag != null)
         {
-            Managers.ui.GetLayout<UILayoutNameTag>().RemoveNameTag(transform);
+            Managers.ui.GetLayout<UILayoutNameTag>().RemoveNameTag(gameObject);
             nameTag = null;
         }
     }
