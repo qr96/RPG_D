@@ -276,7 +276,7 @@ public class LocalServer : MonoBehaviour
             if (userData.money >= price)
             {
                 userData.money -= price;
-                userData.attack = DataTable.GetEquipmentAddedStat(equipType, nowLevel);
+                userData.attack += DataTable.GetEquipmentAddedStat(equipType, nowLevel);
                 userData.equipmentDic[equipType].level++;
 
                 LocalPacketHandler.S_UserInfo(userData);
