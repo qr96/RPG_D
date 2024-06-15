@@ -98,15 +98,15 @@ public class DataTable
             return 20f;
     }
 
-    public static long GetMakeEquipPrice(int anvilLevel)
-    {
-        return (anvilLevel * 1000);
-    }
-
     public static string GetEquipmentSpritePath(int equipType)
     {
         var path = "";
-        var prefix = "Sprites/Weapon/";
+        var prefix = "Sprites/";
+
+        if (equipType >= 3001 && equipType <= 3999)
+            prefix += "Weapon/";
+        else if (equipType >= 4001 && equipType <= 4999)
+            prefix += "Shirt/";
 
         path = equipType.ToString();
 
@@ -135,6 +135,14 @@ public class DataTable
             name = "±Ý°î±ªÀÌ";
         else if (equipType == 3008)
             name = "ÇÃ·¡Æ¼³Ñ°î±ªÀÌ";
+        else if (equipType == 4001)
+            name = "ºñ´ÒºÀÁö¿Ê";
+        else if (equipType == 4002)
+            name = "½Å¹®Áö¿Ê";
+        else if (equipType == 4003)
+            name = "Çã¸§ÇÑ ¸Þ¸®¾ß½º";
+        else if (equipType == 4004)
+            name = "¸Þ¸®¾ß½º";
 
         return name;
     }
@@ -156,11 +164,7 @@ public class DataTable
     public static long GetEquipmentEnhancePrice(int equipType, int level)
     {
         long price = 0;
-        
         price = (long)(Mathf.Pow(3, equipType - 3001) * 1000);
-        if (level == 0)
-            price *= 2;
-
         return price;
     }
     #endregion

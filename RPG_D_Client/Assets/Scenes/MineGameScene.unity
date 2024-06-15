@@ -30503,7 +30503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC815\uD654\uD1B5"
+  m_text: "\uC637"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98ad297d881bb964d857489313a4979c, type: 2}
   m_sharedMaterial: {fileID: 7668709645966836536, guid: 98ad297d881bb964d857489313a4979c, type: 2}
@@ -32694,9 +32694,9 @@ RectTransform:
   - {fileID: 152333916}
   m_Father: {fileID: 722732062}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 281.5, y: -70}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 563, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &370626977
@@ -33624,7 +33624,7 @@ RectTransform:
   m_Father: {fileID: 379317234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -37571,7 +37571,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.0000276574}
-  m_SizeDelta: {x: 0, y: 140}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &722732063
 MonoBehaviour:
@@ -92512,6 +92512,7 @@ RectTransform:
   m_Children:
   - {fileID: 326829380}
   - {fileID: 589565354}
+  - {fileID: 1932426402}
   m_Father: {fileID: 1061169454}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -93480,7 +93481,6 @@ RectTransform:
   - {fileID: 44813443}
   - {fileID: 1214500122}
   - {fileID: 2076438078}
-  - {fileID: 1932426402}
   - {fileID: 1017975161}
   - {fileID: 1942199759}
   - {fileID: 144386368}
@@ -95591,7 +95591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1232584982
 RectTransform:
   m_ObjectHideFlags: 0
@@ -97218,7 +97218,7 @@ GameObject:
   - component: {fileID: 1310127655}
   - component: {fileID: 1310127654}
   m_Layer: 5
-  m_Name: Cloth
+  m_Name: Shirt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104799,7 +104799,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932426401}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -104807,7 +104807,7 @@ RectTransform:
   - {fileID: 1475197539}
   - {fileID: 2083782819}
   - {fileID: 1328557027}
-  m_Father: {fileID: 1061169454}
+  m_Father: {fileID: 1006423130}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

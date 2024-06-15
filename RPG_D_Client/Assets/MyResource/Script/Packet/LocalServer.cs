@@ -57,7 +57,12 @@ public class LocalServer : MonoBehaviour
         userData.anvilLevel = 1;
 
         for (int i = 3001; i < 3009; i++)
-            userData.equipmentDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
+            userData.weaponDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
+
+        for (int i = 4001; i < 4005; i++)
+            userData.shirtDic.Add(i, new Equipment() { type = i, level = i == 4001 ? 1 : 0 });
+
+
     }
 
     public void C_Login(string nickname)
@@ -259,15 +264,15 @@ public class LocalServer : MonoBehaviour
 
     public void C_BuyEquip(int equipType)
     {
-        if (userData.equipmentDic.ContainsKey(equipType))
+        if (userData.weaponDic.ContainsKey(equipType))
         {
-            var nowLevel = userData.equipmentDic[equipType].level;
+            var nowLevel = userData.weaponDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
             if (userData.money >= price)
             {
                 userData.money -= price;
                 userData.attack += DataTable.GetEquipmentAddedStat(equipType, nowLevel);
-                userData.equipmentDic[equipType].level++;
+                userData.weaponDic[equipType].level++;
 
                 LocalPacketHandler.S_UserInfo(userData);
             }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +17,11 @@ public class UIPopupEquipShop : UIPopup
     TMP_Text moneyText;
     TMP_Text needMoneyText;
     TMP_Text addStatText;
+
+    Button weaponTabButton;
+    Button shirtTabButton;
+    Button bagTabButton;
+    Button shoeTabButton;
 
     Button buyButton;
 
@@ -45,6 +52,15 @@ public class UIPopupEquipShop : UIPopup
         moneyText = shopPopup.Find<TMP_Text>("Info/Money");
         needMoneyText = shopPopup.Find<TMP_Text>("Info/NeedMoney");
         addStatText = shopPopup.Find<TMP_Text>("Info/AddStat");
+
+        weaponTabButton = shopPopup.Find<Button>("Navigation/Weapon");
+        shirtTabButton = shopPopup.Find<Button>("Navigation/Shirt");
+        bagTabButton = shopPopup.Find<Button>("Navigation/Bag");
+        shoeTabButton = shopPopup.Find<Button>("Navigation/Shoes");
+        weaponTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().weaponDic.Values.ToList()));
+        shirtTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().shirtDic.Values.ToList()));
+        bagTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().bagDic.Values.ToList()));
+        shoeTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().shoeDic.Values.ToList()));
 
         buyButton = gameObject.Find<Button>("BuyButton");
         buyButton.onClick.AddListener(() => OnClickBuyEquip());

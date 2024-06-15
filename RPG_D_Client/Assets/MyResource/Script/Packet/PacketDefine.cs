@@ -33,7 +33,7 @@ public class Equipment
 }
 #endregion
 
-# region InServer
+# region Common
 public class UserData
 {
     public int userId;
@@ -46,7 +46,10 @@ public class UserData
     public int anvilLevel;
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
-    public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
+    public Dictionary<int, Equipment> weaponDic = new Dictionary<int, Equipment>();
+    public Dictionary<int, Equipment> shirtDic = new Dictionary<int, Equipment>();
+    public Dictionary<int, Equipment> bagDic = new Dictionary<int, Equipment>();
+    public Dictionary<int, Equipment> shoeDic = new Dictionary<int, Equipment>();
 
     public long nowWeight;
     public int weaponLevel;
@@ -55,7 +58,24 @@ public class UserData
 
     public int lastMapId;
 }
+public class Stat
+{
+    public long attack;
+    public long maxHp;
+    public long maxWeight;
+    public float speed;
 
+    public void AddStat(Stat stat)
+    {
+        attack += stat.attack;
+        maxHp += stat.maxHp;
+        maxWeight += stat.maxWeight;
+        speed += stat.speed;
+    }
+}
+#endregion
+
+# region InServer
 public class UserGameInfo
 {
     public int id;
