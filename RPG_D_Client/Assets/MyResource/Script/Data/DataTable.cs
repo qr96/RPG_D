@@ -93,6 +93,10 @@ public class DataTable
             prefix += "Weapon/";
         else if (equipType >= 4001 && equipType <= 4999)
             prefix += "Shirt/";
+        else if (equipType >= 5001 && equipType <= 5999)
+            prefix += "Bag/";
+        else if (equipType >= 6001 && equipType <= 6999)
+            prefix += "Shoes/";
 
         path = equipType.ToString();
 
@@ -127,15 +131,19 @@ public class DataTable
             name = "허름한 메리야스";
         else if (equipType == 4004)
             name = "메리야스";
-
+        else if (equipType == 5001)
+            name = "비닐봉투";
+        else if (equipType == 5002)
+            name = "신문지보따리";
+        else if (equipType == 5003)
+            name = "대형마트 쇼핑백";
+        else if (equipType == 5004)
+            name = "초등학생 책가방";
+        else if (equipType == 5005)
+            name = "메이커 가방";
+        else if (equipType == 5006)
+            name = "원가 8만원 명품백";
         return name;
-    }
-
-    public static long GetEquipmentAddedStat(int equipType, int nowLevel)
-    {
-        long weight = 0;
-        weight = (long)Mathf.Pow(2, equipType - 3001);
-        return weight;
     }
 
     public static Stat GetEquipmentStat(int equipType, int level)
@@ -153,13 +161,11 @@ public class DataTable
         Stat stat = new Stat();
 
         if (equipType >= 3001 && equipType <= 3999)
-        {
             stat.attack += (long)Mathf.Pow(2, equipType - 3001);
-        }
         else if (equipType >= 4001 && equipType <= 4999)
-        {
             stat.maxHp += (long)Mathf.Pow(2, equipType - 4001) * 10;
-        }
+        else if (equipType >= 5001 && equipType <= 5999)
+            stat.maxWeight += (long)Mathf.Pow(2, equipType - 5001) * 5;
 
         return stat;
     }
@@ -167,10 +173,14 @@ public class DataTable
     public static long GetEquipmentEnhancePrice(int equipType, int level)
     {
         long price = 0;
+
         if (equipType >= 3001 && equipType <= 3999)
             price = (long)(Mathf.Pow(3, equipType - 3001) * 1000);
         else if (equipType >= 4001 && equipType <= 4999)
             price = (long)(Mathf.Pow(3, equipType - 4001) * 1000);
+        else if (equipType >= 5001 && equipType <= 5999)
+            price = (long)(Mathf.Pow(3, equipType - 5001) * 1000);
+
         return price;
     }
     #endregion

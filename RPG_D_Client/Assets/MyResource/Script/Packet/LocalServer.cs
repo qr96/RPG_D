@@ -57,6 +57,9 @@ public class LocalServer : MonoBehaviour
 
         for (int i = 4001; i < 4005; i++)
             userData.shirtDic.Add(i, new Equipment() { type = i, level = i == 4001 ? 1 : 0 });
+
+        for (int i = 5001; i < 5007; i++)
+            userData.bagDic.Add(i, new Equipment() { type = i, level = i == 5001 ? 1 : 0 });
     }
 
     public void C_Login(string nickname)
@@ -231,6 +234,34 @@ public class LocalServer : MonoBehaviour
                 userData.money -= price;
                 userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
                 userData.shirtDic[equipType].level++;
+
+                LocalPacketHandler.S_UserInfo(userData);
+            }
+        }
+        else if (userData.bagDic.ContainsKey(equipType))
+        {
+            var nowLevel = userData.bagDic[equipType].level;
+            var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
+
+            if (userData.money >= price)
+            {
+                userData.money -= price;
+                userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
+                userData.bagDic[equipType].level++;
+
+                LocalPacketHandler.S_UserInfo(userData);
+            }
+        }
+        else if (userData.shoeDic.ContainsKey(equipType))
+        {
+            var nowLevel = userData.shoeDic[equipType].level;
+            var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
+
+            if (userData.money >= price)
+            {
+                userData.money -= price;
+                userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
+                userData.shoeDic[equipType].level++;
 
                 LocalPacketHandler.S_UserInfo(userData);
             }
