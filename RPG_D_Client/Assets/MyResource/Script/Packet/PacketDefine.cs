@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
 #region Packet
 
@@ -54,6 +53,7 @@ public class UserData
     public Dictionary<int, Equipment> shoeDic = new Dictionary<int, Equipment>();
 }
 
+[Serializable]
 public class Stat
 {
     public long attack;

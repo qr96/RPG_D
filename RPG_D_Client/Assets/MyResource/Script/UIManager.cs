@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
             if (popup is T)
             {
                 // Prevent duplicate input callback removal
-                if (popup.isActiveAndEnabled)
+                if (popup != null && popup.isActiveAndEnabled)
                     popup.Hide();
                 return;
             }

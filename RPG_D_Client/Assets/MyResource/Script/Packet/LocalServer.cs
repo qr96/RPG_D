@@ -1,7 +1,8 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class LocalServer : MonoBehaviour
@@ -44,10 +45,13 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(16, new LodeObject() { id = 16, lodeType = 10001, position = new Vector2(37f, -104f) });
         lodeObjectDic.Add(17, new LodeObject() { id = 17, lodeType = 10001, position = new Vector2(31f, -107f) });
         lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10001, position = new Vector2(20f, -110f) });
-        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });
+        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });   
+    }
 
-        userData.nickName = "테스트플레이어";
-        userData.money = 10000000;
+    void MakeUserData(string nickname)
+    {
+        userData.nickName = nickname;
+        userData.money = 10000;
         userData.lastMapId = 1001;
         userData.normalStat = new Stat() { attack = 10, maxHp = 100, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
@@ -65,9 +69,34 @@ public class LocalServer : MonoBehaviour
             userData.shoeDic.Add(i, new Equipment() { type = i, level = i == 6001 ? 1 : 0 });
     }
 
+    void SaveData()
+    {
+        var directoryPath = $"{Application.persistentDataPath}/{userData.nickName}/";
+        Directory.CreateDirectory(directoryPath);
+
+        var filePath = $"{directoryPath}/userData";
+        var userDataJson = JsonConvert.SerializeObject(userData);
+        File.WriteAllText(filePath, userDataJson);
+    }
+
+    void LoadData(string nickname)
+    {
+        var filePath = $"{Application.persistentDataPath}/{nickname}/userData";
+        if (File.Exists(filePath))
+        {
+            var fileData = File.ReadAllText(filePath);
+            userData = JsonConvert.DeserializeObject<UserData>(fileData);
+        }
+        else
+        {
+            MakeUserData(nickname);
+            SaveData();
+        }
+    }
+
     public void C_Login(string nickname)
     {
-        userData.nickName = nickname;
+        LoadData(nickname);
         LocalPacketHandler.S_Login(true);
     }
 
@@ -181,6 +210,7 @@ public class LocalServer : MonoBehaviour
 
         LocalPacketHandler.S_MineGameResult(gameSuccess, acquiredItem.Values.ToList());
         SendInventoryInfo();
+        SaveData();
     }
 
     public void C_SellItem(bool sellAll, int itemType, long count)
@@ -209,6 +239,7 @@ public class LocalServer : MonoBehaviour
 
         userData.money += sellPrice;
         SendInventoryInfo();
+        SaveData();
     }
 
     public void C_BuyEquip(int equipType)
@@ -269,6 +300,8 @@ public class LocalServer : MonoBehaviour
                 LocalPacketHandler.S_UserInfo(userData);
             }
         }
+
+        SaveData();
     }
 
     public void SendInventoryInfo()
