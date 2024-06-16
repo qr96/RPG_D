@@ -46,23 +46,17 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10001, position = new Vector2(20f, -110f) });
         lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });
 
-        userData.speed = 200f;
-        userData.maxHp = 100;
         userData.nickName = "테스트플레이어";
-        userData.maxWeight = 100;
-        userData.maxHp = 100;
-        userData.attack = 10;
         userData.money = 10000000;
         userData.lastMapId = 1001;
-        userData.anvilLevel = 1;
+        userData.normalStat = new Stat() { attack = 10, maxHp = 100, maxWeight = 100, speed = 200f };
+        userData.equipStat = new Stat();
 
         for (int i = 3001; i < 3009; i++)
             userData.weaponDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
 
         for (int i = 4001; i < 4005; i++)
             userData.shirtDic.Add(i, new Equipment() { type = i, level = i == 4001 ? 1 : 0 });
-
-
     }
 
     public void C_Login(string nickname)
@@ -79,26 +73,26 @@ public class LocalServer : MonoBehaviour
 
     public void C_MoveMap(int mapId)
     {
-        userGameInfo.speed = userData.speed;
-        userGameInfo.maxHp = userData.maxHp;
-        userGameInfo.nowHp = userData.maxHp;
-        userGameInfo.maxWeight = userData.maxWeight;
-        userGameInfo.attack = userData.attack;
-
         if (mapId == 1001)
-            LocalPacketHandler.S_MoveMap(true, mapId, new List<LodeObject>(), userGameInfo, false);
+        {
+            LocalPacketHandler.S_MoveMapTown(mapId);
+            LocalPacketHandler.S_UserInfo(userData);
+        }
         else if (mapId == 1002)
-            LocalPacketHandler.S_MoveMap(true, mapId, lodeObjectDic.Values.ToList(), userGameInfo, true);
+            LocalPacketHandler.S_MoveMapMineGame(mapId, lodeObjectDic.Values.ToList());
     }
 
     public void C_GameStart()
     {
-        userGameInfo.gameStartTime = DateTime.Now;
-        userGameInfo.maxHp = userData.maxHp;
-        userGameInfo.nowWeight = userData.nowWeight;
-        userGameInfo.maxWeight = userData.maxWeight;
+        userGameInfo.gameStat = new Stat();
+        userGameInfo.gameStat.AddStat(userData.normalStat);
+        userGameInfo.gameStat.AddStat(userData.equipStat);
 
-        LocalPacketHandler.S_GameStart(true, hpReducePerSec);
+        userGameInfo.gameStartTime = DateTime.Now;
+        userGameInfo.nowWeight = userData.nowWeight;
+        userGameInfo.nowHp = userData.normalStat.maxHp + userData.equipStat.maxHp;
+
+        LocalPacketHandler.S_GameStart(hpReducePerSec);
     }
 
     public void C_LodeAttackStart(int lodeId)
@@ -122,11 +116,11 @@ public class LocalServer : MonoBehaviour
 
         var damage = 0L;
         if (attackLevel == 0)
-            damage = userData.attack * 12 / 10;
+            damage = userGameInfo.gameStat.attack * 12 / 10;
         else if (attackLevel == 1)
-            damage = userData.attack;
+            damage = userGameInfo.gameStat.attack;
         else if (attackLevel == 2)
-            damage = userData.attack * 8 / 10;
+            damage = userGameInfo.gameStat.attack * 8 / 10;
 
             lodeHp -= damage;
         if (lodeHp < 0)
@@ -139,7 +133,7 @@ public class LocalServer : MonoBehaviour
             var nowMinerals = new List<Item>();
 
             // can get more items
-            if (userGameInfo.nowWeight < userGameInfo.maxWeight)
+            if (userGameInfo.nowWeight < userGameInfo.gameStat.maxWeight)
             {
                 nowMinerals.Add(new Item() { itemType = 10001, count = 3 });
                 nowMinerals.Add(new Item() { itemType = 10002, count = 4 });
@@ -156,14 +150,14 @@ public class LocalServer : MonoBehaviour
 
             userGameInfo.nowWeight = DataTable.GetMineralWeight(acquiredItem.Values.ToList());
 
-            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userData.maxWeight, userGameInfo.nowWeight);
+            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userGameInfo.gameStat.maxWeight, userGameInfo.nowWeight);
         }
     }
 
     public void C_MineGameResult()
     {
         bool gameSuccess = false;
-        gameSuccess = (DateTime.Now - userGameInfo.gameStartTime).TotalSeconds * hpReducePerSec < userData.maxHp;
+        gameSuccess = (DateTime.Now - userGameInfo.gameStartTime).TotalSeconds * hpReducePerSec < userGameInfo.gameStat.maxWeight;
 
         if (gameSuccess)
         {
@@ -176,7 +170,7 @@ public class LocalServer : MonoBehaviour
                     userData.mineralDic[acquired.Key] = acquired.Value;
             }
 
-            userData.nowWeight += userGameInfo.nowWeight;
+            userData.nowWeight = userGameInfo.nowWeight;
         }
 
         LocalPacketHandler.S_MineGameResult(gameSuccess, acquiredItem.Values.ToList());
@@ -220,7 +214,7 @@ public class LocalServer : MonoBehaviour
             if (userData.money >= price)
             {
                 userData.money -= price;
-                userData.attack += DataTable.GetEquipmentAddedStat(equipType, nowLevel);
+                userData.equipStat.attack += DataTable.GetEquipmentAddedStat(equipType, nowLevel);
                 userData.weaponDic[equipType].level++;
 
                 LocalPacketHandler.S_UserInfo(userData);
@@ -230,6 +224,6 @@ public class LocalServer : MonoBehaviour
 
     public void SendInventoryInfo()
     {
-        LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money, userData.maxWeight, userData.nowWeight);
+        LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money, userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
     }
 }

@@ -39,26 +39,21 @@ public class UserData
 {
     public int userId;
     public string nickName;
-    public long maxWeight;
-    public long maxHp;
-    public long attack;
-    public float speed;
+
     public long money;
-    public int anvilLevel;
+    public long nowWeight;
+    public int lastMapId;
+
+    public Stat normalStat;
+    public Stat equipStat;
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
     public Dictionary<int, Equipment> weaponDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> shirtDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> bagDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> shoeDic = new Dictionary<int, Equipment>();
-
-    public long nowWeight;
-    public int weaponLevel;
-    public int armorLevel;
-    public int shoesLevel;
-
-    public int lastMapId;
 }
+
 public class Stat
 {
     public long attack;
@@ -80,12 +75,10 @@ public class Stat
 public class UserGameInfo
 {
     public int id;
-    public long maxWeight;
     public long nowWeight;
-    public long maxHp;
     public long nowHp;
-    public long attack;
     public float speed;
+    public Stat gameStat;
 
     public DateTime gameStartTime;
     public List<Item> mineralList = new List<Item>();

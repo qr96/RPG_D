@@ -23,25 +23,26 @@ public class LocalPacketHandler
     public static void S_UserInfo(UserData userData)
     {
         Managers.data.SetMyUserData(userData);
-        Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.maxHp, userData.maxHp);
-        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.maxWeight, userData.nowWeight);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.normalStat.maxHp + userData.equipStat.maxHp, userData.normalStat.maxHp + userData.equipStat.maxHp);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.weaponDic.Values.ToList());
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
 
-        Managers.obj.myPlayer.speed = userData.speed;
+        Managers.obj.myPlayer.speed = userData.normalStat.speed + userData.equipStat.speed;
         Managers.obj.myPlayer.SetNameTag(userData.nickName);
     }
-        
-    public static void S_MoveMap(bool moveSuccess, int mapId, List<LodeObject> lodeInfoList, UserGameInfo userInfo, bool showStartGame)
-    {
-        if (!moveSuccess)
-        {
-            // TODO
-            // Move Room failed procedure;
-            return;
-        }
 
+    public static void S_MoveMapTown(int mapId)
+    {
+        Managers.obj.DestroyAllLode();
+        Managers.map.SetMap(mapId);
+        Managers.ui.GetLayout<UILayoutMiniMap>().SetMiniMap(mapId);
+        Managers.obj.myPlayer.SetPlayerMoveLock(false);
+    }
+
+    public static void S_MoveMapMineGame(int mapId, List<LodeObject> lodeInfoList)
+    {
         Managers.obj.DestroyAllLode();
         Managers.map.SetMap(mapId);
         Managers.ui.GetLayout<UILayoutMiniMap>().SetMiniMap(mapId);
@@ -54,29 +55,15 @@ public class LocalPacketHandler
             lode.gameObject.SetActive(true);
         }
 
-        Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userInfo.maxHp, userInfo.maxHp);
-        if (showStartGame)
-        {
-            Managers.ui.ShowPopup<UIPopupStartGame>();
-            Managers.obj.myPlayer.SetPlayerMoveLock(true);
-        }
-        else
-            Managers.obj.myPlayer.SetPlayerMoveLock(false);
+        Managers.ui.ShowPopup<UIPopupStartGame>();
+        Managers.obj.myPlayer.SetPlayerMoveLock(true);
     }
 
-    public static void S_GameStart(bool success, long hpReducePerSec)
+    public static void S_GameStart(long hpReducePerSec)
     {
-        if (success)
-        {
-            Managers.ui.GetLayout<UILayoutMineHUD>().StartReduceHP(hpReducePerSec, () => LocalPacketSender.C_MineGameResult());
-            Managers.ui.HidePopup<UIPopupStartGame>();
-            Managers.obj.myPlayer.SetPlayerMoveLock(false);
-        }
-        else
-        {
-            // TODO
-            // Start game failed
-        }
+        Managers.ui.GetLayout<UILayoutMineHUD>().StartReduceHP(hpReducePerSec, () => LocalPacketSender.C_MineGameResult());
+        Managers.ui.HidePopup<UIPopupStartGame>();
+        Managers.obj.myPlayer.SetPlayerMoveLock(false);
     }
 
     public static void S_LodeAttackStart(int lodeId, long lodeMaxHp)
