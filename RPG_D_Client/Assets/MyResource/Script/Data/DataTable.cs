@@ -143,6 +143,18 @@ public class DataTable
             name = "메이커 가방";
         else if (equipType == 5006)
             name = "원가 8만원 명품백";
+
+        else if (equipType == 6001)
+            name = "비닐봉지 신발";
+        else if (equipType == 6002)
+            name = "헤진 신발";
+        else if (equipType == 6003)
+            name = "중고 독일군 스니커즈";
+        else if (equipType == 6004)
+            name = "검은 캔버스화";
+        else if (equipType == 6005)
+            name = "메이커 신발";
+
         return name;
     }
 
@@ -166,6 +178,8 @@ public class DataTable
             stat.maxHp += (long)Mathf.Pow(2, equipType - 4001) * 10;
         else if (equipType >= 5001 && equipType <= 5999)
             stat.maxWeight += (long)Mathf.Pow(2, equipType - 5001) * 5;
+        else if (equipType >= 6001 && equipType <= 6999)
+            stat.speed += equipType - 6000;
 
         return stat;
     }
@@ -180,7 +194,8 @@ public class DataTable
             price = (long)(Mathf.Pow(3, equipType - 4001) * 1000);
         else if (equipType >= 5001 && equipType <= 5999)
             price = (long)(Mathf.Pow(3, equipType - 5001) * 1000);
-
+        else if (equipType >= 6001 && equipType <= 6999)
+            price = (long)(Mathf.Pow(10, equipType - 6001) * 1000);
         return price;
     }
     #endregion

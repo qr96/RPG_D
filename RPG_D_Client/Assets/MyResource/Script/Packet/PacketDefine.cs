@@ -80,7 +80,7 @@ public class Stat
         if (maxHp > 0)
             info += $"{(info.Length > 0 ? newLine : nothing)}HP +{maxHp}";
         if (maxWeight > 0)
-            info += $"{(info.Length > 0 ? newLine : nothing)}WEIGHT +{maxWeight}";
+            info += $"{(info.Length > 0 ? newLine : nothing)}WGHT +{maxWeight}";
         if (speed > 0)
             info += $"{(info.Length > 0 ? newLine : nothing)}SPEED +{speed}";
 

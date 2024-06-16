@@ -60,6 +60,9 @@ public class LocalServer : MonoBehaviour
 
         for (int i = 5001; i < 5007; i++)
             userData.bagDic.Add(i, new Equipment() { type = i, level = i == 5001 ? 1 : 0 });
+
+        for (int i = 6001; i < 6006; i++)
+            userData.shoeDic.Add(i, new Equipment() { type = i, level = i == 6001 ? 1 : 0 });
     }
 
     public void C_Login(string nickname)
