@@ -30,18 +30,31 @@ public class MapManager : MonoBehaviour
                 Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
 
-            var shop = mapList[0].Find<MovePortal>("Shop");
-            shop.SetTriggerEnterEvent(() =>
+            var mineralShop = mapList[0].Find<MovePortal>("MineralShop");
+            mineralShop.SetTriggerEnterEvent(() =>
             {
                 Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("상점이용",
                     () => Managers.ui.ShowPopup<UIPopupMineShop>());
                 Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
-            shop.SetTriggerExitEvent(() =>
+            mineralShop.SetTriggerExitEvent(() =>
             {
                 Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
-            shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.gameObject, "광물상인"));
+            mineralShop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(mineralShop.gameObject, "광물상인"));
+
+            var equipShop = mapList[0].Find<MovePortal>("EquipShop");
+            equipShop.SetTriggerEnterEvent(() =>
+            {
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("상점이용",
+                    () => Managers.ui.ShowPopup<UIPopupEquipShop>());
+                Managers.ui.ShowPopup<UIPopupTriggerButton>();
+            });
+            equipShop.SetTriggerExitEvent(() =>
+            {
+                Managers.ui.HidePopup<UIPopupTriggerButton>();
+            });
+            equipShop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(equipShop.gameObject, "대장장이"));
         }
         else if (mapId == 1002)
         {

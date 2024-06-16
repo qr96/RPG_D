@@ -12,8 +12,6 @@ public class UILayoutMineHUD : UILayout
     public GameObject ItemNotiBox;
     public TMP_Text itemNotiPrefab;
     public Button inventoryButton;
-    
-    Button equipmentButton;
 
     GameObject bagIndicator;
     TMP_Text bagIndicatorTmp;
@@ -31,16 +29,12 @@ public class UILayoutMineHUD : UILayout
 
     private void Awake()
     {
-        equipmentButton = gameObject.Find<Button>("EquipButton");
-
         bagIndicator = gameObject.Find("BagIndicator");
         bagIndicatorTmp = bagIndicator.Find<TMP_Text>("Text");
         depthIndicator = gameObject.Find("DepthIndicator");
         depthIndicatorTmp = depthIndicator.Find<TMP_Text>("Text");
 
         inventoryButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupInventory>());
-        //equipmentButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupEquipment>());
-        equipmentButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupEquipShop>());
     }
 
     private void Start()
