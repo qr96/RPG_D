@@ -68,6 +68,24 @@ public class Stat
         maxWeight += stat.maxWeight;
         speed += stat.speed;
     }
+
+    public string ToStringInfo()
+    {
+        var info = "";
+        var newLine = "\n";
+        var nothing = "";
+
+        if (attack > 0)
+            info += $"ATK +{attack}";
+        if (maxHp > 0)
+            info += $"{(info.Length > 0 ? newLine : nothing)}HP +{maxHp}";
+        if (maxWeight > 0)
+            info += $"{(info.Length > 0 ? newLine : nothing)}WEIGHT +{maxWeight}";
+        if (speed > 0)
+            info += $"{(info.Length > 0 ? newLine : nothing)}SPEED +{speed}";
+
+        return info;
+    }
 }
 #endregion
 

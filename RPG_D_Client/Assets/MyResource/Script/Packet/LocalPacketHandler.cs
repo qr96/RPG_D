@@ -26,7 +26,7 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.normalStat.maxHp + userData.equipStat.maxHp, userData.normalStat.maxHp + userData.equipStat.maxHp);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
-        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.weaponDic.Values.ToList());
+        Managers.ui.GetPopup<UIPopupEquipShop>().UpdatePopup();
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
 
         Managers.obj.myPlayer.speed = userData.normalStat.speed + userData.equipStat.speed;
@@ -100,11 +100,6 @@ public class LocalPacketHandler
         Managers.obj.myPlayer.SetPlayerMoveLock(true);
         Managers.ui.GetLayout<UILayoutMineHUD>().StopReduceHp();
         Managers.ui.ShowPopup<UIPopupGameResult>().SetResultPopup(success, minerals);
-    }
-
-    public static void S_EquipmentList(Dictionary<int, Equipment> equipmentList)
-    {
-        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(equipmentList.Values.ToList());
     }
 
     public static void S_InventoryInfo(List<Item> minerals, long money, long maxWeight, long nowWeight)

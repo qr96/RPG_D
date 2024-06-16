@@ -90,7 +90,7 @@ public class LocalServer : MonoBehaviour
 
         userGameInfo.gameStartTime = DateTime.Now;
         userGameInfo.nowWeight = userData.nowWeight;
-        userGameInfo.nowHp = userData.normalStat.maxHp + userData.equipStat.maxHp;
+        userGameInfo.nowHp = userGameInfo.gameStat.maxHp;
 
         LocalPacketHandler.S_GameStart(hpReducePerSec);
     }
@@ -211,11 +211,26 @@ public class LocalServer : MonoBehaviour
         {
             var nowLevel = userData.weaponDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
+
             if (userData.money >= price)
             {
                 userData.money -= price;
-                userData.equipStat.attack += DataTable.GetEquipmentAddedStat(equipType, nowLevel);
+                userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
                 userData.weaponDic[equipType].level++;
+
+                LocalPacketHandler.S_UserInfo(userData);
+            }
+        }
+        else if (userData.shirtDic.ContainsKey(equipType))
+        {
+            var nowLevel = userData.shirtDic[equipType].level;
+            var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
+
+            if (userData.money >= price)
+            {
+                userData.money -= price;
+                userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
+                userData.shirtDic[equipType].level++;
 
                 LocalPacketHandler.S_UserInfo(userData);
             }

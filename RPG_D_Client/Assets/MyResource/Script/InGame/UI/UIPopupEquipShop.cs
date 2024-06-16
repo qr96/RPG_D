@@ -26,6 +26,8 @@ public class UIPopupEquipShop : UIPopup
     Button buyButton;
 
     public int selectedEquipType;
+    public int currentTab;
+    Toggle firstToggle;
 
     public override void InputEvent()
     {
@@ -57,10 +59,26 @@ public class UIPopupEquipShop : UIPopup
         shirtTabButton = shopPopup.Find<Button>("Navigation/Shirt");
         bagTabButton = shopPopup.Find<Button>("Navigation/Bag");
         shoeTabButton = shopPopup.Find<Button>("Navigation/Shoes");
-        weaponTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().weaponDic.Values.ToList()));
-        shirtTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().shirtDic.Values.ToList()));
-        bagTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().bagDic.Values.ToList()));
-        shoeTabButton.onClick.AddListener(() => SetPopup(Managers.data.GetMyUserData().shoeDic.Values.ToList()));
+        weaponTabButton.onClick.AddListener(() =>
+        {
+            currentTab = 0;
+            UpdatePopup();
+        });
+        shirtTabButton.onClick.AddListener(() =>
+        {
+            currentTab = 1;
+            UpdatePopup();
+        });
+        bagTabButton.onClick.AddListener(() =>
+        {
+            currentTab = 2;
+            UpdatePopup();
+        });
+        shoeTabButton.onClick.AddListener(() =>
+        {
+            currentTab = 3;
+            UpdatePopup();
+        });
 
         buyButton = gameObject.Find<Button>("BuyButton");
         buyButton.onClick.AddListener(() => OnClickBuyEquip());
@@ -71,8 +89,21 @@ public class UIPopupEquipShop : UIPopup
         moneyText.text = $"∫∏¿Ø ∞ÒµÂ : {RDUtil.MoneyComma(money)}";
     }
 
-    public void SetPopup(List<Equipment> equipList)
+    public void UpdatePopup()
     {
+        if (currentTab == 0)
+            SetPopup(Managers.data.GetMyUserData().weaponDic.Values.ToList());
+        if (currentTab == 1)
+            SetPopup(Managers.data.GetMyUserData().shirtDic.Values.ToList());
+        if (currentTab == 2)
+            SetPopup(Managers.data.GetMyUserData().bagDic.Values.ToList());
+        if (currentTab == 3)
+            SetPopup(Managers.data.GetMyUserData().shoeDic.Values.ToList());
+    }
+
+    void SetPopup(List<Equipment> equipList)
+    {
+        firstToggle = null;
         slotView.SetInventory(equipList,
             (item, slot) =>
             {
@@ -86,7 +117,7 @@ public class UIPopupEquipShop : UIPopup
                 itemNameText.text = DataTable.GetEquipmentSpriteName(item.type);
 
                 var itemInfoText = slot.Find<TMP_Text>("Info");
-                itemInfoText.text = $"ATK+{DataTable.GetEquipmentStat(item.type, item.level)}";
+                itemInfoText.text = DataTable.GetEquipmentStat(item.type, item.level).ToStringInfo();
 
                 var unPurchased = slot.Find("Unpurchased");
                 unPurchased.SetActive(item.level <= 0);
@@ -96,15 +127,23 @@ public class UIPopupEquipShop : UIPopup
                 toggle.group = toggleGroup;
                 toggle.onValueChanged.RemoveAllListeners();
                 toggle.onValueChanged.AddListener((isOn) => OnChangeToggle(isOn, item));
+                toggle.isOn = item.type == selectedEquipType;
+
+                if (firstToggle == null)
+                    firstToggle = toggle;
 
                 slot.SetActive(true);
             });
+
+        if (!toggleGroup.AnyTogglesOn() && firstToggle != null)
+            firstToggle.isOn = true;
     }
 
     void OnChangeToggle(bool isOn, Equipment equipment)
     {
         if (isOn)
         {
+            Debug.Log(equipment.type);
             selectedEquipType = equipment.type;
             if (equipment.level > 0)
             {
@@ -118,7 +157,7 @@ public class UIPopupEquipShop : UIPopup
             }
 
             needMoneyText.text = $"« ø‰ ∞ÒµÂ : {RDUtil.MoneyComma(DataTable.GetEquipmentEnhancePrice(equipment.type, equipment.level))}";
-            addStatText.text = $"¡ı∞° Ω∫≈» : ATK +{DataTable.GetEquipmentAddedStat(equipment.type, equipment.level)}";
+            addStatText.text = $"¡ı∞° Ω∫≈» : {DataTable.GetEquipmentIncreaseStat(equipment.type).ToStringInfo()}";
         }
     }
 

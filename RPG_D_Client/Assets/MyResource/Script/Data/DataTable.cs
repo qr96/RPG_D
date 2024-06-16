@@ -96,8 +96,6 @@ public class DataTable
 
         path = equipType.ToString();
 
-        Debug.Log(path);
-
         return prefix + path;
     }
 
@@ -133,13 +131,6 @@ public class DataTable
         return name;
     }
 
-    public static long GetEquipmentStat(int equipType, int level)
-    {
-        long stat = 0;
-        stat = GetEquipmentAddedStat(equipType, level) * level;
-        return stat;
-    }
-
     public static long GetEquipmentAddedStat(int equipType, int nowLevel)
     {
         long weight = 0;
@@ -147,10 +138,39 @@ public class DataTable
         return weight;
     }
 
+    public static Stat GetEquipmentStat(int equipType, int level)
+    {
+        Stat stat = GetEquipmentIncreaseStat(equipType);
+        stat.attack *= level;
+        stat.maxHp *= level;
+        stat.maxWeight *= level;
+        stat.speed *= level;
+        return stat;
+    }
+
+    public static Stat GetEquipmentIncreaseStat(int equipType)
+    {
+        Stat stat = new Stat();
+
+        if (equipType >= 3001 && equipType <= 3999)
+        {
+            stat.attack += (long)Mathf.Pow(2, equipType - 3001);
+        }
+        else if (equipType >= 4001 && equipType <= 4999)
+        {
+            stat.maxHp += (long)Mathf.Pow(2, equipType - 4001) * 10;
+        }
+
+        return stat;
+    }
+
     public static long GetEquipmentEnhancePrice(int equipType, int level)
     {
         long price = 0;
-        price = (long)(Mathf.Pow(3, equipType - 3001) * 1000);
+        if (equipType >= 3001 && equipType <= 3999)
+            price = (long)(Mathf.Pow(3, equipType - 3001) * 1000);
+        else if (equipType >= 4001 && equipType <= 4999)
+            price = (long)(Mathf.Pow(3, equipType - 4001) * 1000);
         return price;
     }
     #endregion
