@@ -83,6 +83,20 @@ public class DataTable
     }
     #endregion
 
+    #region Lode
+
+    public static string GetLodeSpritePath(int lodeType)
+    {
+        var spriteName = "";
+        var prefix = "Sprites/Lode/";
+
+        spriteName = lodeType.ToString();
+
+        return prefix + spriteName;
+    }
+
+    #endregion
+
     #region Equipment
     public static string GetEquipmentSpritePath(int equipType)
     {

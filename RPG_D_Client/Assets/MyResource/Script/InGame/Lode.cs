@@ -5,6 +5,7 @@ using UnityEngine;
 public class Lode : MonoBehaviour
 {
     public int id;
+    public SpriteRenderer spriteRenderer;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,5 +21,10 @@ public class Lode : MonoBehaviour
         {
             Managers.ui.HidePopup<UIPopupTriggerButton>();
         }
+    }
+
+    public void SetSprite(string spritePath)
+    {
+        spriteRenderer.sprite = Resources.Load<Sprite>(spritePath);
     }
 }

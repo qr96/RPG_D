@@ -51,6 +51,7 @@ public class LocalPacketHandler
             var lode = Managers.obj.InstantiateLode();
             lode.id = lodeInfo.id;
             lode.transform.position = lodeInfo.position;
+            lode.SetSprite(DataTable.GetLodeSpritePath(lodeInfo.lodeType));
             lode.gameObject.SetActive(true);
         }
 

@@ -27,6 +27,9 @@ public class LocalServer : MonoBehaviour
         Instance = this;
 
         lodeInfoDic.Add(10001, new Tuple<long>(100));
+        lodeInfoDic.Add(10002, new Tuple<long>(200));
+        lodeInfoDic.Add(10003, new Tuple<long>(500));
+
         lodeObjectDic.Add(1, new LodeObject() { id = 1, lodeType = 10001, position = new Vector2(0.3f, -3.5f) });
         lodeObjectDic.Add(2, new LodeObject() { id = 2, lodeType = 10001, position = new Vector2(4.2f, -8.7f) });
         lodeObjectDic.Add(3, new LodeObject() { id = 3, lodeType = 10001, position = new Vector2(0.6f, -16.5f) });
@@ -36,16 +39,16 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(7, new LodeObject() { id = 7, lodeType = 10001, position = new Vector2(20f, -42f) });
         lodeObjectDic.Add(8, new LodeObject() { id = 8, lodeType = 10001, position = new Vector2(12f, -51f) });
         lodeObjectDic.Add(9, new LodeObject() { id = 9, lodeType = 10001, position = new Vector2(5f, -63f) });
-        lodeObjectDic.Add(10, new LodeObject() { id = 10, lodeType = 10001, position = new Vector2(10f, -75f) });
-        lodeObjectDic.Add(11, new LodeObject() { id = 11, lodeType = 10001, position = new Vector2(20f, -80f) });
-        lodeObjectDic.Add(12, new LodeObject() { id = 12, lodeType = 10001, position = new Vector2(32f, -80f) });
-        lodeObjectDic.Add(13, new LodeObject() { id = 13, lodeType = 10001, position = new Vector2(46f, -77f) });
-        lodeObjectDic.Add(14, new LodeObject() { id = 14, lodeType = 10001, position = new Vector2(50f, -85f) });
-        lodeObjectDic.Add(15, new LodeObject() { id = 15, lodeType = 10001, position = new Vector2(44f, -98f) });
-        lodeObjectDic.Add(16, new LodeObject() { id = 16, lodeType = 10001, position = new Vector2(37f, -104f) });
-        lodeObjectDic.Add(17, new LodeObject() { id = 17, lodeType = 10001, position = new Vector2(31f, -107f) });
-        lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10001, position = new Vector2(20f, -110f) });
-        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });   
+        lodeObjectDic.Add(10, new LodeObject() { id = 10, lodeType = 10002, position = new Vector2(10f, -75f) });
+        lodeObjectDic.Add(11, new LodeObject() { id = 11, lodeType = 10002, position = new Vector2(20f, -80f) });
+        lodeObjectDic.Add(12, new LodeObject() { id = 12, lodeType = 10002, position = new Vector2(32f, -80f) });
+        lodeObjectDic.Add(13, new LodeObject() { id = 13, lodeType = 10002, position = new Vector2(46f, -77f) });
+        lodeObjectDic.Add(14, new LodeObject() { id = 14, lodeType = 10002, position = new Vector2(50f, -85f) });
+        lodeObjectDic.Add(15, new LodeObject() { id = 15, lodeType = 10002, position = new Vector2(44f, -98f) });
+        lodeObjectDic.Add(16, new LodeObject() { id = 16, lodeType = 10002, position = new Vector2(37f, -104f) });
+        lodeObjectDic.Add(17, new LodeObject() { id = 17, lodeType = 10002, position = new Vector2(31f, -107f) });
+        lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10002, position = new Vector2(20f, -110f) });
+        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10003, position = new Vector2(12f, -116f) });   
     }
 
     void MakeUserData(string nickname)
@@ -170,9 +173,24 @@ public class LocalServer : MonoBehaviour
             // can get more items
             if (userGameInfo.nowWeight < userGameInfo.gameStat.maxWeight)
             {
-                nowMinerals.Add(new Item() { itemType = 10001, count = 3 });
-                nowMinerals.Add(new Item() { itemType = 10002, count = 4 });
-                nowMinerals.Add(new Item() { itemType = 10003, count = 5 });
+                if (lodeObjectDic[lodeId].lodeType == 10001)
+                {
+                    nowMinerals.Add(new Item() { itemType = 10001, count = 3 });
+                    nowMinerals.Add(new Item() { itemType = 10002, count = 4 });
+                    nowMinerals.Add(new Item() { itemType = 10003, count = 5 });
+                }
+                else if (lodeObjectDic[lodeId].lodeType == 10002)
+                {
+                    nowMinerals.Add(new Item() { itemType = 10001, count = 7 });
+                    nowMinerals.Add(new Item() { itemType = 10002, count = 9 });
+                    nowMinerals.Add(new Item() { itemType = 10003, count = 11 });
+                }
+                else if (lodeObjectDic[lodeId].lodeType == 10003)
+                {
+                    nowMinerals.Add(new Item() { itemType = 10001, count = 16 });
+                    nowMinerals.Add(new Item() { itemType = 10002, count = 21 });
+                    nowMinerals.Add(new Item() { itemType = 10003, count = 26 });
+                }
             }
 
             foreach (var item in nowMinerals)
