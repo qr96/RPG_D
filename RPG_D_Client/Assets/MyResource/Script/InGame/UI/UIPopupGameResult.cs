@@ -45,8 +45,8 @@ public class UIPopupGameResult : UIPopup
 
     public void SetResultPopup(bool success, List<Item> itemList)
     {
-        result.text = success ? "Å½»ç¼º°ø" : "Å½»ç½ÇÆĞ";
-        inventoryPopupTitle.text = success ? "È¹µæ ¾ÆÀÌÅÛ" : "ÀÒÀº ¾ÆÀÌÅÛ";
+        result.text = success ? "íƒì‚¬ì„±ê³µ" : "íƒì‚¬ì‹¤íŒ¨";
+        inventoryPopupTitle.text = success ? "íšë“ ì•„ì´í…œ" : "ìƒì€ ì•„ì´í…œ";
 
         var needSlot = itemList.Count - itemSlotPool.Count;
 

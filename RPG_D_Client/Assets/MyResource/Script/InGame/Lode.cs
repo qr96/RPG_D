@@ -10,7 +10,7 @@ public class Lode : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Managers.ui.ShowPopup<UIPopupTriggerButton>().SetButton("Ã¤±¤½ÃÀÛ", () => LocalPacketSender.C_LodeAttackStart(id));
+            Managers.ui.ShowPopup<UIPopupTriggerButton>().SetButton("ì±„ê´‘ì‹œìž‘", () => LocalPacketSender.C_LodeAttackStart(id));
         }
     }
 

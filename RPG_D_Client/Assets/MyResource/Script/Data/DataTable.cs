@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataTable
 {
-    // ÃßÈÄ¿¡ json È¤Àº csv µîÀÇ ÆÄÀÏ·Î ¼­¹ö, Å¬¶ó °ø¿ëÀ¸·Î ÀĞ¾î¼­ Ã³¸®ÇÒ ¿¹Á¤
+    // ì¶”í›„ì— json í˜¹ì€ csv ë“±ì˜ íŒŒì¼ë¡œ ì„œë²„, í´ë¼ ê³µìš©ìœ¼ë¡œ ì½ì–´ì„œ ì²˜ë¦¬í•  ì˜ˆì •
 
     #region Minerals
     public static string GetItemSpritePath(int itemType)
@@ -73,11 +73,11 @@ public class DataTable
         var name = "NONE";
 
         if (itemType == 10001)
-            name = "»ç¾Ï";
+            name = "ì‚¬ì•”";
         else if (itemType == 10002)
-            name = "Ã¶±¤¼®";
+            name = "ì² ê´‘ì„";
         else if (itemType == 10003)
-            name = "Èæ¿ä¼®";
+            name = "í‘ìš”ì„";
 
         return name;
     }
@@ -104,29 +104,29 @@ public class DataTable
         var name = "-";
 
         if (equipType == 3001)
-            name = "Èë¼öÀú";
+            name = "í™ìˆ˜ì €";
         else if (equipType == 3002)
-            name = "Àº¼öÀú";
+            name = "ì€ìˆ˜ì €";
         else if (equipType == 3003)
-            name = "±İ¼öÀú";
+            name = "ê¸ˆìˆ˜ì €";
         else if (equipType == 3004)
-            name = "ÇÃ·¡Æ¼³Ñ ¼öÀú";
+            name = "í”Œë˜í‹°ë„˜ ìˆ˜ì €";
         else if (equipType == 3005)
-            name = "Èë°î±ªÀÌ";
+            name = "í™ê³¡ê´­ì´";
         else if (equipType == 3006)
-            name = "Àº°î±ªÀÌ";
+            name = "ì€ê³¡ê´­ì´";
         else if (equipType == 3007)
-            name = "±İ°î±ªÀÌ";
+            name = "ê¸ˆê³¡ê´­ì´";
         else if (equipType == 3008)
-            name = "ÇÃ·¡Æ¼³Ñ°î±ªÀÌ";
+            name = "í”Œë˜í‹°ë„˜ê³¡ê´­ì´";
         else if (equipType == 4001)
-            name = "ºñ´ÒºÀÁö¿Ê";
+            name = "ë¹„ë‹ë´‰ì§€ì˜·";
         else if (equipType == 4002)
-            name = "½Å¹®Áö¿Ê";
+            name = "ì‹ ë¬¸ì§€ì˜·";
         else if (equipType == 4003)
-            name = "Çã¸§ÇÑ ¸Ş¸®¾ß½º";
+            name = "í—ˆë¦„í•œ ë©”ë¦¬ì•¼ìŠ¤";
         else if (equipType == 4004)
-            name = "¸Ş¸®¾ß½º";
+            name = "ë©”ë¦¬ì•¼ìŠ¤";
 
         return name;
     }

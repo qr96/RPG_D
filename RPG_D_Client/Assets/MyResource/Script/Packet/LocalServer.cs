@@ -46,7 +46,7 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10001, position = new Vector2(20f, -110f) });
         lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10001, position = new Vector2(12f, -116f) });
 
-        userData.nickName = "Å×½ºÆ®ÇÃ·¹ÀÌ¾î";
+        userData.nickName = "í…ŒìŠ¤íŠ¸í”Œë ˆì´ì–´";
         userData.money = 10000000;
         userData.lastMapId = 1001;
         userData.normalStat = new Stat() { attack = 10, maxHp = 100, maxWeight = 100, speed = 200f };

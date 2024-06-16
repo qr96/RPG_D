@@ -86,7 +86,7 @@ public class UIPopupEquipShop : UIPopup
 
     public void SetPopup(long money)
     {
-        moneyText.text = $"º¸À¯ °ñµå : {RDUtil.MoneyComma(money)}";
+        moneyText.text = $"ë³´ìœ  ê³¨ë“œ : {RDUtil.MoneyComma(money)}";
     }
 
     public void UpdatePopup()
@@ -148,16 +148,16 @@ public class UIPopupEquipShop : UIPopup
             if (equipment.level > 0)
             {
                 var buyButtonText = buyButton.gameObject.Find<TMP_Text>("Text");
-                buyButtonText.text = "°­È­ÇÏ±â";
+                buyButtonText.text = "ê°•í™”í•˜ê¸°";
             }
             else
             {
                 var buyButtonText = buyButton.gameObject.Find<TMP_Text>("Text");
-                buyButtonText.text = "±¸¸ÅÇÏ±â";
+                buyButtonText.text = "êµ¬ë§¤í•˜ê¸°";
             }
 
-            needMoneyText.text = $"ÇÊ¿ä °ñµå : {RDUtil.MoneyComma(DataTable.GetEquipmentEnhancePrice(equipment.type, equipment.level))}";
-            addStatText.text = $"Áõ°¡ ½ºÅÈ : {DataTable.GetEquipmentIncreaseStat(equipment.type).ToStringInfo()}";
+            needMoneyText.text = $"í•„ìš” ê³¨ë“œ : {RDUtil.MoneyComma(DataTable.GetEquipmentEnhancePrice(equipment.type, equipment.level))}";
+            addStatText.text = $"ì¦ê°€ ìŠ¤íƒ¯ : {DataTable.GetEquipmentIncreaseStat(equipment.type).ToStringInfo()}";
         }
     }
 

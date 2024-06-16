@@ -58,11 +58,11 @@ public class UIPopupMineShop : UIPopup
     {
         if (fullPrice == 0)
         {
-            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("ÆÈ ¼ö ÀÖ´Â ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("íŒ” ìˆ˜ ìˆëŠ” ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
-            var message = $"ÃÑ ÆÇ¸Å±İ¾×Àº {fullPrice}°ñµå ÀÔ´Ï´Ù. Á¤¸»·Î ÆÄ½Ã°Ú½À´Ï±î?";
+            var message = $"ì´ íŒë§¤ê¸ˆì•¡ì€ {fullPrice}ê³¨ë“œ ì…ë‹ˆë‹¤. ì •ë§ë¡œ íŒŒì‹œê² ìŠµë‹ˆê¹Œ?";
             Managers.ui.ShowPopup<UIPopupNotice>().SetPopup(message,
                 () => LocalPacketSender.C_SellItem(true, 0, 0));
         }

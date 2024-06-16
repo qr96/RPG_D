@@ -41,7 +41,7 @@ public class UIPopupBlackSmith : UIPopup
     {
         this.anvilLevel.text = $"LV : {anvilLevel}";
         
-        var equipPriceText = $"Á¦ÀÛºñ¿ë : {RDUtil.MoneyComma(makeEquipPrice)}";
+        var equipPriceText = $"ì œìž‘ë¹„ìš© : {RDUtil.MoneyComma(makeEquipPrice)}";
         makeEquipment.gameObject.Find<TMP_Text>("NeedMoney").text = equipPriceText;
     }
 

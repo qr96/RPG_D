@@ -16,7 +16,7 @@ public class LocalPacketHandler
         }
         else
         {
-            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("¿¡·¯°¡ ¹ß»ıÇß½À´Ï´Ù.\nÀç½Ãµµ ºÎÅ¹µå¸³´Ï´Ù.");
+            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.\nì¬ì‹œë„ ë¶€íƒë“œë¦½ë‹ˆë‹¤.");
         }
     }
 
@@ -89,9 +89,9 @@ public class LocalPacketHandler
         Managers.obj.DestroyLode(lodeId);
 
         if (minerals.Count <= 0)
-            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"°¡¹æÀÌ °¡µæ Â÷ È¹µæÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"ê°€ë°©ì´ ê°€ë“ ì°¨ íšë“í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         foreach (var mineral in minerals)
-            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}°³ È¹µæ");
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}ê°œ íšë“");
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 

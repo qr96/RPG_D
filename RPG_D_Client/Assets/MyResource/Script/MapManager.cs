@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
             var portal = mapList[0].Find<MovePortal>("MinePortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("±§ªÍ¿‘¿Â",
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("Í¥ëÏÇ∞ÏûÖÏû•",
                     () => LocalPacketSender.C_MoveMap(1002));
                 Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
@@ -33,7 +33,7 @@ public class MapManager : MonoBehaviour
             var shop = mapList[0].Find<MovePortal>("Shop");
             shop.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("ªÛ¡°¿ÃøÎ",
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("ÏÉÅÏ†êÏù¥Ïö©",
                     () => Managers.ui.ShowPopup<UIPopupMineShop>());
                 Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
@@ -41,7 +41,7 @@ public class MapManager : MonoBehaviour
             {
                 Managers.ui.HidePopup<UIPopupTriggerButton>();
             });
-            shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.gameObject, "±§π∞ªÛ¿Œ"));
+            shop.SetNameTag(Managers.ui.GetLayout<UILayoutNameTag>().AcquireNameTag(shop.gameObject, "Í¥ëÎ¨ºÏÉÅÏù∏"));
         }
         else if (mapId == 1002)
         {
@@ -53,7 +53,7 @@ public class MapManager : MonoBehaviour
             var portal = mapList[1].Find<MovePortal>("TownPortal");
             portal.SetTriggerEnterEvent(() =>
             {
-                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("≈Ω«Ë¡æ∑·",
+                Managers.ui.GetPopup<UIPopupTriggerButton>().SetButton("ÌÉêÌóòÏ¢ÖÎ£å",
                     () => LocalPacketSender.C_MineGameResult());
                 Managers.ui.ShowPopup<UIPopupTriggerButton>();
             });
