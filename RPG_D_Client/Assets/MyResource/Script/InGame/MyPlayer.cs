@@ -14,15 +14,9 @@ public class MyPlayer : MonoBehaviour
     Transform nameTag;
     Vector2 input;
 
-    bool moveLock;
-
     private void Update()
     {
-        input.x = Input.GetAxis("Horizontal");
-        input.y = Input.GetAxis("Vertical");
-
-        if (moveLock)
-            input = Vector2.zero;
+        input = Managers.input.GetPlayerInputAxis();
 
         if (input.sqrMagnitude > 1)
             input = input.normalized;
@@ -46,11 +40,6 @@ public class MyPlayer : MonoBehaviour
 
         if (nameTag != null)
             nameTag.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0f, 1f, 0f));
-    }
-
-    public void SetPlayerMoveLock(bool moveLock)
-    {
-        this.moveLock = moveLock;
     }
 
     public void SetNameTag(string name)

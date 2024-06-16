@@ -7,44 +7,36 @@ using UnityEngine.UIElements;
 
 public class InputManager : MonoBehaviour
 {
-    Dictionary<KeyCode, Action> keyDownEventDic = new Dictionary<KeyCode, Action>();
     Stack<Action> inputEvents = new Stack<Action>();
+    Stack<bool> playerLock = new Stack<bool>();
+    Vector2 playerInput;
 
     private void Update()
     {
-        foreach (var keyDownEvent in keyDownEventDic.ToArray())
-        {
-            if (Input.GetKeyDown(keyDownEvent.Key))
-            {
-                keyDownEventDic[keyDownEvent.Key]?.Invoke();
-            }
-        }
-
         if (inputEvents.Count > 0)
             inputEvents.Peek().Invoke();
+
+        playerInput.x = Input.GetAxis("Horizontal");
+        playerInput.y = Input.GetAxis("Vertical");
+
+        if (playerLock.Count > 0 && playerLock.Peek())
+            playerInput = Vector2.zero;
     }
 
-    public void AddKeyDownEvent(KeyCode key, Action onKeyDown)
-    {
-        if (keyDownEventDic.ContainsKey(key))
-            keyDownEventDic[key] += onKeyDown;
-        else
-            keyDownEventDic.Add(key, onKeyDown);
-    }
-
-    public void RemoveKeyDownEvent(KeyCode key, Action onKeyDown)
-    {
-        if (keyDownEventDic.ContainsKey(key))
-            keyDownEventDic[key] -= onKeyDown;
-    }
-
-    public void PushInputEvent(Action inputEvent)
+    public void PushInputEvent(Action inputEvent, bool playerMoveLock)
     {
         inputEvents.Push(inputEvent);
+        playerLock.Push(playerMoveLock);
     }
 
     public void PopInputEvent()
     {
         inputEvents.Pop();
+        playerLock.Pop();
+    }
+
+    public Vector2 GetPlayerInputAxis()
+    {
+        return playerInput;
     }
 }

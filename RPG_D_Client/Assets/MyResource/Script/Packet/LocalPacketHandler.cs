@@ -38,7 +38,6 @@ public class LocalPacketHandler
         Managers.obj.DestroyAllLode();
         Managers.map.SetMap(mapId);
         Managers.ui.GetLayout<UILayoutMiniMap>().SetMiniMap(mapId);
-        Managers.obj.myPlayer.SetPlayerMoveLock(false);
     }
 
     public static void S_MoveMapMineGame(int mapId, List<LodeObject> lodeInfoList)
@@ -56,19 +55,16 @@ public class LocalPacketHandler
         }
 
         Managers.ui.ShowPopup<UIPopupStartGame>();
-        Managers.obj.myPlayer.SetPlayerMoveLock(true);
     }
 
     public static void S_GameStart(long hpReducePerSec)
     {
         Managers.ui.GetLayout<UILayoutMineHUD>().StartReduceHP(hpReducePerSec, () => LocalPacketSender.C_MineGameResult());
         Managers.ui.HidePopup<UIPopupStartGame>();
-        Managers.obj.myPlayer.SetPlayerMoveLock(false);
     }
 
     public static void S_LodeAttackStart(int lodeId, long lodeMaxHp)
     {
-        Managers.obj.myPlayer.SetPlayerMoveLock(true);
         Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp);
     }
 
@@ -85,7 +81,6 @@ public class LocalPacketHandler
 
     public static void S_LodeAttackResult(int lodeId, List<Item> minerals, long maxWeight, long nowWeight)
     {
-        Managers.obj.myPlayer.SetPlayerMoveLock(false);
         Managers.obj.DestroyLode(lodeId);
 
         if (minerals.Count <= 0)
@@ -97,7 +92,6 @@ public class LocalPacketHandler
 
     public static void S_MineGameResult(bool success, List<Item> minerals)
     {
-        Managers.obj.myPlayer.SetPlayerMoveLock(true);
         Managers.ui.GetLayout<UILayoutMineHUD>().StopReduceHp();
         Managers.ui.ShowPopup<UIPopupGameResult>().SetResultPopup(success, minerals);
     }

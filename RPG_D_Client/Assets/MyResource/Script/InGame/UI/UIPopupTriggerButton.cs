@@ -20,6 +20,7 @@ public class UIPopupTriggerButton : UIPopup
 
     public override void OnCreate()
     {
+        playerMoveLock = false;
         triggerButton = gameObject.Find<Button>("TriggerButton");
         triggerButtonText = triggerButton.gameObject.Find<TMP_Text>("Text");
     }
