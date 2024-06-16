@@ -5,18 +5,21 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
 #region Packet
-public class LodeObject
-{
-    public int id;
-    public int lodeType;
-    public Vector2 position;
-}
 
 public class UserInfo
 {
     public int id;
     public string name;
     public float speed;
+    public Vector2 position;
+}
+#endregion
+
+# region Common
+public class LodeObject
+{
+    public int id;
+    public int lodeType;
     public Vector2 position;
 }
 
@@ -31,9 +34,7 @@ public class Equipment
     public int type;
     public int level;
 }
-#endregion
 
-# region Common
 public class UserData
 {
     public int userId;

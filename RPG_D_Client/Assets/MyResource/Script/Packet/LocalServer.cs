@@ -211,57 +211,6 @@ public class LocalServer : MonoBehaviour
         SendInventoryInfo();
     }
 
-    public void C_EnforceEquip(int equipType)
-    {
-        var nowLevel = 0;
-        var result = 0;
-
-        if (equipType == 0)
-            nowLevel = userData.weaponLevel;
-        else if (equipType == 1)
-            nowLevel = userData.armorLevel;
-        else if (equipType == 2)
-            nowLevel = userData.shoesLevel;
-
-        var enhancePrice = DataTable.GetEquipEnhancePrice(nowLevel);
-        var successPer = DataTable.GetEquipEnhanceSuccessPercent(nowLevel);
-        var rand = UnityEngine.Random.Range(0f, 100f);
-
-        if (userData.money > enhancePrice)
-        {
-            userData.money -= enhancePrice;
-            if (rand < successPer)
-            {
-                result = 0;
-                if (equipType == 0)
-                {
-                    userData.weaponLevel++;
-                    userData.attack += 5;
-                }
-                else if (equipType == 1)
-                {
-                    userData.armorLevel++;
-                    userData.maxHp += 10;
-                }
-                else if (equipType == 2)
-                {
-                    userData.shoesLevel++;
-                    userData.speed += 5;
-                }
-            }
-            else
-            {
-                result = 1;
-            }
-        }
-        else
-        {
-            result = 2;
-        }
-
-        LocalPacketHandler.S_EnforceEquip(userData, result);
-    }
-
     public void C_BuyEquip(int equipType)
     {
         if (userData.weaponDic.ContainsKey(equipType))

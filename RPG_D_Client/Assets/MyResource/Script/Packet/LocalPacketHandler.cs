@@ -25,11 +25,6 @@ public class LocalPacketHandler
         Managers.data.SetMyUserData(userData);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.maxHp, userData.maxHp);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.maxWeight, userData.nowWeight);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(0, userData.weaponLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(1, userData.armorLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.weaponDic.Values.ToList());
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
@@ -120,30 +115,6 @@ public class LocalPacketHandler
         Managers.ui.ShowPopup<UIPopupGameResult>().SetResultPopup(success, minerals);
     }
 
-    public static void S_EnforceEquip(UserData userData, int result)
-    {
-        if (result == 0)
-        {
-            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("강화 성공");
-        }
-        else if (result == 1)
-        {
-            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("강화 실패");
-        }
-        else if (result == 2)
-        {
-            Managers.ui.ShowPopup<UIPopupNotice>().SetPopup("돈이 부족합니다.");
-        }
-
-        Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetStat(userData.attack.ToString(), userData.maxHp.ToString(), userData.speed.ToString());
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(0, userData.weaponLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(1, userData.armorLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetEquipLevel(2, userData.shoesLevel);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(userData.money);
-        Managers.obj.myPlayer.speed = userData.speed;
-    }
-
     public static void S_EquipmentList(Dictionary<int, Equipment> equipmentList)
     {
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(equipmentList.Values.ToList());
@@ -154,7 +125,6 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupInventory>().SetInventory(minerals);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(money);
         Managers.ui.GetPopup<UIPopupMineShop>().SetInventory(minerals);
-        Managers.ui.GetPopup<UIPopupEquipment>().SetMoney(money);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 }

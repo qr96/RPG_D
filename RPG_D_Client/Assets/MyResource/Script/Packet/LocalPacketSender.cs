@@ -44,11 +44,6 @@ public class LocalPacketSender
         LocalServer.Instance.C_SellItem(sellAll, itemType, count);
     }
 
-    public static void C_EnforceEquip(int equipType)
-    {
-        LocalServer.Instance.C_EnforceEquip(equipType);
-    }
-
     public static void C_BuyEquip(int equipType)
     {
         LocalServer.Instance.C_BuyEquip(equipType);

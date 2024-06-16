@@ -84,20 +84,6 @@ public class DataTable
     #endregion
 
     #region Equipment
-    public static long GetEquipEnhancePrice(int nowLevel)
-    {
-        return 1000 + nowLevel * 1000;
-    }
-
-    static float[] successPercentage = new float[10] { 90f, 85f, 80f, 75f, 60f, 50f, 40f, 30f, 20f, 20f };
-    public static float GetEquipEnhanceSuccessPercent(int nowLevel)
-    {
-        if (nowLevel < 10)
-            return successPercentage[nowLevel];
-        else
-            return 20f;
-    }
-
     public static string GetEquipmentSpritePath(int equipType)
     {
         var path = "";
