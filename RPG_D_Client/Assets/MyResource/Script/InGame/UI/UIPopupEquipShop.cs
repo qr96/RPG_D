@@ -111,7 +111,7 @@ public class UIPopupEquipShop : UIPopup
                 itemImage.sprite = Resources.Load<Sprite>(DataTable.GetEquipmentSpritePath(item.type));
 
                 var levelText = slot.Find<TMP_Text>("Item/Level");
-                levelText.text = $"+{item.level}";
+                levelText.text = $"{item.level}/20";
 
                 var itemNameText = slot.Find<TMP_Text>("Name");
                 itemNameText.text = DataTable.GetEquipmentSpriteName(item.type);
@@ -143,7 +143,6 @@ public class UIPopupEquipShop : UIPopup
     {
         if (isOn)
         {
-            Debug.Log(equipment.type);
             selectedEquipType = equipment.type;
             if (equipment.level > 0)
             {

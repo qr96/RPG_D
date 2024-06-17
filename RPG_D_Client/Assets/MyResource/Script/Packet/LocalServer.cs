@@ -267,7 +267,7 @@ public class LocalServer : MonoBehaviour
             var nowLevel = userData.weaponDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
 
-            if (userData.money >= price)
+            if (userData.money >= price && userData.weaponDic[equipType].level < 20)
             {
                 userData.money -= price;
                 userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
@@ -281,7 +281,7 @@ public class LocalServer : MonoBehaviour
             var nowLevel = userData.shirtDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
 
-            if (userData.money >= price)
+            if (userData.money >= price && userData.shirtDic[equipType].level < 20)
             {
                 userData.money -= price;
                 userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
@@ -295,7 +295,7 @@ public class LocalServer : MonoBehaviour
             var nowLevel = userData.bagDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
 
-            if (userData.money >= price)
+            if (userData.money >= price && userData.bagDic[equipType].level < 20)
             {
                 userData.money -= price;
                 userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));
@@ -309,7 +309,7 @@ public class LocalServer : MonoBehaviour
             var nowLevel = userData.shoeDic[equipType].level;
             var price = DataTable.GetEquipmentEnhancePrice(equipType, nowLevel);
 
-            if (userData.money >= price)
+            if (userData.money >= price && userData.shoeDic[equipType].level < 20)
             {
                 userData.money -= price;
                 userData.equipStat.AddStat(DataTable.GetEquipmentIncreaseStat(equipType));

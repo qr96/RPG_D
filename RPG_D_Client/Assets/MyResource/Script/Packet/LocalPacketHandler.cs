@@ -102,6 +102,7 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupInventory>().SetInventory(minerals);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(money);
         Managers.ui.GetPopup<UIPopupMineShop>().SetInventory(minerals);
+        Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(money);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 }
