@@ -36,11 +36,11 @@ public class DataTable
         var price = 0L;
 
         if (itemType == 10001)
-            price = 1000;
+            price = 100;
         else if (itemType == 10002)
-            price = 1500;
+            price = 150;
         else if (itemType == 10003)
-            price = 2000;
+            price = 200;
 
         return price;
     }
@@ -93,6 +93,20 @@ public class DataTable
         spriteName = lodeType.ToString();
 
         return prefix + spriteName;
+    }
+
+    public static long GetLodeHp(int lodeType)
+    {
+        var lodeHp = -1L;
+
+        if (lodeType == 10001)
+            lodeHp = 100;
+        else if (lodeType == 10002)
+            lodeHp = 500;
+        else if (lodeType == 10003)
+            lodeHp = 2500;
+
+        return lodeHp;
     }
 
     #endregion

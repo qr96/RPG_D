@@ -10,7 +10,6 @@ public class LocalServer : MonoBehaviour
     public static LocalServer Instance;
 
     Dictionary<int, LodeObject> lodeObjectDic = new Dictionary<int, LodeObject>();
-    Dictionary<int, Tuple<long>> lodeInfoDic = new Dictionary<int, Tuple<long>>(); // <lodeType, maxHp> : TODO
 
     // TODO : Make class
     // Now Attacked lode Info
@@ -25,10 +24,6 @@ public class LocalServer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        lodeInfoDic.Add(10001, new Tuple<long>(100));
-        lodeInfoDic.Add(10002, new Tuple<long>(200));
-        lodeInfoDic.Add(10003, new Tuple<long>(500));
 
         lodeObjectDic.Add(1, new LodeObject() { id = 1, lodeType = 10001, position = new Vector2(0.3f, -3.5f) });
         lodeObjectDic.Add(2, new LodeObject() { id = 2, lodeType = 10001, position = new Vector2(4.2f, -8.7f) });
@@ -48,7 +43,15 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(16, new LodeObject() { id = 16, lodeType = 10002, position = new Vector2(37f, -104f) });
         lodeObjectDic.Add(17, new LodeObject() { id = 17, lodeType = 10002, position = new Vector2(31f, -107f) });
         lodeObjectDic.Add(18, new LodeObject() { id = 18, lodeType = 10002, position = new Vector2(20f, -110f) });
-        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10003, position = new Vector2(12f, -116f) });   
+        lodeObjectDic.Add(19, new LodeObject() { id = 19, lodeType = 10003, position = new Vector2(12f, -116f) });
+        lodeObjectDic.Add(20, new LodeObject() { id = 20, lodeType = 10003, position = new Vector2(5f, -120f) });
+        lodeObjectDic.Add(21, new LodeObject() { id = 21, lodeType = 10003, position = new Vector2(-9f, -127f) });
+        lodeObjectDic.Add(22, new LodeObject() { id = 22, lodeType = 10003, position = new Vector2(1.4f, -134f) });
+        lodeObjectDic.Add(23, new LodeObject() { id = 23, lodeType = 10003, position = new Vector2(9.3f, -137f) });
+        lodeObjectDic.Add(24, new LodeObject() { id = 24, lodeType = 10003, position = new Vector2(19f, -140f) });
+        lodeObjectDic.Add(25, new LodeObject() { id = 25, lodeType = 10003, position = new Vector2(33.5f, -146f) });
+        lodeObjectDic.Add(26, new LodeObject() { id = 26, lodeType = 10003, position = new Vector2(42f, -152f) });
+        lodeObjectDic.Add(27, new LodeObject() { id = 27, lodeType = 10003, position = new Vector2(31.4f, -159f) });
     }
 
     void MakeUserData(string nickname)
@@ -138,11 +141,12 @@ public class LocalServer : MonoBehaviour
         if (!lodeObjectDic.ContainsKey(lodeId))
             return;
 
-        if (!lodeInfoDic.ContainsKey(lodeObjectDic[lodeId].lodeType))
+        var getLodeHp = DataTable.GetLodeHp(lodeObjectDic[lodeId].lodeType);
+        if (getLodeHp <= 0)
             return;
 
         this.lodeId = lodeId;
-        lodeHp = lodeInfoDic[lodeObjectDic[lodeId].lodeType].Item1;
+        lodeHp = getLodeHp;
 
         LocalPacketHandler.S_LodeAttackStart(0, lodeHp);
     }
