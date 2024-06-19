@@ -58,7 +58,7 @@ public class LocalServer : MonoBehaviour
         userData.nickName = nickname;
         userData.money = 10000;
         userData.lastMapId = 1001;
-        userData.normalStat = new Stat() { attack = 10, maxHp = 100, maxWeight = 100, speed = 200f };
+        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
 
         for (int i = 3001; i < 3009; i++)
@@ -214,7 +214,7 @@ public class LocalServer : MonoBehaviour
     public void C_MineGameResult()
     {
         bool gameSuccess = false;
-        gameSuccess = (DateTime.Now - userGameInfo.gameStartTime).TotalSeconds * hpReducePerSec < userGameInfo.gameStat.maxWeight;
+        gameSuccess = (DateTime.Now - userGameInfo.gameStartTime).TotalSeconds * hpReducePerSec <= userGameInfo.gameStat.maxHp;
 
         if (gameSuccess)
         {
