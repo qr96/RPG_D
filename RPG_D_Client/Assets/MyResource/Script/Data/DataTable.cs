@@ -227,4 +227,20 @@ public class DataTable
         return price;
     }
     #endregion
+
+    #region Quest
+
+    public static bool IsQuestComplete(int questId, UserData userData)
+    {
+        bool complted = false;
+
+        if (questId == 0)
+        {
+
+        }
+
+        return complted;
+    }
+
+    #endregion
 }

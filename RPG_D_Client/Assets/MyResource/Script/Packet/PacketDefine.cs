@@ -51,6 +51,8 @@ public class UserData
     public Dictionary<int, Equipment> shirtDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> bagDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> shoeDic = new Dictionary<int, Equipment>();
+
+    public Dictionary<int, QuestState> questDic = new Dictionary<int, QuestState>();
 }
 
 [Serializable]
@@ -87,6 +89,14 @@ public class Stat
         return info;
     }
 }
+
+public enum QuestState
+{
+    NotStarted = 0,
+    Progress = 1,
+    Done = 2
+}
+
 #endregion
 
 # region InServer
@@ -99,6 +109,6 @@ public class UserGameInfo
     public Stat gameStat;
 
     public DateTime gameStartTime;
-    public List<Item> mineralList = new List<Item>();
+    public Dictionary<int, Item> acquired = new Dictionary<int, Item>();
 }
 #endregion
