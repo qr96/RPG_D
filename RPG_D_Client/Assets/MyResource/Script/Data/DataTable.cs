@@ -95,6 +95,16 @@ public class DataTable
         return prefix + spriteName;
     }
 
+    public static Vector2 GetLodeScale(int lodeType)
+    {
+        Vector2 scale = Vector2.one;
+
+        if (lodeType == 10004)
+            scale *= 2;
+
+        return scale;
+    }
+
     public static long GetLodeHp(int lodeType)
     {
         var lodeHp = -1L;
@@ -104,9 +114,21 @@ public class DataTable
         else if (lodeType == 10002)
             lodeHp = 500;
         else if (lodeType == 10003)
-            lodeHp = 2500;
+            lodeHp = 1100;
+        else if (lodeType == 10004)
+            lodeHp = 3000;
 
         return lodeHp;
+    }
+
+    public static int GetRewardMineTicket(int lodeType)
+    {
+        var ticketType = 0;
+
+        if (lodeType == 10004)
+            ticketType = 1002;
+
+        return ticketType;
     }
 
     #endregion

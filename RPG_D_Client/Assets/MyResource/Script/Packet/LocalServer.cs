@@ -51,6 +51,7 @@ public class LocalServer : MonoBehaviour
         lodeObjectDic.Add(25, new LodeObject() { id = 25, lodeType = 10003, position = new Vector2(33.5f, -146f) });
         lodeObjectDic.Add(26, new LodeObject() { id = 26, lodeType = 10003, position = new Vector2(42f, -152f) });
         lodeObjectDic.Add(27, new LodeObject() { id = 27, lodeType = 10003, position = new Vector2(31.4f, -159f) });
+        lodeObjectDic.Add(28, new LodeObject() { id = 28, lodeType = 10004, position = new Vector2(34f, -226f) });
     }
 
     void MakeUserData(string nickname)
@@ -60,6 +61,8 @@ public class LocalServer : MonoBehaviour
         userData.lastMapId = 1001;
         userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
+
+        userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });
 
         for (int i = 3001; i < 3009; i++)
             userData.weaponDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
@@ -119,7 +122,13 @@ public class LocalServer : MonoBehaviour
             LocalPacketHandler.S_UserInfo(userData);
         }
         else if (mapId == 1002)
-            LocalPacketHandler.S_MoveMapMineGame(mapId, lodeObjectDic.Values.ToList());
+        {
+            if (userData.mineTicketDic.ContainsKey(1001) && userData.mineTicketDic[1001].count > 0)
+            {
+                userData.mineTicketDic[1001].count--;
+                LocalPacketHandler.S_MoveMapMineGame(mapId, lodeObjectDic.Values.ToList());
+            }
+        }
     }
 
     public void C_GameStart()
@@ -194,6 +203,14 @@ public class LocalServer : MonoBehaviour
                     nowMinerals.Add(new Item() { itemType = 10001, count = 16 });
                     nowMinerals.Add(new Item() { itemType = 10002, count = 21 });
                     nowMinerals.Add(new Item() { itemType = 10003, count = 26 });
+                }
+                else if (lodeObjectDic[lodeId].lodeType == 10004)
+                {
+                    var ticketType = DataTable.GetRewardMineTicket(lodeObjectDic[lodeId].lodeType);
+                    if (userData.mineTicketDic.ContainsKey(ticketType))
+                        userData.mineTicketDic[ticketType].count++;
+                    else
+                        userData.mineTicketDic.Add(ticketType, new Item() { itemType = ticketType, count = 1 });
                 }
             }
 
