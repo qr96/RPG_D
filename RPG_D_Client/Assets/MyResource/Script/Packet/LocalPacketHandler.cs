@@ -24,6 +24,7 @@ public class LocalPacketHandler
     {
         Managers.data.SetMyUserData(userData);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.normalStat.maxHp + userData.equipStat.maxHp, userData.normalStat.maxHp + userData.equipStat.maxHp);
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetMpBar(userData.normalStat.maxMp + userData.equipStat.maxMp, userData.normalStat.maxMp + userData.equipStat.maxMp);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupEquipShop>().UpdatePopup();
@@ -70,7 +71,7 @@ public class LocalPacketHandler
         Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp);
     }
 
-    public static void S_LodeAttack(long lodeHp, long damage, bool critical)
+    public static void S_LodeAttack(long lodeHp, long damage, long nowMp)
     {
         Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupHp(lodeHp);
         Managers.ui.GetPopup<UIPopupMineGame>().ShowDamageBar(damage);
@@ -79,17 +80,26 @@ public class LocalPacketHandler
             Managers.ui.GetPopup<UIPopupMineGame>().ResultMineGamePopup();
         else
             Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupTargetZone();
+
+        Managers.ui.GetLayout<UILayoutMineHUD>().SetMpBar(Managers.data.GetMyUserData().normalStat.maxMp + Managers.data.GetMyUserData().equipStat.maxMp, nowMp);
     }
 
-    public static void S_LodeAttackResult(int lodeId, List<Item> minerals, long maxWeight, long nowWeight)
+    public static void S_LodeAttackResult(int lodeId, bool success, List<Item> minerals, long maxWeight, long nowWeight)
     {
-        Managers.obj.DestroyLode(lodeId);
+        if (success)
+        {
+            Managers.obj.DestroyLode(lodeId);
 
-        if (minerals.Count <= 0)
-            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"가방이 가득 차 획득할 수 없습니다.");
-        foreach (var mineral in minerals)
-            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}개 획득");
-        Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
+            if (minerals.Count <= 0)
+                Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"가방이 가득 차 획득할 수 없습니다.");
+            foreach (var mineral in minerals)
+                Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}개 획득");
+            Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
+        }
+        else
+        {
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"기력이 부족하여 채집에 실패했습니다.");
+        }
     }
 
     public static void S_MineGameResult(bool success, List<Item> minerals)
