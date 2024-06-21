@@ -59,7 +59,7 @@ public class LocalServer : MonoBehaviour
         userData.nickName = nickname;
         userData.money = 10000;
         userData.lastMapId = 1001;
-        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxMp = 30, maxWeight = 100, speed = 200f };
+        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
 
         userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });
@@ -140,7 +140,6 @@ public class LocalServer : MonoBehaviour
         userGameInfo.gameStartTime = DateTime.Now;
         userGameInfo.nowWeight = userData.nowWeight;
         userGameInfo.nowHp = userGameInfo.gameStat.maxHp;
-        userGameInfo.nowMp = userGameInfo.gameStat.maxMp;
         userGameInfo.acquired.Clear();
 
         LocalPacketHandler.S_GameStart(hpReducePerSec);
@@ -166,15 +165,6 @@ public class LocalServer : MonoBehaviour
         if (lodeHp <= 0)
             return;
 
-        if (userGameInfo.nowMp <= 0)
-        {
-            LocalPacketHandler.S_LodeAttack(0, 0, userGameInfo.nowMp);
-            LocalPacketHandler.S_LodeAttackResult(lodeId, false, new List<Item>(), userGameInfo.gameStat.maxWeight, userGameInfo.nowWeight);
-            return;
-        }
-
-        userGameInfo.nowMp -= 1;
-
         var damage = 0L;
         if (attackLevel == 0)
             damage = userGameInfo.gameStat.attack * 12 / 10;
@@ -187,7 +177,7 @@ public class LocalServer : MonoBehaviour
         if (lodeHp < 0)
             lodeHp = 0;
 
-        LocalPacketHandler.S_LodeAttack(lodeHp, damage, userGameInfo.nowMp);
+        LocalPacketHandler.S_LodeAttack(lodeHp, damage);
 
         if (lodeHp <= 0)
         {
@@ -234,7 +224,7 @@ public class LocalServer : MonoBehaviour
 
             userGameInfo.nowWeight = DataTable.GetMineralWeight(userGameInfo.acquired.Values.ToList());
 
-            LocalPacketHandler.S_LodeAttackResult(lodeId, true, nowMinerals, userGameInfo.gameStat.maxWeight, userGameInfo.nowWeight);
+            LocalPacketHandler.S_LodeAttackResult(lodeId, nowMinerals, userGameInfo.gameStat.maxWeight, userGameInfo.nowWeight);
         }
     }
 

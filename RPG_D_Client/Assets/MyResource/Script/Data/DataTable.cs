@@ -225,7 +225,7 @@ public class DataTable
         if (equipType >= 3001 && equipType <= 3999)
             stat.attack += (long)Mathf.Pow(2, equipType - 3001);
         else if (equipType >= 4001 && equipType <= 4999)
-            stat.maxHp += (long)Mathf.Pow(2, equipType - 4001) * 10;
+            stat.maxHp += (long)Mathf.Pow(2, equipType - 4001) * 5;
         else if (equipType >= 5001 && equipType <= 5999)
             stat.maxWeight += (long)Mathf.Pow(2, equipType - 5001) * 5;
         else if (equipType >= 6001 && equipType <= 6999)

@@ -62,7 +62,6 @@ public class Stat
 {
     public long attack;
     public long maxHp;
-    public long maxMp;
     public long maxWeight;
     public float speed;
 
@@ -70,7 +69,6 @@ public class Stat
     {
         attack += stat.attack;
         maxHp += stat.maxHp;
-        maxMp += stat.maxMp;
         maxWeight += stat.maxWeight;
         speed += stat.speed;
     }
@@ -109,7 +107,6 @@ public class UserGameInfo
     public int id;
     public long nowWeight;
     public long nowHp;
-    public long nowMp;
     public float speed;
     public Stat gameStat;
 

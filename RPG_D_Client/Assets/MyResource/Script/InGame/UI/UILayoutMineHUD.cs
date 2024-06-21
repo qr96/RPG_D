@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class UILayoutMineHUD : UILayout
 {
     public GuageBar hpBar;
-    public GuageBar mpBar;
     public GameObject ItemNotiBox;
     public TMP_Text itemNotiPrefab;
     public Button inventoryButton;
@@ -63,11 +62,6 @@ public class UILayoutMineHUD : UILayout
         this.nowHP = nowHp;
 
         hpBar.SetGuage(maxHp, nowHp);
-    }
-
-    public void SetMpBar(long maxMp, long nowMp)
-    {
-        mpBar.SetGuage(maxMp, nowMp);
     }
 
     public void StartReduceHP(long reduceHpPerSec, Action onEndHpCo)
