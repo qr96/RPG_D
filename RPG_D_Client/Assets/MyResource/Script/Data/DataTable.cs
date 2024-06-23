@@ -83,6 +83,18 @@ public class DataTable
     }
     #endregion
 
+    #region Tickets
+    public static string GetTicketSpritePath(int itemType)
+    {
+        var spriteName = "";
+        var prefix = "Sprites/Tickets";
+
+        spriteName = prefix + itemType.ToString();
+
+        return prefix + spriteName;
+    }
+    #endregion
+
     #region Lode
 
     public static string GetLodeSpritePath(int lodeType)

@@ -15,6 +15,7 @@ public class LocalServer : MonoBehaviour
     // Now Attacked lode Info
     int lodeId = 0;
     long lodeHp = 0;
+    long userNowMp = 0;
 
     UserData userData = new UserData(); // user's normal info
     UserGameInfo userGameInfo = new UserGameInfo(); // user's now playing game info
@@ -59,7 +60,7 @@ public class LocalServer : MonoBehaviour
         userData.nickName = nickname;
         userData.money = 10000;
         userData.lastMapId = 1001;
-        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxWeight = 100, speed = 200f };
+        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxMp = 5, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
 
         userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });
@@ -156,13 +157,17 @@ public class LocalServer : MonoBehaviour
 
         this.lodeId = lodeId;
         lodeHp = getLodeHp;
+        userNowMp = userGameInfo.gameStat.maxMp;
 
-        LocalPacketHandler.S_LodeAttackStart(0, lodeHp);
+        LocalPacketHandler.S_LodeAttackStart(0, lodeHp, userNowMp);
     }
 
     public void C_LodeAttack(int attackLevel)
     {
         if (lodeHp <= 0)
+            return;
+
+        if (userNowMp <= 0)
             return;
 
         var damage = 0L;
@@ -173,13 +178,18 @@ public class LocalServer : MonoBehaviour
         else if (attackLevel == 2)
             damage = userGameInfo.gameStat.attack * 8 / 10;
 
-            lodeHp -= damage;
-        if (lodeHp < 0)
+        lodeHp -= damage;
+        lodeHp = Math.Max(lodeHp, 0);
+        userNowMp -= 1;
+        userNowMp = Math.Max(userNowMp, 0);
+
+        LocalPacketHandler.S_LodeAttack(lodeHp, damage, userGameInfo.gameStat.maxMp, userNowMp);
+
+        if (userNowMp <= 0 && lodeHp > 0)
+        {
             lodeHp = 0;
-
-        LocalPacketHandler.S_LodeAttack(lodeHp, damage);
-
-        if (lodeHp <= 0)
+        }
+        else if (lodeHp <= 0)
         {
             var nowMinerals = new List<Item>();
 

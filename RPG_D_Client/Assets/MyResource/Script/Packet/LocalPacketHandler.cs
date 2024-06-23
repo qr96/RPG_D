@@ -61,18 +61,24 @@ public class LocalPacketHandler
         Managers.ui.HidePopup<UIPopupStartGame>();
     }
 
-    public static void S_LodeAttackStart(int lodeId, long lodeMaxHp)
+    public static void S_LodeAttackStart(int lodeId, long lodeMaxHp, long userMaxMp)
     {
-        Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp);
+        Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp, userMaxMp);
     }
 
-    public static void S_LodeAttack(long lodeHp, long damage)
+    public static void S_LodeAttack(long lodeHp, long damage, long userMaxMp, long userNowMp)
     {
         Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupHp(lodeHp);
         Managers.ui.GetPopup<UIPopupMineGame>().ShowDamageBar(damage);
+        Managers.ui.GetPopup<UIPopupMineGame>().SetMpBar(userMaxMp, userNowMp);
 
         if (lodeHp <= 0)
             Managers.ui.GetPopup<UIPopupMineGame>().ResultMineGamePopup();
+        else if (userNowMp <= 0)
+        {
+            Managers.ui.GetPopup<UIPopupMineGame>().ResultMineGamePopup();
+            Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"기력이 부족합니다.");
+        }
         else
             Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupTargetZone();
     }
@@ -81,10 +87,12 @@ public class LocalPacketHandler
     {
         Managers.obj.DestroyLode(lodeId);
 
-        if (minerals.Count <= 0)
+        if (nowWeight >= maxWeight)
             Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"가방이 가득 차 획득할 수 없습니다.");
+
         foreach (var mineral in minerals)
             Managers.ui.GetLayout<UILayoutMineHUD>().AddItemNotiQue($"{DataTable.GetMinrealName(mineral.itemType)} {mineral.count}개 획득");
+
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
     }
 

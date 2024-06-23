@@ -111,6 +111,7 @@
     <Compile Include="Assets\MyResource\Script\Scene\MineGameScene.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMakeResult.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\GuageBar.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineTicket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

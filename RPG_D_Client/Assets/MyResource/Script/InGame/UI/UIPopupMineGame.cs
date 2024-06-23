@@ -9,6 +9,7 @@ public class UIPopupMineGame : UIPopup
 {
     TimingGuage timingGuage;
     GuageBar hpBar;
+    GuageBar mpBar;
     Button stopButton;
     Image attackEffet;
     TMP_Text resultEffect;
@@ -29,6 +30,7 @@ public class UIPopupMineGame : UIPopup
     {
         timingGuage = gameObject.Find<TimingGuage>("TimingGuage");
         hpBar = gameObject.Find<GuageBar>("HPGuage");
+        mpBar = gameObject.Find<GuageBar>("MPGuage");
         stopButton = gameObject.Find<Button>("StopButton");
         attackEffet = gameObject.Find<Image>("Effect");
         resultEffect = gameObject.Find<TMP_Text>("Result");
@@ -41,7 +43,7 @@ public class UIPopupMineGame : UIPopup
         damagePrefab.gameObject.SetActive(false);
     }
 
-    public void SetMinePopup(long lodeMaxHp)
+    public void SetMinePopup(long lodeMaxHp, long userMaxMp)
     {
         var moveTime = 0.5f;
         var orangePer = 0.75f;
@@ -55,6 +57,8 @@ public class UIPopupMineGame : UIPopup
 
         hpBar.SetGuage(lodeMaxHp, lodeMaxHp);
         this.lodeMaxHp = lodeMaxHp;
+
+        mpBar.SetGuage(userMaxMp, userMaxMp);
 
         attackEffet.color = new Color(0f, 0f, 0f, 0f);
         resultEffect.text = "";
@@ -75,6 +79,11 @@ public class UIPopupMineGame : UIPopup
     public void ChangeMinePopupHp(long lodeNowHp)
     {
         hpBar.SetGuage(lodeMaxHp, lodeNowHp);
+    }
+
+    public void SetMpBar(long maxMp, long nowMp)
+    {
+        mpBar.SetGuage(maxMp, nowMp);
     }
 
     public void ShowDamageBar(long damage)
