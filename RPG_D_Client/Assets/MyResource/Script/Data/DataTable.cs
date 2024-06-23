@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DataTable
@@ -259,6 +260,54 @@ public class DataTable
         else if (equipType >= 6001 && equipType <= 6999)
             price = (long)(Mathf.Pow(10, equipType - 6001) * 1000);
         return price;
+    }
+    #endregion
+
+    #region Skill
+    public static string GetSkillSpritePath(int skillType)
+    {
+        var spriteName = "";
+        var prefix = "Sprites/Skills/";
+
+        spriteName = skillType.ToString();
+
+        return prefix + spriteName;
+    }
+
+    public static int GetSkillMaxExp(int skillLevel)
+    {
+        return (int)Mathf.Pow(4, skillLevel);
+    }
+
+    static string[] skillNames = new string[] { "등가교환", "네잎클로버", "호루스의 관찰", "기회포착", "물 만난 물고기", "라임의 맛", "오렌지의 맛", "레몬의 맛", "소화흡수", "운기조식" };
+    public static string GetSkillName(int skillType)
+    {
+        var skillName = "오류발생";
+
+        skillName = skillNames[skillType - 8001];
+
+        return skillName;
+    }
+
+    static string[] skillInfos = new string[] { "기력을 n배 소모하여 데미지 n% 증가", "n%확률로 n%의 추가 데미지\n(최대 n번)", "크리티컬 확률 n% 증가", "크리티컬 데미지 n% 증가", "퍼펙트 연속 성공 시 데미지 n% 증가\n(최대 중첩 n회)", "그린존 데미지 n%증가", "오렌지존 데미지 n% 증가", "옐로우존 데미지 n% 증가", "탐험 물약의 회복률 n%증가", "기력 증가" };
+    public static string GetSkillInfo(int skillType, int skillLevel)
+    {
+        var skillInfo = "오류발생";
+
+        if (skillLevel == 0)
+        {
+            skillInfo = "[획득효과]\n";
+            skillInfo += skillInfos[skillType - 8001];
+        }
+        else
+        {
+            skillInfo = $"[현재레벨 {skillLevel}]\n";
+            skillInfo += skillInfos[skillType - 8001];
+            skillInfo += $"[\n다음레벨 {skillLevel + 1}]\n";
+            skillInfo += skillInfos[skillType - 8001];
+        }
+        
+        return skillInfo;
     }
     #endregion
 

@@ -65,6 +65,9 @@ public class LocalServer : MonoBehaviour
 
         userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });
 
+        for (int i = 8001; i < 8009; i++)
+            userData.skillDic.Add(i, new Skill() { type = i });
+
         for (int i = 3001; i < 3009; i++)
             userData.weaponDic.Add(i, new Equipment() { type = i, level = i == 3001 ? 1 : 0 });
 

@@ -103,12 +103,14 @@
     <Compile Include="Assets\MyResource\Script\ObjectManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupInventory.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineShop.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupSkillInfo.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\Lode.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupGameResult.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingGuage.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_TexutreList.cs" />
     <Compile Include="Assets\MyResource\Script\Managers.cs" />
     <Compile Include="Assets\MyResource\Script\Scene\MineGameScene.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupSkill.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMakeResult.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\GuageBar.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineTicket.cs" />

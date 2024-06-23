@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Linq;
 
 public class LocalPacketHandler
 {
@@ -24,6 +25,7 @@ public class LocalPacketHandler
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
         Managers.ui.GetPopup<UIPopupEquipShop>().UpdatePopup();
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
+        Managers.ui.GetPopup<UIPopupSkill>().SetSkills(userData.skillDic.Values.ToList());
 
         Managers.obj.myPlayer.speed = userData.normalStat.speed + userData.equipStat.speed;
         Managers.obj.myPlayer.SetNameTag(userData.nickName);

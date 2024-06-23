@@ -34,6 +34,13 @@ public class Equipment
     public int level;
 }
 
+public class Skill
+{
+    public int type;
+    public int level;
+    public int exp;
+}
+
 public class UserData
 {
     public int userId;
@@ -45,6 +52,8 @@ public class UserData
 
     public Stat normalStat;
     public Stat equipStat;
+
+    public Dictionary<int, Skill> skillDic = new Dictionary<int, Skill>();
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
     public Dictionary<int, Item> mineTicketDic = new Dictionary<int, Item>();
