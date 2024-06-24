@@ -46,6 +46,9 @@ public class UIPopupSkill : UIPopup
                 var levelText = slot.Find<TMP_Text>("Level");
                 levelText.text = skill.level <= 0 ? "미획득" : $"Lv.{skill.level}";
 
+                var disable = slot.Find("Disable");
+                disable.SetActive(skill.level <= 0);
+
                 var expGuage = slot.Find<GuageBar>("EXPGuage");
                 expGuage.SetGuage(DataTable.GetSkillMaxExp(skill.level), skill.exp);
 
