@@ -227,6 +227,13 @@ public class LocalServer : MonoBehaviour
                         userData.mineTicketDic[ticketType].count++;
                     else
                         userData.mineTicketDic.Add(ticketType, new Item() { itemType = ticketType, count = 1 });
+
+                    if (userGameInfo.consumableDic.ContainsKey(ticketType))
+                        userGameInfo.consumableDic[1001].count++;
+                    else
+                        userGameInfo.consumableDic.Add(1001, new Item() { itemType = 1001, count = 1 });
+
+                    nowMinerals.Add(new Item() { itemType = 10003, count = 50 });
                 }
             }
 
@@ -258,6 +265,14 @@ public class LocalServer : MonoBehaviour
                     userData.mineralDic[acquired.Key].count += acquired.Value.count;
                 else
                     userData.mineralDic[acquired.Key] = acquired.Value;
+            }
+
+            foreach (var item in userGameInfo.consumableDic)
+            {
+                if (userData.consumableDic.ContainsKey(item.Key))
+                    userData.consumableDic[item.Key].count += item.Value.count;
+                else
+                    userData.consumableDic[item.Key] = item.Value;
             }
 
             userData.nowWeight = userGameInfo.nowWeight;
