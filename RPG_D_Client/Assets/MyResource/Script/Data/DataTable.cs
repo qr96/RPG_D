@@ -105,6 +105,16 @@ public class DataTable
 
         return prefix + spriteName;
     }
+
+    public static string GetConsumableName(int itemType)
+    {
+        var name = "오류발생";
+
+        if (itemType == 1001)
+            name = "비급서";
+
+        return name;
+    }
     #endregion
 
     #region Lode

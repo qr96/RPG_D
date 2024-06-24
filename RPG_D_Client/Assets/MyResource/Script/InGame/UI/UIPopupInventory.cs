@@ -63,7 +63,7 @@ public class UIPopupInventory : UIPopup
                     slotButton.onClick.AddListener(() =>
                     {
                         Managers.ui.ShowPopup<UIPopupItemInfo>().Set(
-                            "비급서",
+                            DataTable.GetConsumableName(item.itemType),
                             "사용 시 무공을 획득합니다.",
                             itemImage.sprite,
                             item.count,
