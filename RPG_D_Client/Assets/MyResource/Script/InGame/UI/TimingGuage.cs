@@ -26,7 +26,7 @@ public class TimingGuage : MonoBehaviour
     bool moveRight;
     float timer;
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (movingPointer)
         {
