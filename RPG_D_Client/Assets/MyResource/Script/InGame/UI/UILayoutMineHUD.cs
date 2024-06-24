@@ -18,8 +18,11 @@ public class UILayoutMineHUD : UILayout
     TMP_Text bagIndicatorTmp;
     GameObject depthIndicator;
     TMP_Text depthIndicatorTmp;
+    GameObject timeIndicator;
+    TMP_Text timeIndicatorTmp;
 
     Coroutine reduceHpCo;
+    Coroutine timerCo;
     Queue<string> itemNotiMessageQue = new Queue<string>();
     List<TMP_Text> itemNotiPool = new List<TMP_Text>();
 
@@ -36,6 +39,8 @@ public class UILayoutMineHUD : UILayout
         bagIndicatorTmp = bagIndicator.Find<TMP_Text>("Text");
         depthIndicator = gameObject.Find("DepthIndicator");
         depthIndicatorTmp = depthIndicator.Find<TMP_Text>("Text");
+        timeIndicator = gameObject.Find("TimeIndicator");
+        timeIndicatorTmp = timeIndicator.Find<TMP_Text>("Text");
 
         inventoryButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupInventory>());
         skillButton.onClick.AddListener(() => Managers.ui.ShowPopup<UIPopupSkill>());
@@ -53,6 +58,8 @@ public class UILayoutMineHUD : UILayout
             itemNotiPool.Add(itemNoti);
             itemNoti.GetComponent<RectTransform>().anchoredPosition = new Vector2(itemNotiPivotPos.x, itemNotiPivotPos.y + i * itemNotiHeight);
         }
+
+        StopTimer();
     }
 
     private void Update()
@@ -85,6 +92,20 @@ public class UILayoutMineHUD : UILayout
             StopCoroutine(reduceHpCo);
     }
 
+    public void StartTimer()
+    {
+        StopTimer();
+        timeIndicator.SetActive(true);
+        timerCo = StartCoroutine(TimerCo());
+    }
+
+    public void StopTimer()
+    {
+        timeIndicator.SetActive(false);
+        if (timerCo != null)
+            StopCoroutine(timerCo);
+    }
+
     public void AddItemNotiQue(string message)
     {
         itemNotiMessageQue.Enqueue(message);
@@ -111,6 +132,17 @@ public class UILayoutMineHUD : UILayout
         }
 
         onEndReduceHp?.Invoke();
+    }
+
+    IEnumerator TimerCo()
+    {
+        DateTime startTime = DateTime.Now;
+
+        while (true)
+        {
+            timeIndicatorTmp.text = (DateTime.Now - startTime).ToString(@"mm\:ss");
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     void FlushItemMessageQue()

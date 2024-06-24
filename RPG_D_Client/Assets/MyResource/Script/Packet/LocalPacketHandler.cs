@@ -62,6 +62,7 @@ public class LocalPacketHandler
     public static void S_GameStart(long hpReducePerSec)
     {
         Managers.ui.GetLayout<UILayoutMineHUD>().StartReduceHP(hpReducePerSec, () => LocalPacketSender.C_MineGameResult());
+        Managers.ui.GetLayout<UILayoutMineHUD>().StartTimer();
         Managers.ui.HidePopup<UIPopupStartGame>();
     }
 
@@ -103,6 +104,7 @@ public class LocalPacketHandler
     public static void S_MineGameResult(bool success, List<Item> minerals)
     {
         Managers.ui.GetLayout<UILayoutMineHUD>().StopReduceHp();
+        Managers.ui.GetLayout<UILayoutMineHUD>().StopTimer();
         Managers.ui.ShowPopup<UIPopupGameResult>().SetResultPopup(success, minerals);
     }
 
