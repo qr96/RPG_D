@@ -314,7 +314,7 @@ public class DataTable
         {
             skillInfo = $"[현재레벨 {skillLevel}]\n";
             skillInfo += skillInfos[skillType - 8001];
-            skillInfo += $"[\n다음레벨 {skillLevel + 1}]\n";
+            skillInfo += $"\n\n[다음레벨 {skillLevel + 1}]\n";
             skillInfo += skillInfos[skillType - 8001];
         }
         
