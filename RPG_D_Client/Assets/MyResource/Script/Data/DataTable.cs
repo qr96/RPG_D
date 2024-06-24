@@ -96,6 +96,17 @@ public class DataTable
     }
     #endregion
 
+    #region Items
+    public static string GetConsumableSpritePath(int itemType)
+    {
+        var spriteName = "";
+        var prefix = "Sprites/Consumable/";
+        spriteName = itemType.ToString();
+
+        return prefix + spriteName;
+    }
+    #endregion
+
     #region Lode
 
     public static string GetLodeSpritePath(int lodeType)

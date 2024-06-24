@@ -78,6 +78,7 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutNameTag.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+    <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupItemInfo.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\SlotView.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupNotice.cs" />

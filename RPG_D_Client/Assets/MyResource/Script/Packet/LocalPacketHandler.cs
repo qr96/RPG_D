@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class LocalPacketHandler
 {
@@ -23,6 +24,7 @@ public class LocalPacketHandler
         Managers.ui.GetLayout<UILayoutMineHUD>().SetHpBar(userData.normalStat.maxHp + userData.equipStat.maxHp, userData.normalStat.maxHp + userData.equipStat.maxHp);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(userData.money);
+        Managers.ui.GetPopup<UIPopupInventory>().SetInventory(userData.consumableDic.Values.ToList());
         Managers.ui.GetPopup<UIPopupEquipShop>().UpdatePopup();
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(userData.money);
         Managers.ui.GetPopup<UIPopupSkill>().SetSkills(userData.skillDic.Values.ToList());
@@ -106,10 +108,20 @@ public class LocalPacketHandler
 
     public static void S_InventoryInfo(List<Item> minerals, long money, long maxWeight, long nowWeight)
     {
-        Managers.ui.GetPopup<UIPopupInventory>().SetInventory(minerals);
         Managers.ui.GetPopup<UIPopupInventory>().SetMoney(money);
         Managers.ui.GetPopup<UIPopupMineShop>().SetInventory(minerals);
         Managers.ui.GetPopup<UIPopupEquipShop>().SetPopup(money);
         Managers.ui.GetLayout<UILayoutMineHUD>().SetBagIndicator(maxWeight, nowWeight);
+    }
+
+    public static void S_LearnNewSkill(Skill newSkill)
+    {
+        Managers.ui.ShowPopup<UIPopupSkillInfo>().Set(
+            DataTable.GetSkillName(newSkill.type) + " 획득!",
+            DataTable.GetSkillInfo(newSkill.type, newSkill.level),
+            Resources.Load<Sprite>(DataTable.GetSkillSpritePath(newSkill.type)),
+            newSkill.level,
+            DataTable.GetSkillMaxExp(newSkill.level),
+            newSkill.exp);
     }
 }

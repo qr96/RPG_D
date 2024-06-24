@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,10 +7,10 @@ using UnityEngine.UI;
 
 public class UIPopupInventory : UIPopup
 {
-    public Button dimButton;
-    public GameObject inventoryPopup;
-    public GameObject itemSlotParent;
-    public GameObject itemSlotPrefab;
+    Button dimButton;
+    GameObject inventoryPopup;
+    GameObject itemSlotParent;
+    GameObject itemSlotPrefab;
     SlotView inventoryView;
 
     TMP_Text moneyText;
@@ -24,13 +25,16 @@ public class UIPopupInventory : UIPopup
 
     public override void OnCreate()
     {
+        dimButton = gameObject.Find<Button>("Dim");
+        inventoryPopup = gameObject.Find("InventoryPopup");
+        itemSlotParent = inventoryPopup.Find("Scroll View/Viewport/Content");
+        itemSlotPrefab = itemSlotParent.Find("ItemSlot");
         inventoryView = inventoryPopup.GetComponent<SlotView>();
 
         dimButton.onClick.AddListener(() => Hide());
 
-        var slotPrefab = gameObject.Find("InventoryPopup/Scroll View/Viewport/Content/ItemSlot");
-        slotPrefab.SetActive(false);
-        inventoryView.SetPrefab(slotPrefab, slotPrefab.transform.parent);
+        itemSlotPrefab.SetActive(false);
+        inventoryView.SetPrefab(itemSlotPrefab, itemSlotParent.transform);
         
         moneyText = inventoryPopup.Find<TMP_Text>("Property/MoneyText");
     }
@@ -49,15 +53,35 @@ public class UIPopupInventory : UIPopup
                 {
                     var countText = slot.Find<TMP_Text>("ItemCount");
                     countText.text = item.count.ToString();
+
                     var itemImage = slot.Find<Image>("ItemImage");
-                    itemImage.sprite = Resources.Load<Sprite>(DataTable.GetItemSpritePath(item.itemType));
+                    itemImage.sprite = Resources.Load<Sprite>(DataTable.GetConsumableSpritePath(item.itemType));
                     slot.SetActive(true);
+
+                    var slotButton = slot.GetComponent<Button>();
+                    slotButton.onClick.RemoveAllListeners();
+                    slotButton.onClick.AddListener(() =>
+                    {
+                        Managers.ui.ShowPopup<UIPopupItemInfo>().Set(
+                            "비급서",
+                            "사용 시 무공을 획득합니다.",
+                            itemImage.sprite,
+                            item.count,
+                            () => OnClickUseItem(item.itemType)
+                            );
+                    });
                 }
             });
     }
 
     public void SetMoney(long money)
     {
-        moneyText.text = money.ToString();
+        moneyText.text = $"보유 골드 : {RDUtil.MoneyComma(money)}";
+    }
+
+    void OnClickUseItem(int itemType)
+    {
+        Debug.Log($"Use Item {itemType}");
+        LocalPacketSender.C_UseItem(itemType);
     }
 }

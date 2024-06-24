@@ -57,6 +57,7 @@ public class UserData
 
     public Dictionary<int, Item> mineralDic = new Dictionary<int, Item>();
     public Dictionary<int, Item> mineTicketDic = new Dictionary<int, Item>();
+    public Dictionary<int, Item> consumableDic = new Dictionary<int, Item>();
 
     public Dictionary<int, Equipment> weaponDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> shirtDic = new Dictionary<int, Equipment>();

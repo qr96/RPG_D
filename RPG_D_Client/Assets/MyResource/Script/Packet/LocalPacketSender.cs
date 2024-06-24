@@ -48,4 +48,9 @@ public class LocalPacketSender
     {
         LocalServer.Instance.C_BuyEquip(equipType);
     }
+
+    public static void C_UseItem(int itemType)
+    {
+        LocalServer.Instance.C_UseItem(itemType);
+    }
 }

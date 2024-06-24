@@ -21,6 +21,8 @@ public class LocalServer : MonoBehaviour
     UserGameInfo userGameInfo = new UserGameInfo(); // user's now playing game info
     long hpReducePerSec = 1;
 
+    System.Random rand = new System.Random();
+
     private void Awake()
     {
         Instance = this;
@@ -64,6 +66,7 @@ public class LocalServer : MonoBehaviour
         userData.equipStat = new Stat();
 
         userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });
+        userData.consumableDic.Add(1001, new Item() { itemType = 1001, count = 10 });
 
         for (int i = 8001; i < 8009; i++)
             userData.skillDic.Add(i, new Skill() { type = i });
@@ -354,6 +357,28 @@ public class LocalServer : MonoBehaviour
         }
 
         SaveData();
+    }
+
+    public void C_UseItem(int itemType)
+    {
+        if (userData.consumableDic.ContainsKey(itemType))
+        {
+            if (userData.consumableDic[itemType] != null && userData.consumableDic[(itemType)].count > 0)
+            {
+                userData.consumableDic[itemType].count--;
+                if (itemType == 1001)
+                {
+                    var skillType = rand.Next(8001, 8008);
+                    if (userData.skillDic[skillType].level == 0)
+                        userData.skillDic[skillType].level = 1;
+                    else
+                        userData.skillDic[skillType].exp++;
+
+                    LocalPacketHandler.S_LearnNewSkill(userData.skillDic[skillType]);
+                }
+                LocalPacketHandler.S_UserInfo(userData);
+            }
+        }
     }
 
     public void SendInventoryInfo()
