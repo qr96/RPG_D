@@ -59,25 +59,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MyResource\Script\Util\FPSIndicator.cs" />
-    <Compile Include="Assets\MyResource\Script\Packet\LocalServer.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
-    <Compile Include="Assets\MyResource\Script\Packet\LocalPacketSender.cs" />
     <Compile Include="Assets\MyResource\Script\Util\Extension.cs" />
+    <Compile Include="Assets\MyResource\Script\LocalPacket\LocalServer.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupLogin.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\MovePortal.cs" />
-    <Compile Include="Assets\MyResource\Script\Packet\LocalPacketHandler.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\InputManager.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\Protocol.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingPopup.cs" />
     <Compile Include="Assets\MyResource\Script\Data\DataTable.cs" />
     <Compile Include="Assets\MyResource\Script\Util\RDUtil.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineGame.cs" />
     <Compile Include="Assets\MyResource\Script\Util\Util.cs" />
-    <Compile Include="Assets\MyResource\Script\DataManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Manager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupEquipShop.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutNameTag.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\DataManager.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\UIManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupItemInfo.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\SlotView.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -86,30 +87,38 @@
     <Compile Include="Assets\SPUM\Sample\Script\PlayerObj.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutMiniMap.cs" />
+    <Compile Include="Assets\MyResource\Script\ServerCore\Session.cs" />
+    <Compile Include="Assets\MyResource\Script\LocalPacket\LocalPacketSender.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\Managers.cs" />
     <Compile Include="Assets\MyResource\Script\UIPopup.cs" />
-    <Compile Include="Assets\MyResource\Script\MapManager.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\PacketQueue.cs" />
+    <Compile Include="Assets\MyResource\Script\LocalPacket\LocalPacketHandler.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-    <Compile Include="Assets\MyResource\Script\Packet\PacketDefine.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\MyPlayer.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\PacketHandler.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
+    <Compile Include="Assets\MyResource\Script\ServerCore\RecvBuffer.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupStartGame.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
-    <Compile Include="Assets\MyResource\Script\UIManager.cs" />
+    <Compile Include="Assets\MyResource\Script\ServerCore\Connector.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\NetworkManager.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_Prefabs.cs" />
     <Compile Include="Assets\MyResource\Script\UILayout.cs" />
-    <Compile Include="Assets\MyResource\Script\InputManager.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\MapManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UILayoutMineHUD.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupBlackSmith.cs" />
-    <Compile Include="Assets\MyResource\Script\ObjectManager.cs" />
+    <Compile Include="Assets\MyResource\Script\LocalPacket\PacketDefine.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupInventory.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMineShop.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\ClientPacketManager.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupSkillInfo.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\Lode.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupGameResult.cs" />
+    <Compile Include="Assets\MyResource\Script\Packet\ServerSession.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\TimingGuage.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_TexutreList.cs" />
-    <Compile Include="Assets\MyResource\Script\Managers.cs" />
+    <Compile Include="Assets\MyResource\Script\Managers\ObjectManager.cs" />
     <Compile Include="Assets\MyResource\Script\Scene\MineGameScene.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupSkill.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\UI\UIPopupMakeResult.cs" />
@@ -127,6 +136,7 @@
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Libs\Google.Protobuf.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
@@ -346,6 +356,9 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets\Libs\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
