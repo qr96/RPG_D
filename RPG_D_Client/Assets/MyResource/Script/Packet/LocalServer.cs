@@ -377,6 +377,7 @@ public class LocalServer : MonoBehaviour
                     LocalPacketHandler.S_LearnNewSkill(userData.skillDic[skillType]);
                 }
                 LocalPacketHandler.S_UserInfo(userData);
+                SaveData();
             }
         }
     }

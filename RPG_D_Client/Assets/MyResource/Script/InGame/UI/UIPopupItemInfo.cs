@@ -46,6 +46,12 @@ public class UIPopupItemInfo : UIPopup
         useButton.onClick.RemoveAllListeners();
         useButton.gameObject.SetActive(clickUse != null);
         if (clickUse != null)
-            useButton.onClick.AddListener(() => clickUse());
+        {
+            useButton.onClick.AddListener(() =>
+            {
+                Hide();
+                clickUse();
+            });
+        }
     }
 }
