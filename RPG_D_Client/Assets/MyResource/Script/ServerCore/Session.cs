@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -108,9 +108,9 @@ namespace ServerCore
 			if (Interlocked.Exchange(ref _disconnected, 1) == 1)
 				return;
 
-			OnDisconnected(_socket.RemoteEndPoint);
-			_socket.Shutdown(SocketShutdown.Both);
-			_socket.Close();
+			OnDisconnected(_socket?.RemoteEndPoint);
+			_socket?.Shutdown(SocketShutdown.Both);
+			_socket?.Close();
 			Clear();
 		}
 

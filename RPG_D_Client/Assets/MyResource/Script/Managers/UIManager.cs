@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
     public List<UILayout> uiLayouts = new List<UILayout>();
     public List<UIPopup> uiPopups = new List<UIPopup>();
 
+    public RectTransform canvas;
+    public RectTransform root;
+
     private void Awake()
     {
         foreach (var popup in uiPopups)
@@ -15,6 +18,25 @@ public class UIManager : MonoBehaviour
             popup.OnCreate();
             popup.gameObject.SetActive(false);
         }
+
+        var canvasChangeCallback = canvas.GetComponent<CanvasDimensionsChangeCallback>();
+        canvasChangeCallback.SetDimensionsChangeCallback(() =>
+        {
+            var maxRatio = 0.75f;
+            var nowRatio = (float)Screen.width / Screen.height;
+
+            if (nowRatio > maxRatio)
+            {
+                var margin = (nowRatio - maxRatio) / nowRatio / 2f;
+
+                root.anchorMin = new Vector2(0f + margin, 0f);
+                root.anchorMax = new Vector2(1f - margin, 1f);
+            }
+            else
+            {
+                Camera.main.orthographicSize = nowRatio * -9 + 12.5f;
+            }
+        });
     }
 
     public T GetLayout<T>() where T : UILayout

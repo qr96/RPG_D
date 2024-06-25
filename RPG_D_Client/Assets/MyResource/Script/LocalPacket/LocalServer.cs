@@ -62,7 +62,7 @@ public class LocalServer : MonoBehaviour
         userData.nickName = nickname;
         userData.money = 10000;
         userData.lastMapId = 1001;
-        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxMp = 5, maxWeight = 100, speed = 200f };
+        userData.normalStat = new Stat() { attack = 10, maxHp = 30, maxMp = 10, maxWeight = 100, speed = 200f };
         userData.equipStat = new Stat();
 
         userData.mineTicketDic.Add(1001, new Item() { itemType = 1001, count = 999 });

@@ -95,6 +95,7 @@
     <Compile Include="Assets\MyResource\Script\LocalPacket\LocalPacketHandler.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\MyResource\Script\InGame\MyPlayer.cs" />
+    <Compile Include="Assets\MyResource\Script\Util\CanvasDimensionsChangeCallback.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\MyResource\Script\Packet\PacketHandler.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
