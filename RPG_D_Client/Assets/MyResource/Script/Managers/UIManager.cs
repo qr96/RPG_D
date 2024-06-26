@@ -34,7 +34,10 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                Camera.main.orthographicSize = nowRatio * -9 + 12.5f;
+                root.anchorMin = Vector2.zero;
+                root.anchorMax = Vector2.one;
+
+                Camera.main.orthographicSize = nowRatio * -9 + 13.75f;
             }
         });
     }
