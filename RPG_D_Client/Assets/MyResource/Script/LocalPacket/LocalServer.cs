@@ -148,6 +148,7 @@ public class LocalServer : MonoBehaviour
         userGameInfo.nowWeight = userData.nowWeight;
         userGameInfo.nowHp = userGameInfo.gameStat.maxHp;
         userGameInfo.acquired.Clear();
+        userGameInfo.skillDic = userData.skillDic;
 
         LocalPacketHandler.S_GameStart(hpReducePerSec);
     }
@@ -176,20 +177,20 @@ public class LocalServer : MonoBehaviour
         if (userNowMp <= 0)
             return;
 
-        var damage = 0L;
-        if (attackLevel == 0)
-            damage = userGameInfo.gameStat.attack * 12 / 10;
-        else if (attackLevel == 1)
-            damage = userGameInfo.gameStat.attack;
-        else if (attackLevel == 2)
-            damage = userGameInfo.gameStat.attack * 8 / 10;
+        var damages = new List<long>();
+        for (int i = 0; i < 2; i++)
+        {
+            var damage = DataTable.GetDamage(attackLevel, userGameInfo.gameStat.attack);
+            damages.Add(damage);
+        }
 
-        lodeHp -= damage;
+        foreach (var damage in damages)
+            lodeHp -= damage;
         lodeHp = Math.Max(lodeHp, 0);
         userNowMp -= 1;
         userNowMp = Math.Max(userNowMp, 0);
 
-        LocalPacketHandler.S_LodeAttack(lodeHp, damage, userGameInfo.gameStat.maxMp, userNowMp);
+        LocalPacketHandler.S_LodeAttack(lodeHp, damages, userGameInfo.gameStat.maxMp, userNowMp);
 
         if (userNowMp <= 0 && lodeHp > 0)
         {

@@ -347,4 +347,22 @@ public class DataTable
     }
 
     #endregion
+
+    #region MineGame
+    public static long GetDamage(int attackLevel, long attack)
+    {
+        var damage = 0L;
+
+        if (attackLevel == 0)
+            damage = attack * 12 / 10;
+        else if (attackLevel == 1)
+            damage = attack;
+        else if (attackLevel == 2)
+            damage = attack * 8 / 10;
+
+        return damage;
+    }
+
+    #endregion
 }
+

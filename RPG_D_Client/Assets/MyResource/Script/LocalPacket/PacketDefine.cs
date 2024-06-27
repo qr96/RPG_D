@@ -125,5 +125,6 @@ public class UserGameInfo
     public DateTime gameStartTime;
     public Dictionary<int, Item> acquired = new Dictionary<int, Item>();
     public Dictionary<int, Item> consumableDic = new Dictionary<int, Item>();
+    public Dictionary<int, Skill> skillDic = new Dictionary<int, Skill>();
 }
 #endregion

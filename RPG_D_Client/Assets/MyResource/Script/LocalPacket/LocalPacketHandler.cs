@@ -71,11 +71,11 @@ public class LocalPacketHandler
         Managers.ui.ShowPopup<UIPopupMineGame>().SetMinePopup(lodeMaxHp, userMaxMp);
     }
 
-    public static void S_LodeAttack(long lodeHp, long damage, long userMaxMp, long userNowMp)
+    public static void S_LodeAttack(long lodeHp, List<long> damages, long userMaxMp, long userNowMp)
     {
         Managers.ui.GetPopup<UIPopupMineGame>().ChangeMinePopupHp(lodeHp);
-        Managers.ui.GetPopup<UIPopupMineGame>().ShowDamageBar(damage);
         Managers.ui.GetPopup<UIPopupMineGame>().SetMpBar(userMaxMp, userNowMp);
+        Managers.ui.GetPopup<UIPopupMineGame>().ShowDamageBar(damages);
 
         if (lodeHp <= 0)
             Managers.ui.GetPopup<UIPopupMineGame>().ResultMineGamePopup();

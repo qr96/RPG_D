@@ -13,12 +13,13 @@ public class UIPopupMineGame : UIPopup
     Button stopButton;
     Image attackEffet;
     TMP_Text resultEffect;
-    GameObject damages;
+    GameObject damageParent;
     TMP_Text damagePrefab;
 
     long lodeMaxHp = 0;
 
     Queue<TMP_Text> damagePool = new Queue<TMP_Text>();
+    List<TMP_Text> usingDamage = new List<TMP_Text>();
 
     public override void InputEvent()
     {
@@ -34,8 +35,8 @@ public class UIPopupMineGame : UIPopup
         stopButton = gameObject.Find<Button>("StopButton");
         attackEffet = gameObject.Find<Image>("Effect");
         resultEffect = gameObject.Find<TMP_Text>("Result");
-        damages = gameObject.Find("Damages");
-        damagePrefab = damages.Find<TMP_Text>("Damage");
+        damageParent = gameObject.Find("Damages");
+        damagePrefab = damageParent.Find<TMP_Text>("Damage");
 
         stopButton.onClick.AddListener(() => OnClickMinePopupAttack());
 
@@ -86,29 +87,32 @@ public class UIPopupMineGame : UIPopup
         mpBar.SetGuage(maxMp, nowMp);
     }
 
-    public void ShowDamageBar(long damage)
+    public void ShowDamageBar(List<long> damages)
     {
-        TMP_Text damageTmp;
+        for (int i = damages.Count - 1; i >= 0; i--)
+        {
+            TMP_Text damageTmp;
 
-        if (damagePool.Count <= 0)
-            damageTmp = Instantiate(damagePrefab, damages.transform);
-        else
-            damageTmp = damagePool.Dequeue();
+            if (damagePool.Count <= 0)
+                damageTmp = Instantiate(damagePrefab, damageParent.transform);
+            else
+                damageTmp = damagePool.Dequeue();
 
-        var damageColor = damageTmp.color;
-        damageColor.a = 1f;
-        damageTmp.color = damageColor;
-        damageTmp.rectTransform.anchoredPosition = new Vector2(0f, -70f);
-        damageTmp.gameObject.SetActive(true);
-        damageTmp.text = damage.ToString();
+            var damageColor = damageTmp.color;
+            damageColor.a = 1f;
+            damageTmp.color = damageColor;
+            damageTmp.rectTransform.anchoredPosition = new Vector2(0f, -70f + i * 40f);
+            damageTmp.gameObject.SetActive(true);
+            damageTmp.text = damages[i].ToString();
 
-        damageTmp.rectTransform.DOAnchorPosY(82f, 2f);
-        damageTmp.DOFade(0f, 2f)
-            .OnComplete(() =>
-            {
-                damageTmp.gameObject.SetActive(false);
-                damagePool.Enqueue(damageTmp);
-            });
+            damageTmp.rectTransform.DOAnchorPosY(10f + i * 40f, 4f);
+            damageTmp.DOFade(0f, 4f)
+                .OnComplete(() =>
+                {
+                    damageTmp.gameObject.SetActive(false);
+                    damagePool.Enqueue(damageTmp);
+                });
+        }
     }
 
     public void ChangeMinePopupTargetZone()
