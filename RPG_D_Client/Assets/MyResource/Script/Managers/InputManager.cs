@@ -16,8 +16,12 @@ public class InputManager : MonoBehaviour
         if (inputEvents.Count > 0)
             inputEvents.Peek().Invoke();
 
-        playerInput.x = Input.GetAxis("Horizontal");
-        playerInput.y = Input.GetAxis("Vertical");
+        playerInput = Managers.ui.GetLayout<UILayoutJoystick>().GetInput();
+        if (playerInput == Vector2.zero)
+        {
+            playerInput.x = Input.GetAxis("Horizontal");
+            playerInput.y = Input.GetAxis("Vertical");
+        }
 
         if (playerLock.Count > 0 && playerLock.Peek())
             playerInput = Vector2.zero;
