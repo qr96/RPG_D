@@ -402,30 +402,4 @@ public class LocalServer : MonoBehaviour
     {
         LocalPacketHandler.S_InventoryInfo(userData.mineralDic.Values.ToList(), userData.money, userData.normalStat.maxWeight + userData.equipStat.maxWeight, userData.nowWeight);
     }
-
-    public void C_StartQuest(int questId)
-    {
-        if (userData.questDic.ContainsKey(questId))
-        {
-            if (userData.questDic[questId] == QuestState.NotStarted)
-            {
-                userData.questDic[questId] = QuestState.Progress;
-
-            }   
-        }
-    }
-
-    public void C_CompleteQuest(int questId)
-    {
-        if (userData.questDic.ContainsKey(questId))
-        {
-            if (userData.questDic[questId] == QuestState.Progress)
-            {
-                if (DataTable.IsQuestComplete(questId, userData))
-                {
-
-                }
-            }
-        }
-    }
 }

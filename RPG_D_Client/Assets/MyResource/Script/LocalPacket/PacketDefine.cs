@@ -64,7 +64,9 @@ public class UserData
     public Dictionary<int, Equipment> bagDic = new Dictionary<int, Equipment>();
     public Dictionary<int, Equipment> shoeDic = new Dictionary<int, Equipment>();
 
-    public Dictionary<int, QuestState> questDic = new Dictionary<int, QuestState>();
+    public Dictionary<int, QuestState> questState = new Dictionary<int, QuestState>();
+    public SortedSet<int> progressQuests = new SortedSet<int>();
+    public SortedSet<int> completeQuests = new SortedSet<int>();
 }
 
 [Serializable]
