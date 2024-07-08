@@ -29,12 +29,13 @@ public class MyPlayerB : MonoBehaviour
     {
         input = Managers.input.GetPlayerInputAxis();
 
-        if (isOnAttack && input.Equals(Vector2.zero))
+        if (isOnAttack)
             OnAttack();
+        else
+            animator.SetBool("Moving", input.sqrMagnitude > 0);
 
         rigid.velocity = new Vector2(input.x * speed * Time.fixedDeltaTime, input.y * speed * Time.fixedDeltaTime);
-        animator.SetBool("Moving", input.sqrMagnitude > 0);
-
+        
         if (input.x > 0)
             transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
         else if (input.x < 0)
