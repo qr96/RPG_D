@@ -11,9 +11,11 @@ public class MyPlayerB : MonoBehaviour
 
     public float speed;
     public float pushPower;
-    public float attackDelay;
+    public float attackDelay = 1f;
 
     Transform nameTag;
+
+    HashSet<IDamageable> targets = new HashSet<IDamageable>();
 
     Vector2 input;
     DateTime attackEnd;
@@ -65,20 +67,36 @@ public class MyPlayerB : MonoBehaviour
     {
         if (DateTime.Now < attackEnd)
             return;
-
-        rigid.velocity = Vector3.zero;
-        attackEnd = DateTime.Now.AddSeconds(attackDelay);
-        animator.SetBool("Moving", false);
-        animator.SetTrigger("Attack");
+        StartCoroutine(AttackCoroutine(0.3f));
     }
 
     void OnAttackStart(Collider2D collider)
     {
-        isOnAttack = true;
+        var target = collider.gameObject.GetComponent<IDamageable>();
+
+        if (target != null)
+            targets.Add(target);
+        if (targets.Count > 0)
+            isOnAttack = true;
     }
 
     void OnAttackEnd(Collider2D collider)
     {
-        isOnAttack = false;
+        targets.Remove(collider.GetComponent<IDamageable>());
+        if (targets.Count == 0)
+            isOnAttack = false;
+    }
+
+    IEnumerator AttackCoroutine(float delay)
+    {
+        rigid.velocity = Vector3.zero;
+        attackEnd = DateTime.Now.AddSeconds(attackDelay);
+        animator.SetBool("Moving", false);
+        animator.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(delay);
+
+        foreach (var target in targets)
+            target.OnDamage(10);
     }
 }
