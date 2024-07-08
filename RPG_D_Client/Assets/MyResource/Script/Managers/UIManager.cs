@@ -19,26 +19,17 @@ public class UIManager : MonoBehaviour
             popup.gameObject.SetActive(false);
         }
 
+        UIUtil.ApplySafeAreaAnchor(ref root);
+        UIUtil.ApplyPreserveRatio(root, 0.75f);
+
         var canvasChangeCallback = canvas.GetComponent<CanvasDimensionsChangeCallback>();
         canvasChangeCallback.SetDimensionsChangeCallback(() =>
         {
-            var maxRatio = 0.75f;
+            UIUtil.ApplySafeAreaAnchor(ref root);
+            UIUtil.ApplyPreserveRatio(root, 0.75f);
+
             var nowRatio = (float)Screen.width / Screen.height;
-
-            if (nowRatio > maxRatio)
-            {
-                var margin = (nowRatio - maxRatio) / nowRatio / 2f;
-
-                root.anchorMin = new Vector2(0f + margin, 0f);
-                root.anchorMax = new Vector2(1f - margin, 1f);
-            }
-            else
-            {
-                root.anchorMin = Vector2.zero;
-                root.anchorMax = Vector2.one;
-
-                Camera.main.orthographicSize = nowRatio * -9 + 13.75f;
-            }
+            Camera.main.orthographicSize = nowRatio * -8 + 14f;
         });
     }
 
