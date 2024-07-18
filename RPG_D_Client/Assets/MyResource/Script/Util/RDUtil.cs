@@ -14,7 +14,7 @@ public class RDUtil
         return money.ToString("#,##0");
     }
 
-    public static Vector2 InputToOctaVector(Vector2 vec)
+    public static Vector2 VectorToOcta(Vector2 vec)
     {
         // (0,1)이 0도에서 시계방향으로 증가, [-180~180]
         var angle = Mathf.Atan2(vec.x, vec.y) * Mathf.Rad2Deg;
